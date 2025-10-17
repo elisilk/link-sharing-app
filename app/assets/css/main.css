@@ -1,0 +1,86 @@
+@import "~/assets/css/base.css";
+
+/* semantic properties */
+:root {
+  /* colors */
+
+  /* colors -- backgrounds */
+  --color-background-body: hsl(var(--color-grey-50));
+  --color-background-comment: hsl(var(--color-white));
+
+  /* colors -- text */
+  --color-text-primary: hsl(var(--color-grey-500));
+  --color-text-accent: hsl(var(--color-purple-600));
+
+  /* sizing/spacing */
+
+  /* main */
+  --main-inline-size-max: 45.625rem; /* 730px */
+  --main-inline-size-gutter: var(--space-200); /* (m) 16px -> (t) 42px */
+  --main-block-size-margin: var(--space-400); /* (m) 32px -> (t) 58px */
+}
+
+/* viewport: mobile -> tablet */
+@media (min-width: 40rem) {
+  :root {
+    --main-inline-size-gutter: var(--space-525); /* (m) 16px -> (t) 42px */
+    --main-block-size-margin: var(--space-725); /* (m) 32px -> (t) 58px */
+  }
+}
+
+/* viewport: tablet -> desktop */
+/* @media (min-width: 60rem) {
+  :root {
+  }
+} */
+
+/* -------------------- */
+/* Typography           */
+/* -------------------- */
+
+.text-preset1 {
+  font-size: var(--fs-800);
+  font-weight: var(--fw-bold);
+}
+
+.text-preset2 {
+  font-size: var(--fs-600);
+  font-weight: var(--fw-bold);
+}
+
+.text-preset3-bold {
+  font-size: var(--fs-400);
+  font-weight: var(--fw-bold);
+}
+
+.text-preset3-semibold {
+  font-size: var(--fs-400);
+  font-weight: var(--fw-semibold);
+}
+
+.text-preset3-regular {
+  font-size: var(--fs-400);
+  font-weight: var(--fw-regular);
+}
+
+.text-preset4 {
+  font-size: var(--fs-200);
+  font-weight: var(--fw-regular);
+}
+
+/* -------------------- */
+/* Body / App           */
+/* -------------------- */
+
+body {
+  color: var(--color-text-primary);
+  background-color: var(--color-background-body);
+
+  font-family: var(--ff-base);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-400);
+  letter-spacing: var(--ls-400);
+
+  margin: 0;
+  padding: 0;
+}
