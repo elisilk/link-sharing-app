@@ -40,8 +40,8 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [https://github.com/elisilk/interactive-comments-section](https://github.com/elisilk/interactive-comments-section)
-- Live Site URL: [https://elisilk.github.io/interactive-comments-section/](https://elisilk.github.io/interactive-comments-section/)
+- Solution URL: [https://github.com/elisilk/link-sharing-app](https://github.com/elisilk/link-sharing-app)
+- Live Site URL: [https://link-sharing-app-eight-nu.vercel.app/](https://link-sharing-app-eight-nu.vercel.app/)
 
 ## My process
 
