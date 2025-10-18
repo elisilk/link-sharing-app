@@ -4,7 +4,7 @@
 
 /* Media query breakpoints (min-widths) */
 
-/* 40rem = 640px -- mobile -> tablet */
+/* 29rem = 464px -- mobile -> tablet */
 /* 60rem = 960px -- tablet -> desktop */
 
 /* -------------------- */
@@ -41,7 +41,9 @@
 
   --color-purple-950: 252 50% 27%; /* hex 302267 / rgb 48, 34, 103 */
   --color-purple-600: 252 100% 62%; /* hex 633CFF / rgb 99, 60, 255 */
-  --color-purple-300: 252 100% 84% /* hex BEADFF / rgb 199, 173, 255 */ --color-red-550: 0 84% 58%; /* hex EE3939 / rgb 238, 57, 57 */
+  --color-purple-300: 252 100% 84%; /* hex BEADFF / rgb 199, 173, 255 */
+
+  --color-red-550: 0 84% 58%; /* hex EE3939 / rgb 238, 57, 57 */
   --color-red-500: 0 100% 61%; /* hex FF3939 / rgb 255, 57, 57 */
 
   --color-pink-900: 331 68% 32%; /* hex 8A1A50 / rgb 138, 26, 80 */
@@ -51,6 +53,7 @@
   --color-orange-500: 11 83% 53%; /* hex EB4925 / rgb 235, 73, 37 */
 
   /* shadows & gradients */
+  --shadow-input-field: 0px 0px 32px hsl(var(--color-purple-600) / 0.25);
 
   /* font-families */
   --ff-base: "Instrument Sans", sans-serif;
@@ -67,7 +70,7 @@
   --fs-200: 0.75rem; /* 12px */
 
   /* line height */
-  --lh-400: 150%;
+  --lh-400: 1.5;
 
   /* letter-spacing */
   --ls-400: 0px;
@@ -105,7 +108,7 @@
   --space-0: 0; /* 0px */
 
   /* border radii */
-  --br-500: 10px;
+  --br-500: 12px;
   --br-400: 8px;
   --br-300: 2px;
 }

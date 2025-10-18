@@ -6,22 +6,33 @@
 
   /* colors -- backgrounds */
   --color-background-body: hsl(var(--color-grey-50));
-  --color-background-comment: hsl(var(--color-white));
+  --color-background-form: hsl(var(--color-white));
+  --color-background-button: hsl(var(--color-purple-600));
+  --color-background-button-active: hsl(var(--color-purple-300));
 
   /* colors -- text */
   --color-text-primary: hsl(var(--color-grey-500));
+  --color-text-headings: hsl(var(--color-grey-900));
   --color-text-accent: hsl(var(--color-purple-600));
+  --color-text-button: hsl(var(--color-white));
+  --color-text-link: hsl(var(--color-purple-600));
+  --color-text-link-active: hsl(var(--color-purple-300));
+
+  /* colors -- input */
+  --color-input-border: hsl(var(--color-grey-200));
+  --color-input-error: hsl(var(--color-red-500));
+  --color-input-active: hsl(var(--color-purple-600));
 
   /* sizing/spacing */
 
   /* main */
-  --main-inline-size-max: 45.625rem; /* 730px */
+  --default-inline-size-max: 29.75rem; /* 476px */
   --main-inline-size-gutter: var(--space-200); /* (m) 16px -> (t) 42px */
   --main-block-size-margin: var(--space-400); /* (m) 32px -> (t) 58px */
 }
 
 /* viewport: mobile -> tablet */
-@media (min-width: 40rem) {
+@media (min-width: 29rem) {
   :root {
     --main-inline-size-gutter: var(--space-525); /* (m) 16px -> (t) 42px */
     --main-block-size-margin: var(--space-725); /* (m) 32px -> (t) 58px */
@@ -60,12 +71,34 @@
 
 .text-preset3-regular {
   font-size: var(--fs-400);
-  font-weight: var(--fw-regular);
 }
 
 .text-preset4 {
   font-size: var(--fs-200);
-  font-weight: var(--fw-regular);
+}
+
+/* -------------------- */
+/* Global Text          */
+/* -------------------- */
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  color: var(--color-text-headings);
+}
+
+a {
+  color: var(--color-text-link);
+  text-decoration: none;
+}
+
+a:hover,
+a:focus-visible {
+  outline: none;
+  border-bottom: 1px dashed var(--color-text-link-active);
+  color: var(--color-text-link-active);
 }
 
 /* -------------------- */
