@@ -81,4 +81,8 @@ fieldset {
 fieldset > * + * {
   margin-block-start: var(--space-100);
 }
+
+input[type="file"] {
+  inline-size: 100%;
+}
 </style>
