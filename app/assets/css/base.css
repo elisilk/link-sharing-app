@@ -108,6 +108,8 @@
   --space-0: 0; /* 0px */
 
   /* border radii */
+  --br-800: 32px;
+  --br-600: 24px;
   --br-500: 12px;
   --br-400: 8px;
   --br-300: 2px;
