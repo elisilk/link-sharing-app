@@ -27,12 +27,13 @@
 
   /* main */
   --default-inline-size-max: 29.75rem; /* 476px */
+  --editor-inline-size-max: 90rem; /* 1440px */
   --main-inline-size-gutter: var(--space-200); /* (m) 16px -> (t) 42px */
   --main-block-size-margin: var(--space-400); /* (m) 32px -> (t) 58px */
 }
 
 /* viewport: mobile -> tablet */
-@media (min-width: 29rem) {
+@media (min-width: 45rem) {
   :root {
     --main-inline-size-gutter: var(--space-525); /* (m) 16px -> (t) 42px */
     --main-block-size-margin: var(--space-725); /* (m) 32px -> (t) 58px */
