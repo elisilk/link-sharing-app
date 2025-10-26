@@ -14,31 +14,33 @@ async function login() {
         Add your details below to get back into the app
       </template>
 
-      <AppFormTextField
-        id="loginEmail"
-        type="email"
-        name="loginEmail"
-        label="Email address"
-        placeholder="e.g. alex@email.com"
-        autocomplete="email"
-      >
-        <template #icon>
-          <Icon name="my-icon:icon-email" />
-        </template>
-      </AppFormTextField>
+      <ClientOnly>
+        <AppFormTextField
+          id="loginEmail"
+          type="email"
+          name="loginEmail"
+          label="Email address"
+          placeholder="e.g. alex@email.com"
+          autocomplete="email"
+        >
+          <template #icon>
+            <Icon name="my-icon:icon-email" />
+          </template>
+        </AppFormTextField>
 
-      <AppFormTextField
-        id="loginPassword"
-        type="password"
-        name="loginPassword"
-        label="Password"
-        placeholder="Enter your password"
-        autocomplete="current-password"
-      >
-        <template #icon>
-          <Icon name="my-icon:icon-password" />
-        </template>
-      </AppFormTextField>
+        <AppFormTextField
+          id="loginPassword"
+          type="password"
+          name="loginPassword"
+          label="Password"
+          placeholder="Enter your password"
+          autocomplete="current-password"
+        >
+          <template #icon>
+            <Icon name="my-icon:icon-password" />
+          </template>
+        </AppFormTextField>
+      </ClientOnly>
 
       <template #controls>
         <AppFormButton type="submit">

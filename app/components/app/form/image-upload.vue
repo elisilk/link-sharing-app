@@ -82,6 +82,12 @@ input[type="file"] {
   inline-size: 40px;
 }
 
+label:has(input:focus-visible) {
+  outline: none;
+  border: 1px solid var(--color-input-active);
+  box-shadow: var(--shadow-input-field);
+}
+
 /* container queries */
 
 @container (width > 560px) {

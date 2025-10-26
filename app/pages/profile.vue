@@ -25,32 +25,34 @@ definePageMeta({
       </fieldset>
 
       <fieldset>
-        <AppFormTextField
-          id="profileFirstName"
-          type="text"
-          name="profileFirstName"
-          label="First name"
-          placeholder="e.g. John"
-          autocomplete="given-name"
-          :required="true"
-        />
-        <AppFormTextField
-          id="profileLastName"
-          type="text"
-          name="profileLastName"
-          label="Last name"
-          placeholder="e.g. Appleseed"
-          autocomplete="family-name"
-          :required="true"
-        />
-        <AppFormTextField
-          id="profileEmail"
-          type="email"
-          name="profileEmail"
-          label="Email"
-          placeholder="e.g. email@example.com"
-          autocomplete="email"
-        />
+        <ClientOnly>
+          <AppFormTextField
+            id="profileFirstName"
+            type="text"
+            name="profileFirstName"
+            label="First name"
+            placeholder="e.g. John"
+            autocomplete="given-name"
+            :required="true"
+          />
+          <AppFormTextField
+            id="profileLastName"
+            type="text"
+            name="profileLastName"
+            label="Last name"
+            placeholder="e.g. Appleseed"
+            autocomplete="family-name"
+            :required="true"
+          />
+          <AppFormTextField
+            id="profileEmail"
+            type="email"
+            name="profileEmail"
+            label="Email"
+            placeholder="e.g. email@example.com"
+            autocomplete="email"
+          />
+        </ClientOnly>
       </fieldset>
     </form>
   </AppEditorMain>

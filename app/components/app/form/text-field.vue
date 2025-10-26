@@ -61,15 +61,21 @@ const errorMessage = ref("Can’t be empty");
   gap: var(--space-100);
 }
 
+.inner > * {
+  grid-area: input;
+}
+
+.inner > label {
+  grid-area: label;
+}
+
 /* base elements */
 
 label {
-  grid-area: label;
   font-size: var(--fs-200);
 }
 
 input {
-  grid-area: input;
   padding: var(--padding);
   border-radius: var(--br-400);
   border: 1px solid var(--color-input-border);
@@ -83,7 +89,6 @@ input::placeholder {
 /* icon element */
 
 .icon {
-  grid-area: input;
   pointer-events: none;
   margin-inline-start: var(--padding);
   margin-inline-end: auto;
@@ -91,7 +96,7 @@ input::placeholder {
   align-items: center;
 }
 
-input:has(+ .icon) {
+input:has(~ .icon) {
   padding-inline-start: calc(var(--icon-size) + 2 * var(--padding));
 }
 
