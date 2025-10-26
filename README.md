@@ -60,6 +60,16 @@ Users should be able to:
 - [Vitest](https://vitest.dev/guide/)
 - [Vue Test Utils](https://test-utils.vuejs.org/guide/)
 
+Additional tools:
+
+- [pnpm](https://pnpm.io/) - package manager
+- [ESLint](https://eslint.org/) - linter
+- [@antfu/eslint-config](https://github.com/antfu/eslint-config)
+- [Husky](https://typicode.github.io/husky/) - pre-commit hooks
+- [lint-staged](https://github.com/lint-staged/lint-staged)
+- [@nuxt/eslint](https://nuxt.com/modules/eslint) - eslint Nuxt module
+- [@nuxt/icon](https://nuxt.com/modules/icon) - icon Nuxt moduel
+
 ### What I learned
 
 As always, so many cool :sunglasses: things. Here are some of the key resources I used.
