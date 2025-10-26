@@ -68,6 +68,10 @@ As always, so many cool :sunglasses: things. Here are some of the key resources 
 
 #### Building the App
 
+- File Input Styling
+  - [Custom File Input Styling](https://css-tricks.com/snippets/css/custom-file-input-styling-webkitblink/)
+  - [Custom styled input type file upload button with pure CSS](https://nikitahl.com/custom-styled-input-type-file)
+
 ### Continued development
 
 Specific areas that the solution should be improved (known issues):
