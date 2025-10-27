@@ -1,9 +1,12 @@
 <template>
   <div class="container">
     <AppPreviewNavBar />
-    <main>
-      <slot />
-    </main>
+
+    <slot />
+
+    <ToastNotification icon="my-icon:icon-link-copied-to-clipboard">
+      The link has been copied to your clipboard!
+    </ToastNotification>
   </div>
 </template>
 
@@ -14,11 +17,6 @@
   margin-inline: auto;
   display: grid;
   grid-template-rows: auto 1fr;
-}
-
-main {
-  margin-inline: auto;
-  margin-block: var(--space-300);
 }
 
 /* viewport: mobile -> tablet */
@@ -32,7 +30,7 @@ main {
     grid-row: 1 / 3;
   }
 
-  .container > :last-child {
+  .container > :nth-child(2) {
     grid-column: 1 / -1;
     grid-row: 2 / -1;
   }

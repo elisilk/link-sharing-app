@@ -1,7 +1,12 @@
 <template>
   <div class="container">
     <AppEditorNavBar />
+
     <slot />
+
+    <ToastNotification icon="my-icon:icon-changes-saved">
+      Your changes have been successfully saved!
+    </ToastNotification>
   </div>
 </template>
 
