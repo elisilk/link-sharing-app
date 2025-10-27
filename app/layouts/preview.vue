@@ -4,9 +4,13 @@
 
     <slot />
 
-    <ToastNotification icon="my-icon:icon-link-copied-to-clipboard">
+    <!-- <AppToastNotification>
       The link has been copied to your clipboard!
-    </ToastNotification>
+    </AppToastNotification> -->
+
+    <AppToastNotification icon="my-icon:icon-link-copied-to-clipboard">
+      The link has been copied to your clipboard!
+    </AppToastNotification>
   </div>
 </template>
 
