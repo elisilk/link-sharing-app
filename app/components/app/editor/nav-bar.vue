@@ -9,17 +9,21 @@
       </li>
 
       <li>
-        <NuxtLink to="/links">
-          <Icon class="icon" name="my-icon:icon-links-header" />
-          <span class="text">Links</span>
-        </NuxtLink>
+        <AppEditorTab to="/links">
+          <template #icon>
+            <Icon name="my-icon:icon-links-header" />
+          </template>
+          Links
+        </AppEditorTab>
       </li>
 
       <li>
-        <NuxtLink to="/profile">
-          <Icon class="icon" name="my-icon:icon-profile-details-header" />
-          <span class="text">Profile Details</span>
-        </NuxtLink>
+        <AppEditorTab to="/profile">
+          <template #icon>
+            <Icon name="my-icon:icon-profile-details-header" />
+          </template>
+          Profile Details
+        </AppEditorTab>
       </li>
 
       <li class="preview">
@@ -65,52 +69,16 @@ li:last-child {
   margin-inline-start: auto;
 }
 
-a {
-  block-size: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-100);
-  border-radius: var(--br-400);
-  color: hsl(var(--color-grey-500));
-  font-weight: var(--fw-semibold);
-}
-
-a.router-link-active {
-  background-color: hsl(var(--color-grey-100));
-  color: hsl(var(--color-purple-600));
-}
-
 .preview > a {
   color: hsl(var(--color-purple-600));
   background-color: transparent;
   border: 1px solid hsl(var(--color-purple-600));
 }
 
-a:hover,
-a:focus-visible {
-  color: hsl(var(--color-purple-600));
-  border: 0;
-}
-
-a:focus-visible {
-  outline-offset: 2px;
-  outline: 2px dashed hsl(var(--color-purple-600));
-}
-
 .preview > a:hover,
 .preview > a:focus-visible {
   background-color: hsl(var(--color-grey-100));
   border: 1px solid hsl(var(--color-purple-600));
-}
-
-.text {
-  display: none;
-}
-
-.icon {
-  block-size: 20px;
-  inline-size: 20px;
 }
 
 /* viewport: mobile -> tablet */
@@ -124,17 +92,9 @@ a:focus-visible {
     inline-size: unset;
   }
 
-  a {
-    padding-inline: var(--space-300);
-  }
-
   .preview > a {
     padding-inline: 0;
     inline-size: 108px;
-  }
-
-  .text {
-    display: block;
   }
 
   .preview .icon {
