@@ -54,6 +54,7 @@
 
   /* shadows & gradients */
   --shadow-input-field: 0px 0px 32px hsl(var(--color-purple-600) / 0.25);
+  --shadow-toast-notification: 0px 0px 32px hsl(var(--color-black) / 0.1);
 
   /* font-families */
   --ff-base: "Instrument Sans", sans-serif;
