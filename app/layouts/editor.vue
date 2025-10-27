@@ -4,9 +4,9 @@
 
     <slot />
 
-    <ToastNotification icon="my-icon:icon-changes-saved">
+    <AppToastNotification icon="my-icon:icon-changes-saved">
       Your changes have been successfully saved!
-    </ToastNotification>
+    </AppToastNotification>
   </div>
 </template>
 
