@@ -69,8 +69,8 @@ div {
 }
 
 .icon {
-  inline-size: 20px;
-  block-size: 20px;
+  inline-size: var(--icon-size-md);
+  block-size: var(--icon-size-md);
   flex-shrink: 0;
 }
 

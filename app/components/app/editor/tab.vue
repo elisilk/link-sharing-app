@@ -47,8 +47,8 @@ defineProps<{
 }
 
 .tab:focus-visible {
-  outline-offset: -2px;
-  outline: 2px dashed hsl(var(--color-purple-600));
+  outline-offset: calc(-1 * var(--outline-width));
+  outline: var(--outline-width) dashed hsl(var(--color-purple-600));
 }
 
 .text {
@@ -56,8 +56,8 @@ defineProps<{
 }
 
 .icon {
-  block-size: 20px;
-  inline-size: 20px;
+  block-size: var(--icon-size-md);
+  inline-size: var(--icon-size-md);
 }
 
 .icon > * {
@@ -66,7 +66,7 @@ defineProps<{
 }
 
 .tab.secondary {
-  border: 1px solid hsl(var(--color-purple-600));
+  border: var(--border-width) solid hsl(var(--color-purple-600));
   background-color: transparent;
   color: hsl(var(--color-purple-600));
 }
@@ -77,8 +77,8 @@ defineProps<{
 }
 
 .tab.secondary:focus-visible {
-  outline-offset: 2px;
-  outline: 2px dashed hsl(var(--color-purple-600));
+  outline-offset: var(--outline-width);
+  outline: var(--outline-width) dashed hsl(var(--color-purple-600));
 }
 
 /* viewport: mobile -> tablet */

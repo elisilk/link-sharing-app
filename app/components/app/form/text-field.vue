@@ -51,7 +51,7 @@ const errorMessage = ref("Can’t be empty");
 
 .inner {
   --padding: var(--space-200);
-  --icon-size: 16px;
+  --icon-size: var(--icon-size-sm);
   display: grid;
   grid-template-areas:
     "label"
@@ -78,7 +78,7 @@ label {
 input {
   padding: var(--padding);
   border-radius: var(--br-400);
-  border: 1px solid var(--color-input-border);
+  border: var(--border-width) solid var(--color-input-border);
   color: hsl(var(--color-grey-900));
 }
 
@@ -112,13 +112,13 @@ input:has(~ .icon) {
 input:hover,
 input:focus-visible {
   outline: none;
-  border: 1px solid var(--color-input-active);
+  border: var(--border-width) solid var(--color-input-active);
   box-shadow: var(--shadow-input-field);
 }
 
 input[aria-invalid="true"]:not(:focus):not(:hover),
 input:not(:placeholder-shown):not(:focus):user-invalid {
-  border: 1px solid var(--color-input-error);
+  border: var(--border-width) solid var(--color-input-error);
 }
 
 label:has(+ input[aria-invalid="true"]) {
@@ -127,7 +127,7 @@ label:has(+ input[aria-invalid="true"]) {
 
 /* container queries */
 
-@container (width > 340px) {
+@container (min-width: 25rem) {
   .inner {
     grid-template-areas:
       "label"
@@ -142,11 +142,11 @@ label:has(+ input[aria-invalid="true"]) {
   }
 }
 
-@container (width > 560px) {
+@container (min-width: 37.25rem) {
   .inner {
     grid-template-areas: "label input";
     column-gap: var(--space-200);
-    grid-template-columns: minmax(auto, 240px) 1fr;
+    grid-template-columns: minmax(auto, var(--input-size-label-inline-max)) 1fr;
   }
 
   label {

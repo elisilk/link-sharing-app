@@ -40,7 +40,7 @@ defineProps<{
 }
 
 .inner {
-  --input-size: 150px;
+  --input-size: var(--input-size-image-upload-sm);
   display: grid;
   gap: var(--space-200);
 }
@@ -78,22 +78,22 @@ input[type="file"] {
 }
 
 .icon {
-  block-size: 40px;
-  inline-size: 40px;
+  block-size: var(--icon-size-lg);
+  inline-size: var(--icon-size-lg);
 }
 
 label:has(input:focus-visible) {
   outline: none;
-  border: 1px solid var(--color-input-active);
+  border: var(--border-width) solid var(--color-input-active);
   box-shadow: var(--shadow-input-field);
 }
 
 /* container queries */
 
-@container (width > 560px) {
+@container (min-width: 37.25rem) {
   .inner {
-    --input-size: 193px;
-    grid-template-columns: minmax(auto, 240px) var(--input-size) 1fr;
+    --input-size: var(--input-size-image-upload-lg);
+    grid-template-columns: minmax(auto, var(--input-size-label-inline-max)) var(--input-size) 1fr;
     align-items: center;
   }
 

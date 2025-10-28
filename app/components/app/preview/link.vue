@@ -4,7 +4,7 @@ const props = defineProps<{
 }>();
 
 const platforms = [
-  { name: "Frontend Mentor", icon: "icon-frontend-mentor", backgroundColor: "#FFFFFF", color: "#333333", border: "1px solid #D9D9D9" },
+  { name: "Frontend Mentor", icon: "icon-frontend-mentor", backgroundColor: "#FFFFFF", color: "#333333", border: "var(--border-width) solid #D9D9D9" },
   { name: "GitHub", icon: "icon-github", backgroundColor: "#1A1A1A" },
   { name: "LinkedIn", icon: "icon-linkedin", backgroundColor: "#2D68FF" },
   { name: "Twitter", icon: "icon-twitter", backgroundColor: "#43B7E9" },
@@ -39,7 +39,7 @@ const platform = computed(() => platforms.find(item => item.name === props.name)
 
 <style scoped>
 div {
-  block-size: 44px;
+  block-size: var(--link-block-size);
   display: flex;
   align-items: center;
   gap: var(--space-100);
