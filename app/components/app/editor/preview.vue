@@ -3,6 +3,7 @@
     <div class="links">
       <AppPreviewLink name="GitHub" />
       <AppPreviewLink name="YouTube" />
+      <AppPreviewLink name="Frontend Mentor" />
     </div>
 
     <img
@@ -21,10 +22,10 @@
 
 .links {
   position: absolute;
-  top: 279px;
+  width: var(--link-inline-size);
+  top: var(--link-block-position);
   left: 50%;
   transform: translateX(-50%);
-  width: 237px;
 }
 
 .links > * + * {

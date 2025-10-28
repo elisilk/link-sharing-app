@@ -29,7 +29,7 @@ main {
     background-color: hsl(var(--color-white));
     border-radius: var(--br-600);
     padding: var(--space-600) var(--space-700);
-    box-shadow: 0px 0px 32px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-preview);
   }
 }
 </style>

@@ -1,6 +1,23 @@
 @import "~/assets/css/base.css";
 
-/* semantic properties */
+/* -------------------- */
+/* Breakpoints          */
+/* -------------------- */
+
+/* @media query breakpoints (min-widths) */
+
+/* 45rem = 720px -- mobile -> tablet */
+/* 60rem = 960px -- tablet -> desktop */
+
+/* @container query breakpoints (min-widths) */
+
+/* 25rem = 400px -- mobile -> tablet */
+/* 37.25rem = 596px -- tablet -> desktop */
+
+/* -------------------- */
+/* Semantic properties  */
+/* -------------------- */
+
 :root {
   /* colors */
 
@@ -23,22 +40,51 @@
   --color-input-error: hsl(var(--color-red-500));
   --color-input-active: hsl(var(--color-purple-600));
 
+  /* shadows */
+  --shadow-input-field: var(--shadow-purple-600);
+  --shadow-preview: var(--shadow-black-400);
+  --shadow-toast-notification: var(--shadow-black-400);
+
   /* sizing/spacing */
 
-  /* main */
+  /* borders/outlines */
+  --outline-width: 2px;
+  --border-width: 1px;
+
+  /* layout containers */
   --default-inline-size-max: 29.75rem; /* 476px */
   --editor-inline-size-max: 90rem; /* 1440px */
-  --main-inline-size-gutter: var(--space-200); /* (m) 16px -> (t) 42px */
-  --main-block-size-margin: var(--space-400); /* (m) 32px -> (t) 58px */
+  --preview-inline-size-max: 90rem; /* 1440px */
+
+  --editor-inline-size-editor-column: 50.5rem; /* 808px */
+  --editor-inline-size-preview-column: 35rem; /* 560px */
+  --editor-nav-bar-block-size-inner: 3.25rem; /* 52px */
+  --editor-nav-bar-inline-size-items: 3.25rem; /* 52px */
+
+  --preview-block-size-header-row: 8.5rem; /* 136px */
+  --preview-block-size-header-overlap: 13.8125rem; /* 221px */
+
+  /* links */
+  --link-block-size: 2.75rem; /* 44px */
+  --link-inline-size: 14.8125rem; /* 237px */
+  --link-block-position: 17.4375rem; /* 279px */
+
+  /* icons */
+  --icon-size-lg: var(--space-500);
+  --icon-size-md: var(--space-250);
+  --icon-size-sm: var(--space-200);
+
+  /* inputs */
+  --input-size-label-inline-max: 15rem; /* 240px */
+  --input-size-image-upload-sm: 9.375rem; /* 150px */
+  --input-size-image-upload-lg: 12.0625rem; /* 193px */
 }
 
 /* viewport: mobile -> tablet */
-@media (min-width: 45rem) {
+/* @media (min-width: 45rem) {
   :root {
-    --main-inline-size-gutter: var(--space-525); /* (m) 16px -> (t) 42px */
-    --main-block-size-margin: var(--space-725); /* (m) 32px -> (t) 58px */
   }
-}
+} */
 
 /* viewport: tablet -> desktop */
 /* @media (min-width: 60rem) {
@@ -124,8 +170,8 @@ a:focus-visible {
 }
 
 .btn:focus-visible {
-  outline-offset: 2px;
-  outline: 2px dashed var(--color-background-button-active);
+  outline-offset: var(--outline-width);
+  outline: var(--outline-width) dashed var(--color-background-button-active);
 }
 
 .btn:disabled {
@@ -134,7 +180,7 @@ a:focus-visible {
 }
 
 .btn.btn-secondary {
-  border: 1px solid hsl(var(--color-purple-600));
+  border: var(--border-width) solid hsl(var(--color-purple-600));
   background-color: transparent;
   color: hsl(var(--color-purple-600));
 }
@@ -145,8 +191,8 @@ a:focus-visible {
 }
 
 .btn.btn-secondary:focus-visible {
-  outline-offset: 2px;
-  outline: 2px dashed hsl(var(--color-purple-600));
+  outline-offset: var(--outline-width);
+  outline: var(--outline-width) dashed hsl(var(--color-purple-600));
 }
 
 /* -------------------- */

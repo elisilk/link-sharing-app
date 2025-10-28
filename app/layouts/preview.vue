@@ -13,7 +13,7 @@
 <style scoped>
 .container {
   min-block-size: 100vb;
-  max-inline-size: var(--editor-inline-size-max);
+  max-inline-size: var(--preview-inline-size-max);
   margin-inline: auto;
   display: grid;
   grid-template-rows: auto 1fr;
@@ -22,7 +22,7 @@
 /* viewport: mobile -> tablet */
 @media (min-width: 45rem) {
   .container {
-    grid-template-rows: 136px 221px 1fr;
+    grid-template-rows: var(--preview-block-size-header-row) var(--preview-block-size-header-overlap) 1fr;
   }
 
   .container > :first-child {

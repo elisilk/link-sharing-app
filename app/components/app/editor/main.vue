@@ -78,7 +78,7 @@ header {
 footer {
   padding: var(--space-200);
   text-align: right;
-  border-top: 1px solid hsl(var(--color-grey-200));
+  border-top: var(--border-width) solid hsl(var(--color-grey-200));
 }
 
 /* viewport: mobile -> tablet */
@@ -111,11 +111,11 @@ footer {
   }
 
   .editor {
-    flex-basis: 808px;
+    flex-basis: var(--editor-inline-size-editor-column);
   }
 
   .preview {
-    flex-basis: 560px;
+    flex-basis: var(--editor-inline-size-preview-column);
   }
 }
 </style>

@@ -40,10 +40,7 @@
 
 <style scoped>
 header {
-  --inline-size-items: 52px;
-  --block-size-inner: 52px;
-  --block-size-padding: 16px;
-  block-size: calc(var(--block-size-inner) + 2 * var(--block-size-padding));
+  block-size: calc(var(--editor-nav-bar-block-size-inner) + 2 * var(--space-200));
 
   padding: var(--space-200) var(--space-200) var(--space-200) var(--space-300);
   background-color: hsl(var(--color-white));
@@ -59,7 +56,7 @@ menu {
 
 li {
   list-style-type: none;
-  inline-size: var(--inline-size-items);
+  inline-size: var(--editor-nav-bar-inline-size-items);
 }
 
 li:first-child {
