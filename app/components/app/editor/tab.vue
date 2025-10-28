@@ -31,24 +31,25 @@ defineProps<{
   gap: var(--space-100);
 
   border-radius: var(--br-400);
-  color: hsl(var(--color-grey-500));
+  background-color: var(--color-tab-background);
+  color: var(--color-tab-text);
   font-weight: var(--fw-semibold);
 }
 
 .tab.router-link-active {
-  background-color: hsl(var(--color-grey-100));
-  color: hsl(var(--color-purple-600));
+  background-color: var(--color-tab-current-background);
+  color: var(--color-tab-current-text);
 }
 
 .tab:hover,
 .tab:focus-visible {
-  color: hsl(var(--color-purple-600));
+  color: var(--color-tab-active-text);
   border: 0;
 }
 
 .tab:focus-visible {
   outline-offset: calc(-1 * var(--outline-width));
-  outline: var(--outline-width) dashed hsl(var(--color-purple-600));
+  outline: var(--outline-width) dashed var(--color-tab-active-outline);
 }
 
 .text {
@@ -66,19 +67,19 @@ defineProps<{
 }
 
 .tab.secondary {
-  border: var(--border-width) solid hsl(var(--color-purple-600));
+  border: var(--border-width) solid var(--color-tab-secondary-border);
   background-color: transparent;
-  color: hsl(var(--color-purple-600));
+  color: var(--color-tab-secondary-text);
 }
 
 .tab.secondary:hover,
 .tab.secondary:focus-visible {
-  background-color: hsl(var(--color-grey-100));
+  background-color: var(--color-tab-secondary-active-background);
 }
 
 .tab.secondary:focus-visible {
   outline-offset: var(--outline-width);
-  outline: var(--outline-width) dashed hsl(var(--color-purple-600));
+  outline: var(--outline-width) dashed var(--color-tab-secondary-active-outline);
 }
 
 /* viewport: mobile -> tablet */

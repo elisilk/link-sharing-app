@@ -44,7 +44,7 @@ main {
 }
 
 .container {
-  background-color: hsl(var(--color-white));
+  background-color: var(--color-background-editor-main);
   border-radius: var(--br-500);
 }
 
@@ -78,7 +78,7 @@ header {
 footer {
   padding: var(--space-200);
   text-align: right;
-  border-top: var(--border-width) solid hsl(var(--color-grey-200));
+  border-top: var(--border-width) solid var(--color-divider);
 }
 
 /* viewport: mobile -> tablet */

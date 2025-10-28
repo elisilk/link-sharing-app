@@ -79,11 +79,11 @@ input {
   padding: var(--padding);
   border-radius: var(--br-400);
   border: var(--border-width) solid var(--color-input-border);
-  color: hsl(var(--color-grey-900));
+  color: var(--color-input-text);
 }
 
 input::placeholder {
-  color: hsl(var(--color-grey-900) / 0.5);
+  color: var(--color-input-text-placeholder);
 }
 
 /* icon element */
@@ -138,7 +138,7 @@ label:has(+ input[aria-invalid="true"]) {
     grid-area: input;
     pointer-events: none;
     margin-inline-end: var(--padding);
-    background-color: hsl(var(--color-white));
+    background-color: var(--color-input-error-background);
   }
 }
 
