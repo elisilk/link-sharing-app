@@ -4,7 +4,7 @@ const props = defineProps<{
 }>();
 
 const platforms = [
-  { name: "Frontend Mentor", icon: "icon-frontend-mentor", backgroundColor: "#FFFFFF", color: "#333333", border: "var(--border-width) solid #D9D9D9" },
+  { name: "Frontend Mentor", icon: "icon-frontend-mentor", backgroundColor: "#FFFFFF", color: "#333333", border: "var(--border-width) solid #D9D9D9", iconColor: "#737373" },
   { name: "GitHub", icon: "icon-github", backgroundColor: "#1A1A1A" },
   { name: "LinkedIn", icon: "icon-linkedin", backgroundColor: "#2D68FF" },
   { name: "Twitter", icon: "icon-twitter", backgroundColor: "#43B7E9" },
