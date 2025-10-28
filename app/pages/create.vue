@@ -58,9 +58,9 @@ async function createAccount() {
       <p>Password must contain at least 8 characters</p>
 
       <template #controls>
-        <AppFormButton type="submit">
+        <button type="submit" class="btn">
           Create new account
-        </AppFormButton>
+        </button>
       </template>
 
       <template #footer>

@@ -27,10 +27,12 @@
       </li>
 
       <li class="preview">
-        <NuxtLink to="/preview">
-          <Icon class="icon" name="my-icon:icon-preview-header" />
-          <span class="text">Preview</span>
-        </NuxtLink>
+        <AppEditorTab to="/preview" secondary>
+          <template #icon>
+            <Icon name="my-icon:icon-preview-header" />
+          </template>
+          Preview
+        </AppEditorTab>
       </li>
     </menu>
   </header>
@@ -69,18 +71,6 @@ li:last-child {
   margin-inline-start: auto;
 }
 
-.preview > a {
-  color: hsl(var(--color-purple-600));
-  background-color: transparent;
-  border: 1px solid hsl(var(--color-purple-600));
-}
-
-.preview > a:hover,
-.preview > a:focus-visible {
-  background-color: hsl(var(--color-grey-100));
-  border: 1px solid hsl(var(--color-purple-600));
-}
-
 /* viewport: mobile -> tablet */
 @media (min-width: 45rem) {
   header {
@@ -90,15 +80,6 @@ li:last-child {
 
   li {
     inline-size: unset;
-  }
-
-  .preview > a {
-    padding-inline: 0;
-    inline-size: 108px;
-  }
-
-  .preview .icon {
-    display: none;
   }
 }
 </style>
