@@ -65,7 +65,7 @@ form > * + * {
 
 fieldset {
   border: 0;
-  background-color: hsl(var(--color-grey-50));
+  background-color: var(--color-background-form-fieldset);
   border-radius: var(--br-500);
   padding: var(--space-300);
   margin-inline: 0;

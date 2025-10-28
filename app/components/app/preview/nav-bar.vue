@@ -67,13 +67,13 @@ menu > li > .btn {
 @media (min-width: 45rem) {
   header {
     padding: var(--space-300);
-    background-color: hsl(var(--color-purple-600));
+    background-color: var(--color-background-preview-nav-bar-header);
     border-end-start-radius: var(--br-800);
     border-end-end-radius: var(--br-800);
   }
 
   menu {
-    background-color: hsl(var(--color-white));
+    background-color: var(--color-background-preview-nav-bar-menu);
     padding: var(--space-200) var(--space-300);
     border-radius: var(--br-500);
   }

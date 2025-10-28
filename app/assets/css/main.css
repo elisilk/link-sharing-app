@@ -23,22 +23,64 @@
 
   /* colors -- backgrounds */
   --color-background-body: hsl(var(--color-grey-50));
+  --color-background-preview: hsl(var(--color-white));
+  --color-background-notification: hsl(var(--color-grey-900));
   --color-background-form: hsl(var(--color-white));
-  --color-background-button: hsl(var(--color-purple-600));
-  --color-background-button-active: hsl(var(--color-purple-300));
+  --color-background-form-fieldset: hsl(var(--color-grey-50));
+  --color-background-links-empty: hsl(var(--color-grey-50));
+
+  --color-background-editor-main: hsl(var(--color-white));
+  --color-background-editor-nav-bar: hsl(var(--color-white));
+  --color-background-preview-nav-bar-header: hsl(var(--color-purple-600));
+  --color-background-preview-nav-bar-menu: hsl(var(--color-white));
 
   /* colors -- text */
   --color-text-primary: hsl(var(--color-grey-500));
   --color-text-headings: hsl(var(--color-grey-900));
   --color-text-accent: hsl(var(--color-purple-600));
-  --color-text-button: hsl(var(--color-white));
+  --color-text-notification: hsl(var(--color-grey-50));
   --color-text-link: hsl(var(--color-purple-600));
   --color-text-link-active: hsl(var(--color-purple-300));
 
+  /* colors -- dividers */
+  --color-divider: hsl(var(--color-grey-200));
+
+  /* colors -- buttons */
+  --color-button-text: hsl(var(--color-white));
+  --color-button-background: hsl(var(--color-purple-600));
+  --color-button-active-background: hsl(var(--color-purple-300));
+  --color-button-disabled-background: hsl(var(--color-purple-600) / 0.25);
+
+  --color-button-secondary-text: hsl(var(--color-purple-600));
+  --color-button-secondary-border: hsl(var(--color-purple-600));
+  --color-button-secondary-background: transparent;
+  --color-button-secondary-active-background: hsl(var(--color-grey-100));
+
+  /* colors -- tabs */
+  --color-tab-text: hsl(var(--color-grey-500));
+  --color-tab-background: transparent;
+  --color-tab-active-text: hsl(var(--color-purple-600));
+  --color-tab-active-background: transparent;
+  --color-tab-active-outline: hsl(var(--color-purple-600));
+  --color-tab-current-text: hsl(var(--color-purple-600));
+  --color-tab-current-background: hsl(var(--color-grey-100));
+
+  --color-tab-secondary-text: hsl(var(--color-purple-600));
+  --color-tab-secondary-background: transparent;
+  --color-tab-secondary-border: hsl(var(--color-purple-600));
+  --color-tab-secondary-active-background: hsl(var(--color-grey-100));
+  --color-tab-secondary-active-outline: hsl(var(--color-purple-600));
+
   /* colors -- input */
+  --color-input-text: hsl(var(--color-grey-900));
+  --color-input-text-placeholder: hsl(var(--color-grey-900) / 0.5);
   --color-input-border: hsl(var(--color-grey-200));
   --color-input-error: hsl(var(--color-red-500));
+  --color-input-error-background: hsl(var(--color-white));
   --color-input-active: hsl(var(--color-purple-600));
+
+  --color-input-image-text: hsl(var(--color-purple-600));
+  --color-input-image-background: hsl(var(--color-grey-100));
 
   /* shadows */
   --shadow-input-field: var(--shadow-purple-600);
@@ -158,41 +200,41 @@ a:focus-visible {
   display: inline-block;
   inline-size: 100%;
   border-radius: var(--br-400);
-  background-color: var(--color-background-button);
-  color: var(--color-text-button);
+  background-color: var(--color-button-background);
+  color: var(--color-button-text);
   padding: var(--space-200) var(--space-300);
   font-weight: var(--fw-semibold);
 }
 
 .btn:hover,
 .btn:focus-visible {
-  background-color: var(--color-background-button-active);
+  background-color: var(--color-button-active-background);
 }
 
 .btn:focus-visible {
   outline-offset: var(--outline-width);
-  outline: var(--outline-width) dashed var(--color-background-button-active);
+  outline: var(--outline-width) dashed var(--color-button-active-background);
 }
 
 .btn:disabled {
   cursor: not-allowed;
-  background-color: hsl(var(--color-purple-600) / 0.25);
+  background-color: var(--color-button-disabled-background);
 }
 
 .btn.btn-secondary {
-  border: var(--border-width) solid hsl(var(--color-purple-600));
+  border: var(--border-width) solid var(--color-button-secondary-border);
   background-color: transparent;
-  color: hsl(var(--color-purple-600));
+  color: var(--color-button-secondary-text);
 }
 
 .btn.btn-secondary:hover,
 .btn.btn-secondary:focus-visible {
-  background-color: hsl(var(--color-grey-100));
+  background-color: var(--color-button-secondary-active-background);
 }
 
 .btn.btn-secondary:focus-visible {
   outline-offset: var(--outline-width);
-  outline: var(--outline-width) dashed hsl(var(--color-purple-600));
+  outline: var(--outline-width) dashed var(--color-button-background);
 }
 
 /* -------------------- */

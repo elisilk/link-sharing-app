@@ -35,7 +35,7 @@ definePageMeta({
 .empty {
   margin-block-start: var(--space-300);
   padding: var(--space-300);
-  background-color: hsl(var(--color-grey-50));
+  background-color: var(--color-background-links-empty);
   border-radius: var(--br-500);
   display: grid;
   grid-template-areas:

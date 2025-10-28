@@ -63,10 +63,10 @@ label {
   aspect-ratio: 1 / 1;
   inline-size: var(--input-size);
   block-size: auto;
-  background-color: hsl(var(--color-grey-100));
+  background-color: var(--color-input-image-background);
   border-radius: var(--br-500);
 
-  color: hsl(var(--color-purple-600));
+  color: var(--color-input-image-text);
   font-weight: var(--fw-semibold);
 }
 

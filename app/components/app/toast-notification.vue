@@ -48,8 +48,8 @@ div {
   left: 50%;
   transform: translate(-50%, -50%);
 
-  background-color: hsl(var(--color-grey-900));
-  color: hsl(var(--color-grey-50));
+  background-color: var(--color-background-notification);
+  color: var(--color-text-notification);
   display: flex;
   align-items: center;
   gap: var(--space-100);

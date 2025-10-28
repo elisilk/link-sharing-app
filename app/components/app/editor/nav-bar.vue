@@ -43,7 +43,7 @@ header {
   block-size: calc(var(--editor-nav-bar-block-size-inner) + 2 * var(--space-200));
 
   padding: var(--space-200) var(--space-200) var(--space-200) var(--space-300);
-  background-color: hsl(var(--color-white));
+  background-color: var(--color-background-editor-nav-bar);
 }
 
 menu {
