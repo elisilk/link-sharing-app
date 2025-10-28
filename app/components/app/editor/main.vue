@@ -18,7 +18,7 @@
 
       <footer>
         <slot name="footer">
-          <button disabled>
+          <button class="btn" disabled>
             Save
           </button>
         </slot>
@@ -79,18 +79,6 @@ footer {
   padding: var(--space-200);
   text-align: right;
   border-top: 1px solid hsl(var(--color-grey-200));
-}
-
-footer button {
-  inline-size: 100%;
-  padding: var(--space-200) var(--space-300);
-  background-color: hsl(var(--color-purple-600));
-  color: hsl(var(--color-white));
-  border-radius: var(--br-400);
-}
-
-footer button:disabled {
-  background-color: hsl(var(--color-purple-600) / 0.25);
 }
 
 /* viewport: mobile -> tablet */

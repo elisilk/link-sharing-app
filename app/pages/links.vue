@@ -14,7 +14,7 @@ definePageMeta({
       Add/edit/remove links below and then share all your profiles with the world!
     </template>
 
-    <button class="button-add-new-link">
+    <button class="btn btn-secondary">
       + Add new link
     </button>
 
@@ -32,24 +32,6 @@ definePageMeta({
 </template>
 
 <style scoped>
-.button-add-new-link {
-  block-size: 56px;
-  inline-size: 100%;
-  border-radius: var(--br-400);
-  border: 1px solid hsl(var(--color-purple-600));
-  color: hsl(var(--color-purple-600));
-}
-
-.button-add-new-link:hover,
-.button-add-new-link:focus-visible {
-  background-color: hsl(var(--color-grey-100));
-}
-
-.button-add-new-link:focus-visible {
-  outline-offset: 2px;
-  outline: 2px dashed hsl(var(--color-purple-600));
-}
-
 .empty {
   margin-block-start: var(--space-300);
   padding: var(--space-300);

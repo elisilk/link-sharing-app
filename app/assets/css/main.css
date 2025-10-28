@@ -103,6 +103,53 @@ a:focus-visible {
 }
 
 /* -------------------- */
+/* Components           */
+/* -------------------- */
+
+/* Button */
+
+.btn {
+  display: inline-block;
+  inline-size: 100%;
+  border-radius: var(--br-400);
+  background-color: var(--color-background-button);
+  color: var(--color-text-button);
+  padding: var(--space-200) var(--space-300);
+  font-weight: var(--fw-semibold);
+}
+
+.btn:hover,
+.btn:focus-visible {
+  background-color: var(--color-background-button-active);
+}
+
+.btn:focus-visible {
+  outline-offset: 2px;
+  outline: 2px dashed var(--color-background-button-active);
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  background-color: hsl(var(--color-purple-600) / 0.25);
+}
+
+.btn.btn-secondary {
+  border: 1px solid hsl(var(--color-purple-600));
+  background-color: transparent;
+  color: hsl(var(--color-purple-600));
+}
+
+.btn.btn-secondary:hover,
+.btn.btn-secondary:focus-visible {
+  background-color: hsl(var(--color-grey-100));
+}
+
+.btn.btn-secondary:focus-visible {
+  outline-offset: 2px;
+  outline: 2px dashed hsl(var(--color-purple-600));
+}
+
+/* -------------------- */
 /* Body / App           */
 /* -------------------- */
 

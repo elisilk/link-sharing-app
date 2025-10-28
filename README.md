@@ -83,6 +83,8 @@ As always, so many cool :sunglasses: things. Here are some of the key resources 
   - [Custom styled input type file upload button with pure CSS](https://nikitahl.com/custom-styled-input-type-file)
 - LastPass extension layout and hydration issues
   - [`<ClientOnly>`](https://nuxt.com/docs/4.x/api/components/client-only)
+- [Interact with the clipboard](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Interact_with_the_clipboard)
+  - [Clipboard](https://developer.mozilla.org/en-US/docs/Web/API/Clipboard)
 
 ### Continued development
 

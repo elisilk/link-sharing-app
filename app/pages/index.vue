@@ -43,9 +43,9 @@ async function login() {
       </ClientOnly>
 
       <template #controls>
-        <AppFormButton type="submit">
+        <button type="submit" class="btn">
           Login
-        </AppFormButton>
+        </button>
       </template>
 
       <template #footer>

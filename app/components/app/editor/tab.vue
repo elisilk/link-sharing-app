@@ -1,12 +1,17 @@
 <script setup lang="ts">
 defineProps<{
   to: string;
+  secondary?: true | undefined;
 }>();
 </script>
 
 <template>
-  <NuxtLink :to="to" class="tab">
-    <span class="icon">
+  <NuxtLink
+    :to="to"
+    class="tab"
+    :class="{ secondary }"
+  >
+    <span v-if="$slots.icon" class="icon">
       <slot name="icon" />
     </span>
     <span class="text">
@@ -60,6 +65,22 @@ defineProps<{
   inline-size: 100%;
 }
 
+.tab.secondary {
+  border: 1px solid hsl(var(--color-purple-600));
+  background-color: transparent;
+  color: hsl(var(--color-purple-600));
+}
+
+.tab.secondary:hover,
+.tab.secondary:focus-visible {
+  background-color: hsl(var(--color-grey-100));
+}
+
+.tab.secondary:focus-visible {
+  outline-offset: 2px;
+  outline: 2px dashed hsl(var(--color-purple-600));
+}
+
 /* viewport: mobile -> tablet */
 @media (min-width: 45rem) {
   .tab {
@@ -68,6 +89,10 @@ defineProps<{
 
   .text {
     display: block;
+  }
+
+  .tab.secondary .icon {
+    display: none;
   }
 }
 </style>
