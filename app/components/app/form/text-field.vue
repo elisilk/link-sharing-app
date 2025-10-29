@@ -17,7 +17,11 @@ const errorMessage = ref("Can’t be empty");
 <template>
   <div class="outer">
     <div class="inner">
-      <label :for="id">{{ label }}{{ props.required ? "*" : null }}</label>
+      <label :for="id">{{ label }}<span
+        v-if="props.required"
+        class="required"
+        aria-hidden="true"
+      >*</span></label>
       <input
         :id="id"
         :name="name"

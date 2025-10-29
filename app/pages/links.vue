@@ -2,6 +2,8 @@
 definePageMeta({
   layout: "editor",
 });
+
+const empty = ref(false);
 </script>
 
 <template>
@@ -14,11 +16,11 @@ definePageMeta({
       Add/edit/remove links below and then share all your profiles with the world!
     </template>
 
-    <button class="btn btn-secondary">
+    <button class="btn btn-secondary add-new-link-btn">
       + Add new link
     </button>
 
-    <div class="empty">
+    <div v-if="empty" class="empty">
       <h2>Let's get you started</h2>
       <p>Use the “Add new link” button to get started. Once you have more than one link, you can reorder and edit them. We're here to help you share your profiles with everyone!</p>
       <img
@@ -28,12 +30,24 @@ definePageMeta({
         height="161"
       >
     </div>
+
+    <div v-else class="link-list">
+      <h2 class="sr-only">
+        Link List
+      </h2>
+
+      <AppEditorLink :index="1" />
+      <AppEditorLink :index="2" />
+    </div>
   </AppEditorMain>
 </template>
 
 <style scoped>
+.add-new-link-btn {
+  margin-block-end: var(--space-300);
+}
+
 .empty {
-  margin-block-start: var(--space-300);
   padding: var(--space-300);
   background-color: var(--color-background-links-empty);
   border-radius: var(--br-500);
@@ -57,5 +71,10 @@ definePageMeta({
 
 .empty img {
   grid-area: illustration;
+}
+
+.link-list {
+  display: grid;
+  gap: var(--space-300);
 }
 </style>
