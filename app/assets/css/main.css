@@ -31,6 +31,7 @@
 
   --color-background-editor-main: hsl(var(--color-white));
   --color-background-editor-nav-bar: hsl(var(--color-white));
+  --color-background-editor-link: hsl(var(--color-grey-50));
   --color-background-preview-nav-bar-header: hsl(var(--color-purple-600));
   --color-background-preview-nav-bar-menu: hsl(var(--color-white));
 
@@ -82,8 +83,15 @@
   --color-input-image-text: hsl(var(--color-purple-600));
   --color-input-image-background: hsl(var(--color-grey-100));
 
+  --color-input-dropdown-heading: hsl(var(--color-grey-500));
+  --color-input-dropdown-background: hsl(var(--color-white));
+  --color-input-dropdown-scrollbar-track: hsl(var(--color-grey-100));
+  --color-input-dropdown-scrollbar-thumb: hsl(var(--color-grey-200));
+  --color-input-dropdown-active-background: hsl(var(--color-grey-50));
+
   /* shadows */
   --shadow-input-field: var(--shadow-purple-600);
+  --shadow-input-dropdown: var(--shadow-black-400);
   --shadow-preview: var(--shadow-black-400);
   --shadow-toast-notification: var(--shadow-black-400);
 
@@ -115,11 +123,13 @@
   --icon-size-lg: var(--space-500);
   --icon-size-md: var(--space-250);
   --icon-size-sm: var(--space-200);
+  --icon-size-xs: var(--space-150);
 
   /* inputs */
   --input-size-label-inline-max: 15rem; /* 240px */
   --input-size-image-upload-sm: 9.375rem; /* 150px */
   --input-size-image-upload-lg: 12.0625rem; /* 193px */
+  --input-size-dropdown-block-max: 15rem; /* 240px */
 }
 
 /* viewport: mobile -> tablet */

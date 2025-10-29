@@ -16,6 +16,9 @@ definePageMeta({
 
     <form>
       <fieldset>
+        <legend class="sr-only">
+          Profile Image
+        </legend>
         <AppFormImageUpload
           id="profile-picture"
           name="profile-picture"
@@ -25,6 +28,9 @@ definePageMeta({
       </fieldset>
 
       <fieldset>
+        <legend class="sr-only">
+          Profile Text Fields
+        </legend>
         <ClientOnly>
           <AppFormTextField
             id="profileFirstName"
@@ -71,7 +77,7 @@ fieldset {
   margin-inline: 0;
 }
 
-fieldset > * + * {
+fieldset > :not(legend) + * {
   margin-block-start: var(--space-100);
 }
 </style>
