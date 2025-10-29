@@ -2,6 +2,8 @@
 definePageMeta({
   layout: "editor",
 });
+
+const profile = useProfileStore();
 </script>
 
 <template>
@@ -34,6 +36,7 @@ definePageMeta({
         <ClientOnly>
           <AppFormTextField
             id="profileFirstName"
+            v-model="profile.firstName"
             type="text"
             name="profileFirstName"
             label="First name"
@@ -43,6 +46,7 @@ definePageMeta({
           />
           <AppFormTextField
             id="profileLastName"
+            v-model="profile.lastName"
             type="text"
             name="profileLastName"
             label="Last name"
@@ -52,6 +56,7 @@ definePageMeta({
           />
           <AppFormTextField
             id="profileEmail"
+            v-model="profile.email"
             type="email"
             name="profileEmail"
             label="Email"

@@ -91,6 +91,10 @@ As always, so many cool :sunglasses: things. Here are some of the key resources 
   - [Select-Only Combobox Example](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/examples/combobox-select-only/)
     - [Combobox Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/)
   - [Customizable select elements (not yet widely available)](https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Customizable_select)
+- State management
+  - [Nuxt > State Management](https://nuxt.com/docs/4.x/getting-started/state-management)
+  - [Pinia > Nuxt](https://pinia.vuejs.org/ssr/nuxt.html)
+  - [Nuxt 3 State Management: Pinia vs useState](https://www.vuemastery.com/blog/nuxt-3-state-mangement-pinia-vs-usestate/)
 
 ### Continued development
 
