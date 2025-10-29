@@ -89,6 +89,10 @@
   --color-input-dropdown-scrollbar-thumb: hsl(var(--color-grey-200));
   --color-input-dropdown-active-background: hsl(var(--color-grey-50));
 
+  /* colors -- preview */
+  --color-preview-name: hsl(var(--color-grey-900));
+  --color-preview-email: hsl(var(--color-grey-500));
+
   /* shadows */
   --shadow-input-field: var(--shadow-purple-600);
   --shadow-input-dropdown: var(--shadow-black-400);
@@ -114,10 +118,13 @@
   --preview-block-size-header-row: 8.5rem; /* 136px */
   --preview-block-size-header-overlap: 13.8125rem; /* 221px */
 
+  /* preview */
+  --preview-profile-position: 200px; /* 279px */
+  --preview-links-position: 17.4375rem; /* 279px */
+
   /* links */
   --link-block-size: 2.75rem; /* 44px */
   --link-inline-size: 14.8125rem; /* 237px */
-  --link-block-position: 17.4375rem; /* 279px */
 
   /* icons */
   --icon-size-lg: var(--space-500);

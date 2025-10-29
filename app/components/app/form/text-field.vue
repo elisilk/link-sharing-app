@@ -10,6 +10,8 @@ const props = defineProps<{
   required?: boolean;
 }>();
 
+const model = defineModel();
+
 const isInvalid = ref(false);
 const errorMessage = ref("Can’t be empty");
 </script>
@@ -24,6 +26,7 @@ const errorMessage = ref("Can’t be empty");
       >*</span></label>
       <input
         :id="id"
+        v-model="model"
         :name="name"
         :type="type"
         :placeholder="placeholder"
