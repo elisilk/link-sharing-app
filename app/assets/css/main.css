@@ -90,8 +90,10 @@
   --color-input-dropdown-active-background: hsl(var(--color-grey-50));
 
   /* colors -- preview */
+  --color-preview-empty: hsl(var(--color-grey-100));
   --color-preview-name: hsl(var(--color-grey-900));
   --color-preview-email: hsl(var(--color-grey-500));
+  --color-preview-image-border: hsl(var(--color-purple-600));
 
   /* shadows */
   --shadow-input-field: var(--shadow-purple-600);
@@ -115,15 +117,22 @@
   --editor-nav-bar-block-size-inner: 3.25rem; /* 52px */
   --editor-nav-bar-inline-size-items: 3.25rem; /* 52px */
 
+  /* preview */
   --preview-block-size-header-row: 8.5rem; /* 136px */
   --preview-block-size-header-overlap: 13.8125rem; /* 221px */
 
-  /* preview */
+  --preview-inline-size-container: 14.8125rem; /* 237px */
+  --preview-block-size-container-min: 30rem; /* 480px=30rem */
+  --preview-editor-block-size-container-min: 32.125rem; /* 514px=32.125rem */
+  --preview-profile-image-border: 4px;
+  --preview-profile-image-size: 104px;
+  --preview-editor-profile-image-size: 96px;
+
   --preview-profile-position: 200px; /* 279px */
   --preview-links-position: 17.4375rem; /* 279px */
 
   /* links */
-  --link-block-size: 2.75rem; /* 44px */
+  --link-block-size: 3.5rem; /* 44px=2.75rem OR 56px=3.5rem */
   --link-inline-size: 14.8125rem; /* 237px */
 
   /* icons */

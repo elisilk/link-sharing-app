@@ -2,36 +2,12 @@
 definePageMeta({
   layout: "preview",
 });
-
-const profile = useProfileStore();
 </script>
 
 <template>
   <main>
     <div class="inner">
-      <div class="profile">
-        <span class="name">
-          {{ profile.firstName }}
-          {{ profile.lastName }}
-        </span>
-        <span class="email">{{ profile.email }}</span>
-      </div>
-
-      <div class="links">
-        <AppPreviewLink
-          v-for="link in profile.links"
-          :key="link.platform"
-          :platform="link.platform"
-          :url="link.url"
-        />
-      </div>
-
-      <img
-        src="/illustration-phone-mockup.svg"
-        alt="Illustration phone mockup"
-        width="308"
-        height="632"
-      >
+      <AppPreviewProfile />
     </div>
   </main>
 </template>
