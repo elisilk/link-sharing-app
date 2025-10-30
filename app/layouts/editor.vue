@@ -1,17 +1,15 @@
 <template>
-  <div class="container">
+  <div class="editor-layout-container">
     <AppEditorNavBar />
 
     <slot />
 
-    <AppToastNotification icon="my-icon:icon-changes-saved">
-      Your changes have been successfully saved!
-    </AppToastNotification>
+    <AppToastContainer />
   </div>
 </template>
 
 <style scoped>
-.container {
+.editor-layout-container {
   min-block-size: 100vb;
   max-inline-size: var(--editor-inline-size-max);
   margin-inline: auto;
