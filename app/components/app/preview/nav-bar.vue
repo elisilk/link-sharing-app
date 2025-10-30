@@ -1,26 +1,8 @@
 <script setup lang="ts">
-const shareLink = "<generated share link>";
+const emit = defineEmits(["shareLink"]);
 
 async function navigateBackToEditor() {
   await navigateTo("/links");
-}
-
-async function copyShareLinkToClipboard() {
-  try {
-    await navigator.clipboard.writeText(shareLink);
-    // clipboard successfully set
-    // trigger the toast notification
-  }
-  catch (error: unknown) {
-    // clipboard write failed
-    console.error("Share link failed to copy to clipboard");
-    if (error instanceof Error) {
-      console.error(error.message);
-    }
-    else {
-      console.error("An unknown error occurred:", error);
-    }
-  }
 }
 </script>
 
@@ -33,7 +15,7 @@ async function copyShareLinkToClipboard() {
         </button>
       </li>
       <li>
-        <button class="btn" @click="copyShareLinkToClipboard">
+        <button class="btn" @click="emit('shareLink')">
           Share Link
         </button>
       </li>

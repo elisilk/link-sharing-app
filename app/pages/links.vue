@@ -44,11 +44,6 @@ const profile = useProfileStore();
         v-model:platform="link.platform"
         v-model:url="link.url"
       />
-
-      <!--
-      <AppEditorLink :index="1" />
-      <AppEditorLink :index="2" />
-      -->
     </div>
   </AppEditorMain>
 </template>

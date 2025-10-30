@@ -1,3 +1,11 @@
+<script setup lang="ts">
+const { addToast } = useToastNotifications();
+
+function save() {
+  addToast("Your changes have been successfully saved!", "my-icon:icon-changes-saved", false);
+}
+</script>
+
 <template>
   <main>
     <div class="container editor">
@@ -18,7 +26,7 @@
 
       <footer>
         <slot name="footer">
-          <button class="btn" disabled>
+          <button class="btn" @click="save">
             Save
           </button>
         </slot>
