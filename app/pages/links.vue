@@ -4,6 +4,7 @@ definePageMeta({
 });
 
 const empty = ref(false);
+const profile = useProfileStore();
 </script>
 
 <template>
@@ -36,8 +37,18 @@ const empty = ref(false);
         Link List
       </h2>
 
+      <AppEditorLink
+        v-for="link in profile.links"
+        :key="link.platform"
+        v-model:order="link.order"
+        v-model:platform="link.platform"
+        v-model:url="link.url"
+      />
+
+      <!--
       <AppEditorLink :index="1" />
       <AppEditorLink :index="2" />
+      -->
     </div>
   </AppEditorMain>
 </template>

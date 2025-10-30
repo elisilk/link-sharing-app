@@ -1,28 +1,31 @@
 <script setup lang="ts">
 const props = defineProps<{
-  name: string;
+  platform: string;
+  url: string;
 }>();
 
-const platform = computed(() => platforms.find(item => item.name === props.name));
+const platform = computed(() => platforms.find(item => item.name === props.platform));
 </script>
 
 <template>
-  <div
+  <NuxtLink
+    :to="props.url"
     :style="{ backgroundColor:
                 platform && platform.backgroundColor,
               color:
                 platform && platform.color,
               border:
                 platform && platform.border }"
+    target="_blank"
   >
     <Icon :name="`my-icon:${platform && platform.icon}`" />
     <span>{{ platform && platform.name }}</span>
     <Icon name="my-icon:icon-arrow-right" />
-  </div>
+  </NuxtLink>
 </template>
 
 <style scoped>
-div {
+a {
   block-size: var(--link-block-size);
   display: flex;
   align-items: center;
@@ -33,7 +36,7 @@ div {
   color: white;
 }
 
-div > :last-child {
+a > :last-child {
   margin-inline-start: auto;
 }
 </style>

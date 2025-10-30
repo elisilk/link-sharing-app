@@ -17,6 +17,15 @@ const profile = useProfileStore();
         <span class="email">{{ profile.email }}</span>
       </div>
 
+      <div class="links">
+        <AppPreviewLink
+          v-for="link in profile.links"
+          :key="link.platform"
+          :platform="link.platform"
+          :url="link.url"
+        />
+      </div>
+
       <img
         src="/illustration-phone-mockup.svg"
         alt="Illustration phone mockup"

@@ -1,14 +1,16 @@
 <script setup lang="ts">
-defineProps<{
-  index: number;
-}>();
+const order = defineModel<number | undefined>("order");
+const platform = defineModel<string>("platform");
+const url = defineModel<string>("url");
+
+const id = computed(() => `link${order.value}-url`);
 </script>
 
 <template>
   <div class="container">
     <header>
       <h3 class="heading">
-        Link #{{ index }}
+        Link #{{ order }}
       </h3>
 
       <button class="reorder">
@@ -26,12 +28,13 @@ defineProps<{
         Link Fields
       </legend>
 
-      <AppFormDropdownField :index="index" />
+      <AppFormDropdownField v-model="platform" :index="order" />
 
       <AppFormTextField
-        :id="`link${index}-url`"
+        :id="id"
+        v-model="url"
         type="url"
-        :name="`link${index}-url`"
+        :name="id"
         label="Link"
         placeholder="e.g. https://www.<put sample URL here>"
         autocomplete="given-name"
