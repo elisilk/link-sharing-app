@@ -1,12 +1,15 @@
 <script setup lang="ts">
 const props = defineProps<{
-  index: number;
+  index: number | undefined;
 }>();
+const model = defineModel<string | undefined>();
+
+const findPlatform = (name: string | undefined) => platforms.find(platform => platform.name === name);
+
+const selectedPlatform = computed(() => findPlatform(model.value));
 
 const id = computed(() => `link${props.index}-platform`);
-
 const isOpen = ref(false);
-const selectedPlatform = ref(platforms[0]);
 
 function toggleDropdown() {
   isOpen.value = !isOpen.value;
@@ -23,21 +26,23 @@ function handleKeyPress(event: KeyboardEvent) {
   // - Escape
   // - Enter
   // - Tab
-  console.log(event.key);
+  console.warn("Need to handle key press:", event.key);
 }
 
 const selectElement = useTemplateRef<HTMLInputElement>("select-element");
 
 useClickOutside(selectElement, closeDropdown);
 
-const findPlatform = (name: string) => platforms.find(platform => platform.name === name);
-
 function handleOptionSelect(event: MouseEvent) {
   const targetElement = event.target as HTMLInputElement;
 
   // find and set the new selected platform
-  if (targetElement.dataset.name)
-    selectedPlatform.value = findPlatform(targetElement.dataset.name);
+  if (targetElement.dataset.name) {
+    const newSelectedPlatform = findPlatform(targetElement.dataset.name);
+    if (newSelectedPlatform) {
+      model.value = newSelectedPlatform.name;
+    }
+  }
 
   // hide the dropdown
   toggleDropdown();

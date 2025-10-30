@@ -13,9 +13,12 @@ const profile = useProfileStore();
     </div>
 
     <div class="links">
-      <AppPreviewLink name="GitHub" />
-      <AppPreviewLink name="YouTube" />
-      <AppPreviewLink name="Frontend Mentor" />
+      <AppPreviewLink
+        v-for="link in profile.links"
+        :key="link.platform"
+        :platform="link.platform"
+        :url="link.url"
+      />
     </div>
 
     <img
