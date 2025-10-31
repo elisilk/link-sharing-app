@@ -10,7 +10,8 @@
 
 <style scoped>
 .editor-layout-container {
-  min-block-size: 100vb;
+  max-block-size: 100vb;
+  overflow-y: hidden;
   max-inline-size: var(--editor-inline-size-max);
   margin-inline: auto;
   display: grid;
