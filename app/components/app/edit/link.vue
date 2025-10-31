@@ -52,7 +52,7 @@ const id = computed(() => `link${order.value}-url`);
 .container {
   padding: var(--space-200);
   border-radius: var(--br-500);
-  background-color: var(--color-background-editor-link);
+  background-color: var(--color-background-edit-link);
 }
 
 header {

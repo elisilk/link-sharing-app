@@ -1,13 +1,13 @@
 <script setup lang="ts">
 definePageMeta({
-  layout: "editor",
+  layout: "edit",
 });
 
 const profile = useProfileStore();
 </script>
 
 <template>
-  <AppEditorMain>
+  <AppEditMain>
     <template #title>
       Profile Details
     </template>
@@ -66,7 +66,7 @@ const profile = useProfileStore();
         </ClientOnly>
       </fieldset>
     </form>
-  </AppEditorMain>
+  </AppEditMain>
 </template>
 
 <style scoped>

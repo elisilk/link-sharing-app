@@ -8,7 +8,7 @@ function save() {
 
 <template>
   <main>
-    <div class="container editor">
+    <div class="container edit">
       <div class="content">
         <header>
           <h1 class="title">
@@ -35,7 +35,7 @@ function save() {
 
     <div class="container preview">
       <slot name="preview">
-        <AppEditorPreview />
+        <AppEditPreview />
       </slot>
     </div>
   </main>
@@ -49,11 +49,11 @@ main {
 }
 
 .container {
-  background-color: var(--color-background-editor-main);
+  background-color: var(--color-background-edit-main);
   border-radius: var(--br-500);
 }
 
-.editor {
+.edit {
   block-size: 100%;
   display: grid;
   grid-template-rows: 1fr auto;
@@ -75,7 +75,7 @@ main {
 }
 
 .content {
-  padding: var(--space-300) var(--space-300) calc(var(--space-300) + var(--editor-block-size-footer-row));
+  padding: var(--space-300) var(--space-300) calc(var(--space-300) + var(--edit-block-size-footer-row));
   overflow-y: scroll;
 }
 
@@ -84,10 +84,10 @@ header {
 }
 
 footer {
-  block-size: var(--editor-block-size-footer-row);
+  block-size: var(--edit-block-size-footer-row);
   padding: var(--space-200);
   text-align: right;
-  background-color: var(--color-background-editor-main);
+  background-color: var(--color-background-edit-main);
   border-top: var(--border-width) solid var(--color-divider);
   position: absolute;
   bottom: 0;
@@ -101,7 +101,7 @@ footer {
   }
 
   .content {
-    padding: var(--space-500) var(--space-500) calc(var(--space-500) + var(--editor-block-size-footer-row));
+    padding: var(--space-500) var(--space-500) calc(var(--space-500) + var(--edit-block-size-footer-row));
   }
 
   .title {
@@ -125,12 +125,12 @@ footer {
     gap: var(--space-300);
   }
 
-  .editor {
-    flex-basis: var(--editor-inline-size-editor-column);
+  .edit {
+    flex-basis: var(--edit-inline-size-edit-column);
   }
 
   .preview {
-    flex-basis: var(--editor-inline-size-preview-column);
+    flex-basis: var(--edit-inline-size-preview-column);
   }
 }
 </style>

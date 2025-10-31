@@ -7,7 +7,7 @@
       height="632"
     >
 
-    <AppPreviewProfile layout="editor" />
+    <AppPreviewProfile layout="edit" />
   </div>
 </template>
 

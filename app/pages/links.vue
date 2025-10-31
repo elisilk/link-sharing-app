@@ -1,6 +1,6 @@
 <script setup lang="ts">
 definePageMeta({
-  layout: "editor",
+  layout: "edit",
 });
 
 const empty = ref(false);
@@ -8,7 +8,7 @@ const profile = useProfileStore();
 </script>
 
 <template>
-  <AppEditorMain>
+  <AppEditMain>
     <template #title>
       Customize your links
     </template>
@@ -37,7 +37,7 @@ const profile = useProfileStore();
         Link List
       </h2>
 
-      <AppEditorLink
+      <AppEditLink
         v-for="link in profile.links"
         :key="link.platform"
         v-model:order="link.order"
@@ -45,7 +45,7 @@ const profile = useProfileStore();
         v-model:url="link.url"
       />
     </div>
-  </AppEditorMain>
+  </AppEditMain>
 </template>
 
 <style scoped>

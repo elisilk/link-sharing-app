@@ -95,6 +95,10 @@ As always, so many cool :sunglasses: things. Here are some of the key resources 
   - [Nuxt > State Management](https://nuxt.com/docs/4.x/getting-started/state-management)
   - [Pinia > Nuxt](https://pinia.vuejs.org/ssr/nuxt.html)
   - [Nuxt 3 State Management: Pinia vs useState](https://www.vuemastery.com/blog/nuxt-3-state-mangement-pinia-vs-usestate/)
+- Toast notifications
+  - [Primevue > Toast](https://primevue.org/toast/)
+  - [NuxtUI > Toast](https://ui.nuxt.com/docs/components/toast)
+    - [Toast.vue](https://github.com/nuxt/ui/blob/v4/src/runtime/components/Toast.vue)
 
 ### Continued development
 

@@ -50,16 +50,16 @@ async function copyShareLinkToClipboard() {
 
 /* viewport: mobile -> tablet */
 @media (min-width: 45rem) {
-  .container {
+  .preview-layout-container {
     grid-template-rows: var(--preview-block-size-header-row) var(--preview-block-size-header-overlap) 1fr;
   }
 
-  .container > :first-child {
+  .preview-layout-container > :first-child {
     grid-column: 1 / -1;
     grid-row: 1 / 3;
   }
 
-  .container > :nth-child(2) {
+  .preview-layout-container > :nth-child(2) {
     grid-column: 1 / -1;
     grid-row: 2 / -1;
   }
