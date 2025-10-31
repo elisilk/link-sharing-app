@@ -83,6 +83,7 @@ label {
 }
 
 input {
+  inline-size: 100%;
   padding: var(--padding);
   border-radius: var(--br-400);
   border: var(--border-width) solid var(--color-input-border);

@@ -45,10 +45,7 @@ function save() {
 main {
   padding: var(--space-200);
   block-size: 100%;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  gap: var(--space-300);
+  overflow-y: scroll;
 }
 
 .container {
@@ -57,8 +54,10 @@ main {
 }
 
 .editor {
+  block-size: 100%;
   display: grid;
   grid-template-rows: 1fr auto;
+  position: relative;
 }
 
 .preview {
@@ -76,7 +75,8 @@ main {
 }
 
 .content {
-  margin: var(--space-300);
+  padding: var(--space-300) var(--space-300) calc(var(--space-300) + var(--editor-block-size-footer-row));
+  overflow-y: scroll;
 }
 
 header {
@@ -84,9 +84,14 @@ header {
 }
 
 footer {
+  block-size: var(--editor-block-size-footer-row);
   padding: var(--space-200);
   text-align: right;
+  background-color: var(--color-background-editor-main);
   border-top: var(--border-width) solid var(--color-divider);
+  position: absolute;
+  bottom: 0;
+  inline-size: 100%;
 }
 
 /* viewport: mobile -> tablet */
@@ -96,7 +101,7 @@ footer {
   }
 
   .content {
-    margin: var(--space-500);
+    padding: var(--space-500) var(--space-500) calc(var(--space-500) + var(--editor-block-size-footer-row));
   }
 
   .title {
@@ -115,7 +120,9 @@ footer {
 /* viewport: tablet -> desktop */
 @media (min-width: 60rem) {
   main {
+    display: flex;
     flex-direction: row-reverse;
+    gap: var(--space-300);
   }
 
   .editor {

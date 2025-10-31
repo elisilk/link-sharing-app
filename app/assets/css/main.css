@@ -117,6 +117,8 @@
   --editor-nav-bar-block-size-inner: 3.25rem; /* 52px */
   --editor-nav-bar-inline-size-items: 3.25rem; /* 52px */
 
+  --editor-block-size-footer-row: 89px; /* (m) 89px -> 105px */
+
   /* preview */
   --preview-block-size-header-row: 8.5rem; /* 136px */
   --preview-block-size-header-overlap: 13.8125rem; /* 221px */
@@ -149,10 +151,11 @@
 }
 
 /* viewport: mobile -> tablet */
-/* @media (min-width: 45rem) {
+@media (min-width: 45rem) {
   :root {
+    --editor-block-size-footer-row: 105px; /* (m) 89px -> 105px */
   }
-} */
+}
 
 /* viewport: tablet -> desktop */
 /* @media (min-width: 60rem) {
