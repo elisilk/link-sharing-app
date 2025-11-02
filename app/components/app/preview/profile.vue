@@ -5,22 +5,21 @@ type Props = {
 
 const { layout = "preview" } = defineProps<Props>();
 
-const isEdit = computed(() => layout === "edit");
+const isEditor = computed(() => layout === "editor");
 
 const profile = useProfileStore();
-const fullName = computed(() => (profile.firstName === null ? "" : profile.firstName) + (profile.firstName === "" || profile.lastName === "" ? "" : " ") + (profile.lastName === null ? "" : profile.lastName));
 </script>
 
 <template>
   <div
     class="preview-profile-container"
-    :class="{ edit: isEdit }"
+    :class="{ editor: isEditor }"
   >
     <div class="image circle" />
 
     <div class="info">
-      <div v-if="!!fullName" class="name">
-        {{ fullName }}
+      <div v-if="!!profile.fullName" class="name">
+        {{ profile.fullName }}
       </div>
       <div v-else id="placeholder-name" />
 
@@ -50,8 +49,8 @@ const fullName = computed(() => (profile.firstName === null ? "" : profile.first
   grid-template-rows: repeat(3, min-content);
 }
 
-.preview-profile-container.edit {
-  min-block-size: var(--preview-edit-block-size-container-min);
+.preview-profile-container.editor {
+  min-block-size: var(--preview-editor-block-size-container-min);
 }
 
 .circle {
@@ -64,9 +63,9 @@ const fullName = computed(() => (profile.firstName === null ? "" : profile.first
   background-color: var(--color-preview-empty);
 }
 
-.preview-profile-container.edit .circle {
-  inline-size: var(--preview-edit-profile-image-size);
-  block-size: var(--preview-edit-profile-image-size);
+.preview-profile-container.editor .circle {
+  inline-size: var(--preview-editor-profile-image-size);
+  block-size: var(--preview-editor-profile-image-size);
 }
 
 .info {

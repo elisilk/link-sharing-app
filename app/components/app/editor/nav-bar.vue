@@ -9,30 +9,30 @@
       </li>
 
       <li>
-        <AppEditTab to="/links">
+        <AppEditorTab to="/links">
           <template #icon>
             <Icon name="my-icon:icon-links-header" />
           </template>
           Links
-        </AppEditTab>
+        </AppEditorTab>
       </li>
 
       <li>
-        <AppEditTab to="/profile">
+        <AppEditorTab to="/profile">
           <template #icon>
             <Icon name="my-icon:icon-profile-details-header" />
           </template>
           Profile Details
-        </AppEditTab>
+        </AppEditorTab>
       </li>
 
       <li class="preview">
-        <AppEditTab to="/preview" secondary>
+        <AppEditorTab to="/preview" secondary>
           <template #icon>
             <Icon name="my-icon:icon-preview-header" />
           </template>
           Preview
-        </AppEditTab>
+        </AppEditorTab>
       </li>
     </menu>
   </header>
@@ -40,10 +40,10 @@
 
 <style scoped>
 header {
-  block-size: calc(var(--edit-nav-bar-block-size-inner) + 2 * var(--space-200));
+  block-size: calc(var(--editor-nav-bar-block-size-inner) + 2 * var(--space-200));
 
   padding: var(--space-200) var(--space-200) var(--space-200) var(--space-300);
-  background-color: var(--color-background-edit-nav-bar);
+  background-color: var(--color-background-editor-nav-bar);
 }
 
 menu {
@@ -56,7 +56,7 @@ menu {
 
 li {
   list-style-type: none;
-  inline-size: var(--edit-nav-bar-inline-size-items);
+  inline-size: var(--editor-nav-bar-inline-size-items);
 }
 
 li:first-child {

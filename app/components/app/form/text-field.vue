@@ -8,6 +8,7 @@ const props = defineProps<{
   autocomplete?: string;
   pattern?: string;
   required?: boolean;
+  oneRowIfPossible?: boolean;
 }>();
 
 const model = defineModel();
@@ -18,7 +19,10 @@ const errorMessage = ref("Can’t be empty");
 
 <template>
   <div class="outer">
-    <div class="inner">
+    <div
+      class="inner"
+      :class="{ 'inner--one-row-if-possible': oneRowIfPossible }"
+    >
       <label :for="id">{{ label }}<span
         v-if="props.required"
         class="required"
@@ -142,6 +146,10 @@ label:has(+ input[aria-invalid="true"]) {
       "input";
   }
 
+  label {
+    font-size: var(--fs-400);
+  }
+
   .error {
     grid-area: input;
     pointer-events: none;
@@ -151,14 +159,10 @@ label:has(+ input[aria-invalid="true"]) {
 }
 
 @container (min-width: 37.25rem) {
-  .inner {
+  .inner.inner--one-row-if-possible {
     grid-template-areas: "label input";
     column-gap: var(--space-200);
     grid-template-columns: minmax(auto, var(--input-size-label-inline-max)) 1fr;
-  }
-
-  label {
-    font-size: var(--fs-400);
   }
 }
 </style>
