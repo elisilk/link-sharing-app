@@ -1,13 +1,13 @@
 <script setup lang="ts">
 definePageMeta({
-  layout: "edit",
+  layout: "editor",
 });
 
 const profile = useProfileStore();
 </script>
 
 <template>
-  <AppEditMain>
+  <AppEditorMain>
     <template #title>
       Profile Details
     </template>
@@ -42,6 +42,7 @@ const profile = useProfileStore();
             label="First name"
             placeholder="e.g. John"
             autocomplete="given-name"
+            :one-row-if-possible="true"
             :required="true"
           />
           <AppFormTextField
@@ -52,6 +53,7 @@ const profile = useProfileStore();
             label="Last name"
             placeholder="e.g. Appleseed"
             autocomplete="family-name"
+            :one-row-if-possible="true"
             :required="true"
           />
           <AppFormTextField
@@ -62,11 +64,12 @@ const profile = useProfileStore();
             label="Email"
             placeholder="e.g. email@example.com"
             autocomplete="email"
+            :one-row-if-possible="true"
           />
         </ClientOnly>
       </fieldset>
     </form>
-  </AppEditMain>
+  </AppEditorMain>
 </template>
 
 <style scoped>

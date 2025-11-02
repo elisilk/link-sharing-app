@@ -50,53 +50,63 @@ function handleOptionSelect(event: MouseEvent) {
 </script>
 
 <template>
-  <div class="select-container">
-    <div class="select-label">
-      Platform
-    </div>
-    <div
-      :id="id"
-      ref="select-element"
-      class="select"
-    >
-      <button
-        role="combobox"
-        aria-label="Platform select button"
-        aria-haspopup="listbox"
-        :aria-expanded="isOpen"
-        aria-controls="select-dropdown"
-        class="select-button"
-        @click="toggleDropdown"
-        @keypress="handleKeyPress"
-        @keydown.up.prevent="handleKeyPress"
-        @keydown.down.prevent="handleKeyPress"
+  <div class="outer">
+    <div class="select-container">
+      <div class="select-label">
+        Platform
+      </div>
+      <div
+        :id="id"
+        ref="select-element"
+        class="select"
       >
-        <div v-if="selectedPlatform" class="selected-value">
-          <Icon :name="`my-icon:${selectedPlatform.icon}`" />
-          {{ selectedPlatform.name }}
-        </div>
-        <Icon name="my-icon:icon-chevron-down" class="arrow" />
-      </button>
-      <ul v-if="isOpen" class="select-dropdown">
-        <li
-          v-for="platform in platforms"
-          :key="platform.name"
-          :data-name="platform.name"
-          :class="{ selected: selectedPlatform && platform.name === selectedPlatform.name }"
-          @click="handleOptionSelect"
+        <button
+          role="combobox"
+          aria-label="Platform select button"
+          aria-haspopup="listbox"
+          :aria-expanded="isOpen"
+          aria-controls="select-dropdown"
+          class="select-button"
+          @click="toggleDropdown"
+          @keypress="handleKeyPress"
+          @keydown.up.prevent="handleKeyPress"
+          @keydown.down.prevent="handleKeyPress"
         >
-          <Icon :name="`my-icon:${platform.icon}`" />
-          {{ platform.name }}
-        </li>
-      </ul>
+          <div v-if="selectedPlatform" class="selected-value">
+            <Icon :name="`my-icon:${selectedPlatform.icon}`" />
+            {{ selectedPlatform.name }}
+          </div>
+          <Icon name="my-icon:icon-chevron-down" class="arrow" />
+        </button>
+        <ul v-if="isOpen" class="select-dropdown">
+          <li
+            v-for="platform in platforms"
+            :key="platform.name"
+            :data-name="platform.name"
+            :class="{ selected: selectedPlatform && platform.name === selectedPlatform.name }"
+            @click="handleOptionSelect"
+          >
+            <Icon :name="`my-icon:${platform.icon}`" />
+            {{ platform.name }}
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+.outer {
+  container-type: inline-size;
+}
+
 .select-container {
   display: grid;
   gap: var(--space-100);
+}
+
+.select-label {
+  font-size: var(--fs-200);
 }
 
 .select {
@@ -193,5 +203,11 @@ function handleOptionSelect(event: MouseEvent) {
 .select-dropdown li:focus {
   color: var(--color-input-active);
   background-color: var(--color-input-dropdown-active-background);
+}
+
+@container (min-width: 25rem) {
+  .select-label {
+    font-size: var(--fs-400);
+  }
 }
 </style>

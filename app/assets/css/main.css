@@ -29,9 +29,9 @@
   --color-background-form-fieldset: hsl(var(--color-grey-50));
   --color-background-links-empty: hsl(var(--color-grey-50));
 
-  --color-background-edit-main: hsl(var(--color-white));
-  --color-background-edit-nav-bar: hsl(var(--color-white));
-  --color-background-edit-link: hsl(var(--color-grey-50));
+  --color-background-editor-main: hsl(var(--color-white));
+  --color-background-editor-nav-bar: hsl(var(--color-white));
+  --color-background-editor-link: hsl(var(--color-grey-50));
   --color-background-preview-nav-bar-header: hsl(var(--color-purple-600));
   --color-background-preview-nav-bar-menu: hsl(var(--color-white));
 
@@ -109,15 +109,15 @@
 
   /* layout containers */
   --default-inline-size-max: 29.75rem; /* 476px */
-  --edit-inline-size-max: 90rem; /* 1440px */
+  --editor-inline-size-max: 90rem; /* 1440px */
   --preview-inline-size-max: 90rem; /* 1440px */
 
-  --edit-inline-size-edit-column: 50.5rem; /* 808px */
-  --edit-inline-size-preview-column: 35rem; /* 560px */
-  --edit-nav-bar-block-size-inner: 3.25rem; /* 52px */
-  --edit-nav-bar-inline-size-items: 3.25rem; /* 52px */
+  --editor-inline-size-editor-column: 50.5rem; /* 808px */
+  --editor-inline-size-preview-column: 35rem; /* 560px */
+  --editor-nav-bar-block-size-inner: 3.25rem; /* 52px */
+  --editor-nav-bar-inline-size-items: 3.25rem; /* 52px */
 
-  --edit-block-size-footer-row: 89px; /* (m) 89px -> 105px */
+  --editor-block-size-footer-row: 89px; /* (m) 89px -> 105px */
 
   /* preview */
   --preview-block-size-header-row: 8.5rem; /* 136px */
@@ -125,10 +125,10 @@
 
   --preview-inline-size-container: 14.8125rem; /* 237px */
   --preview-block-size-container-min: 30rem; /* 480px=30rem */
-  --preview-edit-block-size-container-min: 32.125rem; /* 514px=32.125rem */
+  --preview-editor-block-size-container-min: 32.125rem; /* 514px=32.125rem */
   --preview-profile-image-border: 4px;
   --preview-profile-image-size: 104px;
-  --preview-edit-profile-image-size: 96px;
+  --preview-editor-profile-image-size: 96px;
 
   --preview-profile-position: 200px; /* 279px */
   --preview-links-position: 17.4375rem; /* 279px */
@@ -153,7 +153,7 @@
 /* viewport: mobile -> tablet */
 @media (min-width: 45rem) {
   :root {
-    --edit-block-size-footer-row: 105px; /* (m) 89px -> 105px */
+    --editor-block-size-footer-row: 105px; /* (m) 89px -> 105px */
   }
 }
 

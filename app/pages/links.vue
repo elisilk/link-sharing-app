@@ -1,14 +1,13 @@
 <script setup lang="ts">
 definePageMeta({
-  layout: "edit",
+  layout: "editor",
 });
 
-const empty = ref(false);
 const profile = useProfileStore();
 </script>
 
 <template>
-  <AppEditMain>
+  <AppEditorMain>
     <template #title>
       Customize your links
     </template>
@@ -21,7 +20,7 @@ const profile = useProfileStore();
       + Add new link
     </button>
 
-    <div v-if="empty" class="empty">
+    <div v-if="profile.isEmpty" class="empty">
       <h2>Let's get you started</h2>
       <p>Use the “Add new link” button to get started. Once you have more than one link, you can reorder and edit them. We're here to help you share your profiles with everyone!</p>
       <img
@@ -37,15 +36,16 @@ const profile = useProfileStore();
         Link List
       </h2>
 
-      <AppEditLink
-        v-for="link in profile.links"
+      <AppEditorLink
+        v-for="(link, index) in profile.links"
         :key="link.platform"
-        v-model:order="link.order"
         v-model:platform="link.platform"
         v-model:url="link.url"
+        :index="index + 1"
+        @remove-link="profile.removeLink(link.id)"
       />
     </div>
-  </AppEditMain>
+  </AppEditorMain>
 </template>
 
 <style scoped>

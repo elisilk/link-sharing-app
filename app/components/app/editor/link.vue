@@ -1,16 +1,20 @@
 <script setup lang="ts">
-const order = defineModel<number | undefined>("order");
+const props = defineProps<{
+  index: number;
+}>();
+
+const emit = defineEmits(["removeLink"]);
 const platform = defineModel<string>("platform");
 const url = defineModel<string>("url");
 
-const id = computed(() => `link${order.value}-url`);
+const id = computed(() => `link${props.index}-url`);
 </script>
 
 <template>
   <div class="container">
     <header>
       <h3 class="heading">
-        Link #{{ order }}
+        Link #{{ index }}
       </h3>
 
       <button class="reorder">
@@ -18,7 +22,7 @@ const id = computed(() => `link${order.value}-url`);
         <Icon name="my-icon:icon-drag-and-drop" class="icon" />
       </button>
 
-      <button class="remove">
+      <button class="remove" @click="emit('removeLink')">
         Remove
       </button>
     </header>
@@ -28,7 +32,7 @@ const id = computed(() => `link${order.value}-url`);
         Link Fields
       </legend>
 
-      <AppFormDropdownField v-model="platform" :index="order" />
+      <AppFormDropdownField v-model="platform" :index="index" />
 
       <AppFormTextField
         :id="id"
@@ -52,7 +56,7 @@ const id = computed(() => `link${order.value}-url`);
 .container {
   padding: var(--space-200);
   border-radius: var(--br-500);
-  background-color: var(--color-background-edit-link);
+  background-color: var(--color-background-editor-link);
 }
 
 header {
