@@ -34,7 +34,7 @@ const selectElement = useTemplateRef<HTMLInputElement>("select-element");
 useClickOutside(selectElement, closeDropdown);
 
 function handleOptionSelect(event: MouseEvent) {
-  const targetElement = event.target as HTMLInputElement;
+  const targetElement = event.currentTarget as HTMLInputElement;
 
   // find and set the new selected platform
   if (targetElement.dataset.name) {

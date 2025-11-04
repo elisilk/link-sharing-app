@@ -75,12 +75,12 @@ main {
 }
 
 .content {
-  padding: var(--space-300) var(--space-300) calc(var(--space-300) + var(--editor-block-size-footer-row));
+  padding-block-end: var(--editor-block-size-footer-row);
   overflow-y: scroll;
 }
 
 header {
-  margin-block-end: var(--space-500);
+  padding: var(--space-300) var(--space-300) var(--space-500);
 }
 
 footer {
@@ -100,8 +100,12 @@ footer {
     padding: 0 var(--space-300) var(--space-300);
   }
 
+  header {
+    padding: var(--space-500);
+  }
+
   .content {
-    padding: var(--space-500) var(--space-500) calc(var(--space-500) + var(--editor-block-size-footer-row));
+    padding-block-end: var(--editor-block-size-footer-row);
   }
 
   .title {

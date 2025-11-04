@@ -4,6 +4,70 @@ definePageMeta({
 });
 
 const profile = useProfileStore();
+const linksContainer = useTemplateRef<HTMLDivElement>("links-container");
+
+function customDragImage() {
+  const canvas = document.createElement("canvas");
+  canvas.width = canvas.height = 50;
+
+  const ctx = canvas.getContext("2d");
+  if (!ctx)
+    return null;
+
+  ctx.lineWidth = 4;
+  ctx.moveTo(0, 0);
+  ctx.lineTo(50, 50);
+  ctx.moveTo(0, 50);
+  ctx.lineTo(50, 0);
+  ctx.stroke();
+
+  return canvas;
+}
+
+function handleDragStart(event: DragEvent, itemId: number) {
+  if (!event.dataTransfer)
+    return;
+  event.dataTransfer.dropEffect = "move";
+  event.dataTransfer.effectAllowed = "move";
+  event.dataTransfer.setData("itemId", itemId.toString());
+
+  const customImage = customDragImage();
+  if (customImage)
+    event.dataTransfer.setDragImage(customImage, 25, 25);
+
+  const targetElement = event.currentTarget as HTMLElement;
+  if (targetElement)
+    targetElement.dataset.grabbed = "true";
+}
+
+function handleDragEnd(event: DragEvent) {
+  const targetElement = event.currentTarget as HTMLElement;
+  if (targetElement)
+    targetElement.removeAttribute("data-grabbed");
+}
+
+function findDropIndex(yPos: number) {
+  if (!linksContainer.value)
+    return;
+
+  for (const [index, item] of Array.from(linksContainer.value.children).entries()) {
+    if (item.getBoundingClientRect().bottom >= yPos)
+      return index;
+  }
+
+  return -1;
+}
+
+function onDrop(event: DragEvent) {
+  if (!event.dataTransfer)
+    return;
+  const itemId = Number(event.dataTransfer.getData("itemId"));
+  const newIndex = findDropIndex(event.clientY);
+  // console.log(`Item ${itemId} / Y ${event.clientY} / new index = ${newIndex}`);
+  if (newIndex === -1 || newIndex === undefined)
+    return;
+  profile.reorderLink(itemId, newIndex);
+}
 </script>
 
 <template>
@@ -31,29 +95,38 @@ const profile = useProfileStore();
       >
     </div>
 
-    <div v-else class="link-list">
-      <h2 class="sr-only">
-        Link List
-      </h2>
-
-      <AppEditorLink
-        v-for="(link, index) in profile.links"
-        :key="link.platform"
-        v-model:platform="link.platform"
-        v-model:url="link.url"
-        :index="index + 1"
-        @remove-link="profile.removeLink(link.id)"
-      />
+    <div
+      v-else
+      ref="links-container"
+      class="links-container"
+      @drop="onDrop($event)"
+      @dragover.prevent
+      @dragenter.prevent
+    >
+      <TransitionGroup>
+        <AppEditorLink
+          v-for="(link, index) in profile.links"
+          :key="link.platform"
+          v-model:platform="link.platform"
+          v-model:url="link.url"
+          :index="index + 1"
+          @remove-link="profile.removeLink(link.id)"
+          @dragstart="handleDragStart($event, link.id)"
+          @dragend="handleDragEnd($event)"
+        />
+      </TransitionGroup>
     </div>
   </AppEditorMain>
 </template>
 
 <style scoped>
 .add-new-link-btn {
-  margin-block-end: var(--space-300);
+  max-inline-size: calc(100% - 2 * var(--space-300));
+  margin-inline: var(--space-300);
 }
 
 .empty {
+  margin: var(--space-300);
   padding: var(--space-300);
   background-color: var(--color-background-links-empty);
   border-radius: var(--br-500);
@@ -79,8 +152,53 @@ const profile = useProfileStore();
   grid-area: illustration;
 }
 
-.link-list {
+.links-container {
   display: grid;
   gap: var(--space-300);
+  padding: var(--space-300);
+}
+
+[data-grabbed="true"] {
+  opacity: 0.2;
+}
+
+.v-move,
+.v-enter-active,
+.v-leave-active {
+  transition: all 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.v-leave-active {
+  position: absolute;
+}
+
+/* viewport: mobile -> tablet */
+@media (min-width: 45rem) {
+  .add-new-link-btn {
+    max-inline-size: calc(100% - 2 * var(--space-500));
+    margin-inline: var(--space-500);
+  }
+
+  .empty {
+    margin: var(--space-300) var(--space-500) var(--space-500);
+  }
+
+  .links-container {
+    padding: var(--space-300) var(--space-500) var(--space-500);
+  }
+}
+</style>
+
+<style>
+.placeholder {
+  border-radius: var(--br-500);
+  background-color: var(--color-placeholder-background);
+  border: var(--border-width) solid var(--color-placeholder-border);
 }
 </style>

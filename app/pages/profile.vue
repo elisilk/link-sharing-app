@@ -73,6 +73,10 @@ const profile = useProfileStore();
 </template>
 
 <style scoped>
+form {
+  padding: 0 var(--space-300) var(--space-300);
+}
+
 form > * + * {
   margin-block-start: var(--space-200);
 }
@@ -87,5 +91,12 @@ fieldset {
 
 fieldset > :not(legend) + * {
   margin-block-start: var(--space-100);
+}
+
+/* viewport: mobile -> tablet */
+@media (min-width: 45rem) {
+  form {
+    padding: 0 var(--space-500) var(--space-500);
+  }
 }
 </style>

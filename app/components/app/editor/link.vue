@@ -7,18 +7,23 @@ const emit = defineEmits(["removeLink"]);
 const platform = defineModel<string>("platform");
 const url = defineModel<string>("url");
 
+const draggable = ref(false);
 const id = computed(() => `link${props.index}-url`);
 </script>
 
 <template>
-  <div class="container">
+  <div
+    class="link-editor-container"
+    :draggable="draggable"
+    @dragend="draggable = false"
+  >
     <header>
       <h3 class="heading">
         Link #{{ index }}
       </h3>
 
-      <button class="reorder">
-        <span class="sr-only">Reorder</span>
+      <button class="reorder" @mousedown="draggable = true">
+        <span class="sr-only">Drag handle</span>
         <Icon name="my-icon:icon-drag-and-drop" class="icon" />
       </button>
 
@@ -49,11 +54,13 @@ const id = computed(() => `link${props.index}-url`);
         </template>
       </AppFormTextField>
     </fieldset>
+    <!--
+    -->
   </div>
 </template>
 
 <style scoped>
-.container {
+.link-editor-container {
   padding: var(--space-200);
   border-radius: var(--br-500);
   background-color: var(--color-background-editor-link);
@@ -93,6 +100,11 @@ header {
   grid-area: reorder;
   display: flex;
   align-items: center;
+  cursor: grab;
+}
+
+.reorder:active {
+  cursor: grabbing;
 }
 
 .reorder .icon {
@@ -121,7 +133,7 @@ fieldset > :not(legend) + * {
 
 /* viewport: mobile -> tablet */
 @media (min-width: 45rem) {
-  .container {
+  .link-editor-container {
     padding: var(--space-300);
   }
 }
