@@ -99,6 +99,12 @@ As always, so many cool :sunglasses: things. Here are some of the key resources 
   - [Primevue > Toast](https://primevue.org/toast/)
   - [NuxtUI > Toast](https://ui.nuxt.com/docs/components/toast)
     - [Toast.vue](https://github.com/nuxt/ui/blob/v4/src/runtime/components/Toast.vue)
+- Drag and drop
+  - [HTML Drag and Drop API](https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API)
+  - [How to Add Drag and Drop to Your VueJS Project](https://learnvue.co/articles/vue-drag-and-drop)
+  - [How Do I Drag and Drop in Vue?](https://vueschool.io/articles/vuejs-tutorials/how-do-i-drag-and-drop-in-vue/)
+  - [Vue Draggable](https://sortablejs.github.io/Vue.Draggable/#/simple)
+    - [Example with handle](https://sortablejs.github.io/Vue.Draggable/#/handle)
 
 ### Continued development
 

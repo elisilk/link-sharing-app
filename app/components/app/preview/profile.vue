@@ -30,12 +30,14 @@ const profile = useProfileStore();
     </div>
 
     <div class="links">
-      <AppPreviewLink
-        v-for="link in profile.links"
-        :key="link.platform"
-        :platform="link.platform"
-        :url="link.url"
-      />
+      <TransitionGroup>
+        <AppPreviewLink
+          v-for="link in profile.links"
+          :key="link.platform"
+          :platform="link.platform"
+          :url="link.url"
+        />
+      </TransitionGroup>
     </div>
   </div>
 </template>
@@ -88,6 +90,22 @@ const profile = useProfileStore();
   margin-block-start: var(--space-700);
   display: grid;
   gap: var(--space-300);
+}
+
+.v-move,
+.v-enter-active,
+.v-leave-active {
+  transition: all 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.v-leave-active {
+  position: absolute;
 }
 
 /* placeholder shapes */
