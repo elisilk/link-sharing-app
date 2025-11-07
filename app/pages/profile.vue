@@ -3,11 +3,29 @@ definePageMeta({
   layout: "editor",
 });
 
+const { addToast } = useToastNotifications();
 const profile = useProfileStore();
+
+/* Vue Form Component Pattern */
+
+function clone(obj: object) {
+  return JSON.parse(JSON.stringify(obj));
+}
+
+const details = ref(clone(profile.details));
+
+function handleSave() {
+  profile.details = clone(details.value);
+  addToast("Your changes have been successfully saved!", "my-icon:icon-changes-saved", false);
+}
+
+profile.$subscribe((mutation, state) => {
+  details.value = clone(state.details);
+}, { deep: true });
 </script>
 
 <template>
-  <AppEditorMain>
+  <AppEditorMain @submit="handleSave">
     <template #title>
       Profile Details
     </template>
@@ -16,7 +34,7 @@ const profile = useProfileStore();
       Add your details to create a personal touch to your profile.
     </template>
 
-    <form>
+    <div class="inputs">
       <fieldset>
         <legend class="sr-only">
           Profile Image
@@ -36,7 +54,7 @@ const profile = useProfileStore();
         <ClientOnly>
           <AppFormTextField
             id="profileFirstName"
-            v-model="profile.firstName"
+            v-model="details.firstName"
             type="text"
             name="profileFirstName"
             label="First name"
@@ -47,7 +65,7 @@ const profile = useProfileStore();
           />
           <AppFormTextField
             id="profileLastName"
-            v-model="profile.lastName"
+            v-model="details.lastName"
             type="text"
             name="profileLastName"
             label="Last name"
@@ -58,7 +76,7 @@ const profile = useProfileStore();
           />
           <AppFormTextField
             id="profileEmail"
-            v-model="profile.email"
+            v-model="details.email"
             type="email"
             name="profileEmail"
             label="Email"
@@ -68,16 +86,16 @@ const profile = useProfileStore();
           />
         </ClientOnly>
       </fieldset>
-    </form>
+    </div>
   </AppEditorMain>
 </template>
 
 <style scoped>
-form {
+.inputs {
   padding: 0 var(--space-300) var(--space-300);
 }
 
-form > * + * {
+.inputs > * + * {
   margin-block-start: var(--space-200);
 }
 
@@ -95,7 +113,7 @@ fieldset > :not(legend) + * {
 
 /* viewport: mobile -> tablet */
 @media (min-width: 45rem) {
-  form {
+  .inputs {
     padding: 0 var(--space-500) var(--space-500);
   }
 }

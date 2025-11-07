@@ -61,6 +61,7 @@ function handleOptionSelect(event: MouseEvent) {
         class="select"
       >
         <button
+          type="button"
           role="combobox"
           aria-label="Platform select button"
           aria-haspopup="listbox"
