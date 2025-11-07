@@ -22,12 +22,20 @@ const id = computed(() => `link${props.index}-url`);
         Link #{{ index }}
       </h3>
 
-      <button class="reorder" @mousedown="draggable = true">
+      <button
+        class="reorder"
+        type="button"
+        @mousedown="draggable = true"
+      >
         <span class="sr-only">Drag handle</span>
         <Icon name="my-icon:icon-drag-and-drop" class="icon" />
       </button>
 
-      <button class="remove" @click="emit('removeLink')">
+      <button
+        class="remove"
+        type="button"
+        @click="emit('removeLink')"
+      >
         Remove
       </button>
     </header>

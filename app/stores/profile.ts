@@ -1,5 +1,11 @@
 import { defineStore } from "pinia";
 
+export type details = {
+  firstName: string | null;
+  lastName: string | null;
+  email: string | null;
+};
+
 export type link = {
   id: number;
   platform: string;
@@ -7,18 +13,20 @@ export type link = {
 };
 
 export const useProfileStore = defineStore("profileStore", () => {
-  const firstName = ref<string | null>("Ben");
-  const lastName = ref<string | null>("Wright");
-  const email = ref<string | null>("ben@example.com");
+  const details = ref<details>({
+    firstName: "Ben",
+    lastName: "Wright",
+    email: "ben@example.com",
+  });
   const links = ref<link[]>([
     { id: 1, platform: "GitHub", url: "https://github.com/benwright/" },
     { id: 3, platform: "LinkedIn", url: "https://www.linkedin.com/in/benwright/" },
     { id: 2, platform: "YouTube", url: "https://www.youtube.com/@benwright" },
-    { id: 4, platform: "Frontend Mentor", url: "https://www.frontendmentor.io/profile/elisilk" },
+    { id: 4, platform: "Frontend Mentor", url: "https://www.frontendmentor.io/profile/benwright" },
   ]);
 
   // Getters: Computed properties based on state
-  const fullName = computed(() => `${firstName.value ?? ""} ${lastName.value ?? ""}`.trim());
+  const fullName = computed(() => `${details.value.firstName ?? ""} ${details.value.lastName ?? ""}`.trim());
   const numLinks = computed(() => links.value.length);
   const isEmpty = computed(() => links.value.length === 0);
   const getLinkByName = computed(() => (name: string) => {
@@ -46,9 +54,7 @@ export const useProfileStore = defineStore("profileStore", () => {
   }
 
   return {
-    firstName,
-    lastName,
-    email,
+    details,
     links,
     fullName,
     numLinks,

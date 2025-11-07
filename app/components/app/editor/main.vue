@@ -1,14 +1,6 @@
-<script setup lang="ts">
-const { addToast } = useToastNotifications();
-
-function save() {
-  addToast("Your changes have been successfully saved!", "my-icon:icon-changes-saved", false);
-}
-</script>
-
 <template>
   <main>
-    <div class="container editor">
+    <form class="container editor" @submit.prevent>
       <div class="content">
         <header>
           <h1 class="title">
@@ -26,12 +18,12 @@ function save() {
 
       <footer>
         <slot name="footer">
-          <button class="btn" @click="save">
+          <button class="btn" type="submit">
             Save
           </button>
         </slot>
       </footer>
-    </div>
+    </form>
 
     <div class="container preview">
       <slot name="preview">

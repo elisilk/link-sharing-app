@@ -3,7 +3,28 @@ definePageMeta({
   layout: "editor",
 });
 
+const { addToast } = useToastNotifications();
 const profile = useProfileStore();
+
+/* Vue Form Component Pattern */
+
+function clone(obj: object) {
+  return JSON.parse(JSON.stringify(obj));
+}
+
+const links = ref(clone(profile.links));
+
+function handleSave() {
+  profile.links = clone(links.value);
+  addToast("Your changes have been successfully saved!", "my-icon:icon-changes-saved", false);
+}
+
+profile.$subscribe((mutation, state) => {
+  links.value = clone(state.links);
+}, { deep: true });
+
+/* drag and drop */
+
 const linksContainer = useTemplateRef<HTMLDivElement>("links-container");
 
 function customDragImage() {
@@ -71,7 +92,7 @@ function onDrop(event: DragEvent) {
 </script>
 
 <template>
-  <AppEditorMain>
+  <AppEditorMain @submit="handleSave">
     <template #title>
       Customize your links
     </template>
@@ -80,7 +101,7 @@ function onDrop(event: DragEvent) {
       Add/edit/remove links below and then share all your profiles with the world!
     </template>
 
-    <button class="btn btn-secondary add-new-link-btn">
+    <button class="btn btn-secondary add-new-link-btn" type="button">
       + Add new link
     </button>
 
@@ -105,8 +126,8 @@ function onDrop(event: DragEvent) {
     >
       <TransitionGroup>
         <AppEditorLink
-          v-for="(link, index) in profile.links"
-          :key="link.platform"
+          v-for="(link, index) in links"
+          :key="link.id"
           v-model:platform="link.platform"
           v-model:url="link.url"
           :index="index + 1"

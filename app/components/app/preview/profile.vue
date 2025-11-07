@@ -23,8 +23,8 @@ const profile = useProfileStore();
       </div>
       <div v-else id="placeholder-name" />
 
-      <div v-if="!!profile.email" class="email">
-        {{ profile.email }}
+      <div v-if="!!profile.details.email" class="email">
+        {{ profile.details.email }}
       </div>
       <div v-else id="placeholder-email" />
     </div>
@@ -72,8 +72,8 @@ const profile = useProfileStore();
 
 .info {
   display: grid;
-  justify-items: center;
   gap: var(--space-100);
+  text-align: center;
 }
 
 .name {
