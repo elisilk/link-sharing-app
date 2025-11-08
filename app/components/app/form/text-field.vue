@@ -9,12 +9,12 @@ const props = defineProps<{
   pattern?: string;
   required?: boolean;
   oneRowIfPossible?: boolean;
+  errorMessages: errorMessagesType;
 }>();
 
 const model = defineModel();
 
-const isInvalid = ref(false);
-const errorMessage = ref("Can’t be empty");
+const { isInvalid, errorMessage, validate } = useInputValidation(props.id, props.errorMessages);
 </script>
 
 <template>
@@ -30,6 +30,7 @@ const errorMessage = ref("Can’t be empty");
       >*</span></label>
       <input
         :id="id"
+        :ref="id"
         v-model="model"
         :name="name"
         :type="type"
@@ -39,6 +40,8 @@ const errorMessage = ref("Can’t be empty");
         :required="required"
         :aria-invalid="isInvalid ? true : undefined"
         :aria-errormessage="isInvalid ? `${id}-error` : undefined"
+        @blur="validate"
+        @change="validate"
       >
       <span v-if="$slots.icon" class="icon">
         <slot name="icon" />

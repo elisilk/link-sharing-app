@@ -14,7 +14,19 @@ function clone(obj: object) {
 
 const details = ref(clone(profile.details));
 
-function handleSave() {
+function handleSave(event: SubmitEvent) {
+  const form = event.target;
+
+  // check if the entire form is valid
+  if (!form || !(form instanceof HTMLFormElement) || form.checkValidity() === false) {
+    // console.warn("Form --> invalid, so save cancelled");
+    addToast("Changes not saved. Check the form for errors.", "my-icon:icon-changes-saved", false);
+    return false;
+  }
+
+  // if all true, then submit the data to the server
+  // console.warn("Form --> valid, so data was saved!");
+
   profile.details = clone(details.value);
   addToast("Your changes have been successfully saved!", "my-icon:icon-changes-saved", false);
 }
@@ -62,6 +74,9 @@ profile.$subscribe((mutation, state) => {
             autocomplete="given-name"
             :one-row-if-possible="true"
             :required="true"
+            :error-messages="{
+              valueMissing: 'Can\'t be empty',
+            }"
           />
           <AppFormTextField
             id="profileLastName"
@@ -73,6 +88,9 @@ profile.$subscribe((mutation, state) => {
             autocomplete="family-name"
             :one-row-if-possible="true"
             :required="true"
+            :error-messages="{
+              valueMissing: 'Can\'t be empty',
+            }"
           />
           <AppFormTextField
             id="profileEmail"
@@ -83,6 +101,11 @@ profile.$subscribe((mutation, state) => {
             placeholder="e.g. email@example.com"
             autocomplete="email"
             :one-row-if-possible="true"
+            :error-messages="{
+              badInput: 'Must be an email address',
+              patternMismatch: 'Must be a valid email address',
+              typeMismatch: 'Must be a valid email type',
+            }"
           />
         </ClientOnly>
       </fieldset>

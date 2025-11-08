@@ -1,6 +1,10 @@
 <template>
   <main>
-    <form class="container editor" @submit.prevent>
+    <form
+      class="container editor"
+      novalidate
+      @submit.prevent
+    >
       <div class="content">
         <header>
           <h1 class="title">

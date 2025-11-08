@@ -5,7 +5,7 @@ async function login() {
 </script>
 
 <template>
-  <form @submit.prevent="login">
+  <form novalidate @submit.prevent="login">
     <AppFormContainer>
       <template #title>
         Login
@@ -22,6 +22,11 @@ async function login() {
           label="Email address"
           placeholder="e.g. alex@email.com"
           autocomplete="email"
+          :error-messages="{
+            badInput: 'Must be an email address',
+            patternMismatch: 'Must be a valid email address',
+            typeMismatch: 'Must be a valid email type',
+          }"
         >
           <template #icon>
             <Icon name="my-icon:icon-email" />
@@ -35,6 +40,9 @@ async function login() {
           label="Password"
           placeholder="Enter your password"
           autocomplete="current-password"
+          :error-messages="{
+            valueMissing: 'Can\'t be empty',
+          }"
         >
           <template #icon>
             <Icon name="my-icon:icon-password" />

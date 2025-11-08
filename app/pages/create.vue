@@ -5,7 +5,7 @@ async function createAccount() {
 </script>
 
 <template>
-  <form @submit.prevent="createAccount">
+  <form novalidate @submit.prevent="createAccount">
     <AppFormContainer>
       <template #title>
         Create account
@@ -22,6 +22,11 @@ async function createAccount() {
           label="Email address"
           placeholder="e.g. alex@email.com"
           autocomplete="email"
+          :error-messages="{
+            badInput: 'Must be an email address',
+            patternMismatch: 'Must be a valid email address',
+            typeMismatch: 'Must be a valid email type',
+          }"
         >
           <template #icon>
             <Icon name="my-icon:icon-email" />
@@ -35,6 +40,9 @@ async function createAccount() {
           label="Create password"
           placeholder="At least 8 characters"
           autocomplete="new-password"
+          :error-messages="{
+            valueMissing: 'Can\'t be empty',
+          }"
         >
           <template #icon>
             <Icon name="my-icon:icon-password" />
@@ -48,6 +56,9 @@ async function createAccount() {
           label="Confirm password"
           placeholder="At least 8 characters"
           autocomplete="new-password"
+          :error-messages="{
+            valueMissing: 'Can\'t be empty',
+          }"
         >
           <template #icon>
             <Icon name="my-icon:icon-password" />
