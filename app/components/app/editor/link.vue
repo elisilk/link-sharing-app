@@ -55,7 +55,12 @@ const id = computed(() => `link${props.index}-url`);
         label="Link"
         placeholder="e.g. https://www.<put sample URL here>"
         autocomplete="given-name"
-        pattern="https://.*"
+        :required="true"
+        :error-messages="{
+          badInput: 'Must be a URL',
+          typeMismatch: 'Please check the URL',
+          valueMissing: 'Can\'t be empty',
+        }"
       >
         <template #icon>
           <Icon name="my-icon:icon-link" />

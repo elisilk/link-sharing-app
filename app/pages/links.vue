@@ -14,7 +14,19 @@ function clone(obj: object) {
 
 const links = ref(clone(profile.links));
 
-function handleSave() {
+function handleSave(event: SubmitEvent) {
+  const form = event.target;
+
+  // check if the entire form is valid
+  if (!form || !(form instanceof HTMLFormElement) || form.checkValidity() === false) {
+    // console.warn("Form --> invalid, so save cancelled");
+    addToast("Changes not saved. Check the form for errors.", "my-icon:icon-changes-saved", false);
+    return false;
+  }
+
+  // if all true, then submit the data to the server
+  // console.warn("Form --> valid, so data was saved!");
+
   profile.links = clone(links.value);
   addToast("Your changes have been successfully saved!", "my-icon:icon-changes-saved", false);
 }
