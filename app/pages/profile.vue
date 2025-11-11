@@ -53,9 +53,10 @@ profile.$subscribe((mutation, state) => {
         </legend>
         <AppFormImageUpload
           id="profile-picture"
+          v-model="details.pictureUrl"
           name="profile-picture"
           label="Profile picture"
-          accept="image/png, image/jpeg"
+          :accept="['image/png', 'image/jpeg']"
         />
       </fieldset>
 

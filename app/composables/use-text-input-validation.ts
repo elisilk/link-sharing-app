@@ -33,7 +33,7 @@ const validityProperties: Array<keyof ValidityState> = [
 
 export type errorMessagesType = Partial<Record<keyof ValidityState, string>>;
 
-export function useInputValidation(inputRefId: string, errors: errorMessagesType) {
+export function useTextInputValidation(inputRefId: string, errors: errorMessagesType) {
   const thisInput = useTemplateRef<HTMLInputElement>(toValue(inputRefId));
   const errorMessages = toValue(errors);
 

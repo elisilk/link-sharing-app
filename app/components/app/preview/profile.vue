@@ -1,11 +1,9 @@
 <script setup lang="ts">
-type Props = {
+const props = withDefaults(defineProps<{
   layout?: string;
-};
+}>(), { layout: "preview" });
 
-const { layout = "preview" } = defineProps<Props>();
-
-const isEditor = computed(() => layout === "editor");
+const isEditor = computed(() => props.layout === "editor");
 
 const profile = useProfileStore();
 </script>
@@ -15,9 +13,15 @@ const profile = useProfileStore();
     class="preview-profile-container"
     :class="{ editor: isEditor }"
   >
-    <div class="image circle" />
+    <div class="details">
+      <!-- <div class="image circle" /> -->
+      <img
+        v-if="!!profile.details.pictureUrl"
+        :src="profile.details.pictureUrl"
+        class="picture"
+      >
+      <div v-else id="placeholder-picture" />
 
-    <div class="info">
       <div v-if="!!profile.fullName" class="name">
         {{ profile.fullName }}
       </div>
@@ -55,25 +59,25 @@ const profile = useProfileStore();
   min-block-size: var(--preview-editor-block-size-container-min);
 }
 
-.circle {
-  margin-block-end: var(--space-300);
-  margin-inline: auto;
-  inline-size: var(--preview-profile-image-size);
-  block-size: var(--preview-profile-image-size);
-  border: var(--preview-profile-image-border) solid var(--color-preview-image-border);
-  border-radius: 50%;
-  background-color: var(--color-preview-empty);
-}
-
-.preview-profile-container.editor .circle {
-  inline-size: var(--preview-editor-profile-image-size);
-  block-size: var(--preview-editor-profile-image-size);
-}
-
-.info {
+.details {
   display: grid;
   gap: var(--space-100);
+  justify-items: center;
   text-align: center;
+}
+
+.picture {
+  inline-size: var(--preview-profile-picture-size);
+  block-size: var(--preview-profile-picture-size);
+  border: var(--preview-profile-picture-border) solid var(--color-preview-image-border);
+  border-radius: 50%;
+  object-fit: cover;
+  /* margin-block-end: var(--space-300); */
+}
+
+.preview-profile-container.editor .picture {
+  inline-size: var(--preview-editor-profile-picture-size);
+  block-size: var(--preview-editor-profile-picture-size);
 }
 
 .name {
@@ -110,7 +114,7 @@ const profile = useProfileStore();
 
 /* placeholder shapes */
 
-#placeholder-photo {
+#placeholder-picture {
   width: 96px;
   height: 96px;
   border-radius: 50%;

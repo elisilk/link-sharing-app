@@ -14,7 +14,7 @@ const props = defineProps<{
 
 const model = defineModel();
 
-const { isInvalid, errorMessage, validate } = useInputValidation(props.id, props.errorMessages);
+const { isInvalid, errorMessage, validate } = useTextInputValidation(props.id, props.errorMessages);
 </script>
 
 <template>
