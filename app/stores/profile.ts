@@ -10,8 +10,12 @@ export type details = {
 export type link = {
   id: number;
   platform: string;
-  url: string;
+  url: string | null;
 };
+
+function maxLinkId(arr: link[]) {
+  return arr.reduce((acc, curr) => curr.id > acc ? curr.id : acc, -1);
+}
 
 export const useProfileStore = defineStore("profileStore", () => {
   const details = ref<details>({
@@ -29,8 +33,16 @@ export const useProfileStore = defineStore("profileStore", () => {
   const getLinkByName = computed(() => (name: string) => {
     return links.value.find(link => link.platform === name);
   });
+  const nextId = computed(() => maxLinkId(links.value) + 1);
 
   // Actions: Functions to modify the state
+  function createLink() {
+    links.value.push({
+      id: nextId.value,
+      platform: "GitHub",
+      url: null,
+    });
+  }
   function removeLink(id: number) {
     links.value = links.value.filter(link => link.id !== id);
   }
@@ -57,6 +69,8 @@ export const useProfileStore = defineStore("profileStore", () => {
     numLinks,
     isEmpty,
     getLinkByName,
+    nextId,
+    createLink,
     removeLink,
     reorderLink,
   };

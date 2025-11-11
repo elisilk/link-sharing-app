@@ -14,7 +14,6 @@ const profile = useProfileStore();
     :class="{ editor: isEditor }"
   >
     <div class="details">
-      <!-- <div class="image circle" /> -->
       <img
         v-if="!!profile.details.pictureUrl"
         :src="profile.details.pictureUrl"
@@ -40,6 +39,15 @@ const profile = useProfileStore();
           :key="link.platform"
           :platform="link.platform"
           :url="link.url"
+        />
+      </TransitionGroup>
+      <TransitionGroup
+        v-if="profile.numLinks < 5"
+      >
+        <div
+          v-for="n in 5 - profile.numLinks"
+          :key="`placeholder-${n}`"
+          class="placeholder-link"
         />
       </TransitionGroup>
     </div>
@@ -135,7 +143,7 @@ const profile = useProfileStore();
   background-color: var(--color-preview-empty);
 }
 
-#placeholder-link {
+.placeholder-link {
   width: 237px;
   height: 44px;
   border-radius: 8px;
