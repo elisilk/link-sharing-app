@@ -81,6 +81,7 @@
   --color-input-active: hsl(var(--color-purple-600));
 
   --color-input-image-text: hsl(var(--color-purple-600));
+  --color-input-image-exists-text: hsl(var(--color-white));
   --color-input-image-background: hsl(var(--color-grey-100));
 
   --color-input-dropdown-heading: hsl(var(--color-grey-500));
@@ -130,9 +131,9 @@
   --preview-inline-size-container: 14.8125rem; /* 237px */
   --preview-block-size-container-min: 30rem; /* 480px=30rem */
   --preview-editor-block-size-container-min: 32.125rem; /* 514px=32.125rem */
-  --preview-profile-image-border: 4px;
-  --preview-profile-image-size: 104px;
-  --preview-editor-profile-image-size: 96px;
+  --preview-profile-picture-border: 4px;
+  --preview-profile-picture-size: 104px;
+  --preview-editor-profile-picture-size: 96px;
 
   --preview-profile-position: 200px; /* 279px */
   --preview-links-position: 17.4375rem; /* 279px */
