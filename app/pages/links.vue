@@ -14,6 +14,10 @@ function clone(obj: object) {
 
 const links = ref(clone(profile.links));
 
+function handleAddNewLink() {
+  profile.createLink();
+}
+
 function handleSave(event: SubmitEvent) {
   const form = event.target;
 
@@ -113,7 +117,11 @@ function onDrop(event: DragEvent) {
       Add/edit/remove links below and then share all your profiles with the world!
     </template>
 
-    <button class="btn btn-secondary add-new-link-btn" type="button">
+    <button
+      class="btn btn-secondary add-new-link-btn"
+      type="button"
+      @click="handleAddNewLink"
+    >
       + Add new link
     </button>
 
