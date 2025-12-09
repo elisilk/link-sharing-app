@@ -14,7 +14,7 @@
 <style scoped>
 .container {
   display: grid;
-  place-items: center;
+  justify-items: center;
 }
 
 .container > * {

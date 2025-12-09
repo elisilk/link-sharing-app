@@ -14,22 +14,27 @@ const profile = useProfileStore();
     :class="{ editor: isEditor }"
   >
     <div class="details">
-      <img
-        v-if="!!profile.details.pictureUrl"
-        :src="profile.details.pictureUrl"
-        class="picture"
-      >
-      <div v-else id="placeholder-picture" />
-
-      <div v-if="!!profile.fullName" class="name">
-        {{ profile.fullName }}
+      <div class="picture">
+        <img
+          v-if="!!profile.details.pictureUrl"
+          :src="profile.details.pictureUrl"
+        >
+        <span v-else class="placeholder" />
       </div>
-      <div v-else id="placeholder-name" />
 
-      <div v-if="!!profile.details.email" class="email">
-        {{ profile.details.email }}
+      <div class="name">
+        <span v-if="!!profile.fullName">
+          {{ profile.fullName }}
+        </span>
+        <span v-else class="placeholder" />
       </div>
-      <div v-else id="placeholder-email" />
+
+      <div class="email">
+        <span v-if="!!profile.details.email">
+          {{ profile.details.email }}
+        </span>
+        <span v-else class="placeholder" />
+      </div>
     </div>
 
     <div class="links">
@@ -47,7 +52,7 @@ const profile = useProfileStore();
         <div
           v-for="n in 5 - profile.numLinks"
           :key="`placeholder-${n}`"
-          class="placeholder-link"
+          class="placeholder"
         />
       </TransitionGroup>
     </div>
@@ -64,26 +69,29 @@ const profile = useProfileStore();
 }
 
 .preview-profile-container.editor {
+  margin-block-start: 63.5px;
   min-block-size: var(--preview-editor-block-size-container-min);
 }
 
 .details {
   display: grid;
-  gap: var(--space-100);
   justify-items: center;
   text-align: center;
 }
 
 .picture {
+  margin-block-end: var(--space-300);
+}
+
+.picture > img {
   inline-size: var(--preview-profile-picture-size);
   block-size: var(--preview-profile-picture-size);
   border: var(--preview-profile-picture-border) solid var(--color-preview-image-border);
   border-radius: 50%;
   object-fit: cover;
-  /* margin-block-end: var(--space-300); */
 }
 
-.preview-profile-container.editor .picture {
+.preview-profile-container.editor .picture > img {
   inline-size: var(--preview-editor-profile-picture-size);
   block-size: var(--preview-editor-profile-picture-size);
 }
@@ -95,7 +103,12 @@ const profile = useProfileStore();
 }
 
 .email {
+  margin-block-start: var(--space-100);
   color: var(--color-preview-email);
+}
+
+.email:has(.placeholder) {
+  margin-block-start: var(--space-150);
 }
 
 .links {
@@ -122,31 +135,32 @@ const profile = useProfileStore();
 
 /* placeholder shapes */
 
-#placeholder-picture {
+.placeholder {
+  display: block;
+  background-color: var(--color-preview-empty);
+}
+
+.picture > .placeholder {
   width: 96px;
   height: 96px;
   border-radius: 50%;
-  background-color: var(--color-preview-empty);
 }
 
-#placeholder-name {
+.name > .placeholder {
   width: 160px;
   height: 16px;
   border-radius: 104px;
-  background-color: var(--color-preview-empty);
 }
 
-#placeholder-email {
+.email > .placeholder {
   width: 72px;
   height: 8px;
   border-radius: 104px;
-  background-color: var(--color-preview-empty);
 }
 
-.placeholder-link {
+.links > .placeholder {
   width: 237px;
   height: 44px;
   border-radius: 8px;
-  background-color: var(--color-preview-empty);
 }
 </style>

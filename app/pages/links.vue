@@ -235,11 +235,3 @@ function onDrop(event: DragEvent) {
   }
 }
 </style>
-
-<style>
-.placeholder {
-  border-radius: var(--br-500);
-  background-color: var(--color-placeholder-background);
-  border: var(--border-width) solid var(--color-placeholder-border);
-}
-</style>
