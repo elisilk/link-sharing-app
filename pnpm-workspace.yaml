@@ -1,9 +1,0 @@
-catalogMode: prefer
-shellEmulator: true
-trustPolicy: no-downgrade
-
-onlyBuiltDependencies:
-  - "@parcel/watcher"
-  - esbuild
-  - supabase
-  - unrs-resolver
