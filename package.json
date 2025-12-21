@@ -2,7 +2,7 @@
   "name": "link-sharing-app",
   "type": "module",
   "private": true,
-  "packageManager": "pnpm@10.20.0",
+  "packageManager": "pnpm@10.25.0",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
@@ -11,12 +11,21 @@
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "prepare": "husky"
+    "prepare": "husky",
+    "supabase:init": "supabase init",
+    "supabase:login": "supabase login",
+    "supabase:link": "supabase link --project-ref loldxhwjbobczvnfxosf",
+    "db:migrate:new": "supabase migration new",
+    "db:reset": "supabase db reset --linked",
+    "db:seed": "node --env-file=.env database/seed.js",
+    "supabase:types": "supabase gen types --lang=typescript --project-id loldxhwjbobczvnfxosf > app/types/database.types.ts"
   },
   "dependencies": {
     "@nuxt/eslint": "1.9.0",
     "@nuxt/icon": "2.1.0",
+    "@nuxtjs/supabase": "2.0.3",
     "@pinia/nuxt": "0.11.2",
+    "@supabase/supabase-js": "^2.87.1",
     "attr-accept": "^2.2.5",
     "eslint": "^9.37.0",
     "nuxt": "^4.1.3",
@@ -26,9 +35,11 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "^6.0.0",
+    "@faker-js/faker": "^10.1.0",
     "eslint-plugin-format": "^1.0.2",
     "husky": "^9.1.7",
-    "lint-staged": "^16.2.4"
+    "lint-staged": "^16.2.4",
+    "supabase": "^2.66.0"
   },
   "lint-staged": {
     "*": "pnpm lint"

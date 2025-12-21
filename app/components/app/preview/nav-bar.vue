@@ -2,7 +2,7 @@
 const emit = defineEmits(["shareLink"]);
 
 async function navigateBackToEditor() {
-  await navigateTo("/links");
+  await navigateTo("/");
 }
 </script>
 

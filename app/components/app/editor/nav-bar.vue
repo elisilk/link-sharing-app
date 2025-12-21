@@ -1,3 +1,5 @@
+<script setup lang="ts"></script>
+
 <template>
   <header>
     <menu>
@@ -9,7 +11,7 @@
       </li>
 
       <li>
-        <AppEditorTab to="/links">
+        <AppEditorTab to="/">
           <template #icon>
             <Icon name="my-icon:icon-links-header" />
           </template>

@@ -4,6 +4,7 @@
 
     <slot />
 
+    <AppFooter />
     <AppToastContainer />
   </div>
 </template>

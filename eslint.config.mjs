@@ -15,7 +15,7 @@ export default withNuxt(
         semi: true,
         quotes: "double",
       },
-      ignores: [".pnpm-store/**", "**/migrations/*", "**/fonts/*"],
+      ignores: [".pnpm-store/**", "**/migrations/*", "**/fonts/*", "**/types/*", "supabase/*"],
     },
     {
       rules: {
