@@ -76,7 +76,7 @@ async function createAccount() {
 
       <template #footer>
         Already have an account?
-        <NuxtLink to="/">
+        <NuxtLink to="/login">
           Login
         </NuxtLink>
       </template>

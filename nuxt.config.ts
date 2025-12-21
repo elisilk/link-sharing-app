@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
-  modules: ["@nuxt/eslint", "@nuxt/icon", "@pinia/nuxt"],
+  modules: ["@nuxt/eslint", "@nuxt/icon", "@pinia/nuxt", "@nuxtjs/supabase"],
   css: ["~/assets/css/main.css"],
   eslint: {
     config: {
@@ -23,6 +23,14 @@ export default defineNuxtConfig({
         driver: "fs",
         base: "./public/uploads",
       },
+    },
+  },
+  supabase: {
+    redirectOptions: {
+      login: "/login",
+      callback: "/confirm",
+      exclude: ["/register"],
+      saveRedirectToCookie: true,
     },
   },
 });

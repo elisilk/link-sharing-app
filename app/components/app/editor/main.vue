@@ -93,7 +93,7 @@ footer {
 /* viewport: mobile -> tablet */
 @media (min-width: 45rem) {
   main {
-    padding: 0 var(--space-300) var(--space-300);
+    padding: 0 var(--space-300);
   }
 
   header {
