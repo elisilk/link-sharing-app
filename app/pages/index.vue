@@ -9,8 +9,8 @@ const client = useSupabaseClient();
 
 /* Database */
 
-const { data: instruments, pending, error } = await useAsyncData("instruments", async () => {
-  const { data } = await client.from("instruments").select();
+const { data: linksDb, pending, error } = await useAsyncData("links", async () => {
+  const { data } = await client.from("links").select();
 
   return data;
 });
@@ -143,9 +143,9 @@ function onDrop(event: DragEvent) {
         <p v-if="error">
           Error: {{ error.message }}
         </p>
-        <ul v-if="instruments">
-          <li v-for="instrument in instruments" :key="instrument.id">
-            {{ instrument.name }}
+        <ul v-if="linksDb">
+          <li v-for="link in linksDb" :key="link.id">
+            {{ link.platform }}: {{ link.url }}
           </li>
         </ul>
       </div>
