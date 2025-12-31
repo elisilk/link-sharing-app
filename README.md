@@ -41,18 +41,14 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [https://github.com/elisilk/multi-step-form](https://github.com/elisilk/multi-step-form)
-- Live Site URL: [https://elisilk.github.io/multi-step-form/](https://elisilk.github.io/multi-step-form/)
+- Solution URL: [https://github.com/elisilk/link-sharing-app](https://github.com/elisilk/link-sharing-app)
+- Live Site URL: [https://link-sharing-app-kuyx.vercel.app/](https://link-sharing-app-kuyx.vercel.app/)
 
 ## My process
 
 ### Built with
 
-- Semantic HTML5 markup
-- CSS custom properties
-- Flexbox
-- CSS Grid
-- Mobile-first workflow
+- [Nuxt](https://nuxt.com/)
 
 ### What I learned
 
