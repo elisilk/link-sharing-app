@@ -22,3 +22,9 @@ logs
 .env
 .env.*
 !.env.example
+
+# Design files (please do not remove 🙂)
+*.sketch
+*.fig
+*.xd
+
