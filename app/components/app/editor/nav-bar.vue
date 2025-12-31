@@ -6,8 +6,8 @@
 
     <div class="navbar-center">
       <NuxtLink to="/editor" class="flex align-middle gap-1">
-        <Icon name="tabler:user-circle" size="24" />
-        Profile Details
+        <Icon name="tabler:edit" size="24" />
+        Editor
       </NuxtLink>
     </div>
 

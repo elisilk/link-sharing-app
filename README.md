@@ -56,6 +56,8 @@ As always, so many cool :sunglasses: things. Here are some of the key resources 
 
 #### Building the App
 
+- [Full Stack App Build | Travel Log w/ Nuxt, Vue, Better Auth, Drizzle, Tailwind, DaisyUI, MapLibre](https://www.youtube.com/watch?v=DK93dqmJJYg) - I learned so much from watching and following along with this video. I adopted/adapted much the same approach and tech stack. Thanks, CJ!
+
 #### Testing the App
 
 ### Continued development
