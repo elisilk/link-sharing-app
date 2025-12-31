@@ -28,3 +28,5 @@ logs
 *.fig
 *.xd
 
+# Database
+local.db*
