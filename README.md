@@ -42,7 +42,7 @@ Users should be able to:
 ### Links
 
 - Solution URL: [https://github.com/elisilk/link-sharing-app](https://github.com/elisilk/link-sharing-app)
-- Live Site URL: [https://link-sharing-app-kuyx.vercel.app/](https://link-sharing-app-kuyx.vercel.app/)
+- Live Site URL: [https://link-sharing-app-eight-nu.vercel.app/](https://link-sharing-app-eight-nu.vercel.app/)
 
 ## My process
 
