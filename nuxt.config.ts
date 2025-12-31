@@ -1,6 +1,6 @@
 import tailwindcss from "@tailwindcss/vite";
 
-import "./shared/env";
+import "./shared/utils/env";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -16,6 +16,11 @@ export default defineNuxtConfig({
   vite: {
     plugins: [
       tailwindcss(),
+    ],
+  },
+  imports: {
+    dirs: [
+      "server/db/schema",
     ],
   },
 });
