@@ -2,10 +2,8 @@
 const authStore = useAuthStore();
 
 onMounted(() => {
-  setTimeout(() => {
-    authStore.signOut();
-    navigateTo("/");
-  }, 2000);
+  authStore.signOut();
+  navigateTo("/");
 });
 </script>
 
