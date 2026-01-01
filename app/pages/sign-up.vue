@@ -6,8 +6,8 @@ const password = ref("");
 const passwordConfirm = ref("");
 const errorMessage = ref("");
 
-async function handleRegister() {
-  // validate form values
+async function handleSignUp() {
+  // validate form
   if (password.value === "" || passwordConfirm.value === "") {
     console.error("Form not valid. Try again.");
     return;
@@ -17,10 +17,8 @@ async function handleRegister() {
     return;
   }
 
-  // valid form, so process it
-  authStore.loading = true;
+  // form is valid form, so process it
   authStore.signUp(email.value, password.value);
-  authStore.loading = false;
 }
 </script>
 
@@ -34,7 +32,7 @@ async function handleRegister() {
 
         <p>Let’s get you started sharing your links!</p>
 
-        <form novalidate @submit.prevent="handleRegister">
+        <form novalidate @submit.prevent="handleSignUp">
           <!-- email address -->
           <fieldset class="fieldset">
             <legend class="fieldset-legend text-left">
