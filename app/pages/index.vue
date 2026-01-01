@@ -17,7 +17,7 @@
         </button>
 
         <p>
-          Don’t have an account? <NuxtLink to="/register">
+          Don’t have an account? <NuxtLink to="/register" class="link link-primary link-hover">
             Create account
           </NuxtLink>
         </p>
