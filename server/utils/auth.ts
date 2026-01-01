@@ -1,7 +1,6 @@
+import db from "~~/server/db/index";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-
-import db from "../../server/db/index";
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
@@ -11,5 +10,8 @@ export const auth = betterAuth({
     database: {
       generateId: false,
     },
+  },
+  emailAndPassword: {
+    enabled: true,
   },
 });
