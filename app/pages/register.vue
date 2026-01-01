@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { authClient } from "~~/server/utils/auth-client";
-
 const authStore = useAuthStore();
 
 const email = ref("");
@@ -9,37 +7,19 @@ const passwordConfirm = ref("");
 const errorMessage = ref("");
 
 async function handleRegister() {
+  // validate form values
   if (password.value === "" || passwordConfirm.value === "") {
     console.error("Form not valid. Try again.");
     return;
   }
-
   if (password.value !== passwordConfirm.value) {
     console.error("Passwords DON'T match. Try again.");
     return;
   }
 
-  // console.log("Passwords DO match, so good to go!");
-
+  // valid form, so process it
   authStore.loading = true;
-
-  try {
-    const { data, error } = await authClient.signUp.email({
-      name: "Jay Doe", // required
-      email: email.value, // required
-      password: password.value, // required
-      callbackURL: "/",
-    });
-
-    if (error) {
-      console.error("signup error:", error);
-    }
-
-    console.warn("signup successful", data);
-  }
-  catch (error) {
-    console.error("signup error:", error);
-  }
+  authStore.signUp(email.value, password.value);
   authStore.loading = false;
 }
 </script>
