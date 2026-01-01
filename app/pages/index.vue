@@ -1,4 +1,8 @@
 <script setup lang="ts">
+definePageMeta({
+  alias: ["/sign-in"],
+});
+
 const authStore = useAuthStore();
 
 const email = ref("");

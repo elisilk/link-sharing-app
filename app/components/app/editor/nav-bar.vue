@@ -4,10 +4,14 @@
       <AppMenuFull />
     </div>
 
-    <div class="navbar-center">
-      <NuxtLink to="/editor" class="flex align-middle gap-1">
-        <Icon name="tabler:edit" size="24" />
-        Editor
+    <div class="navbar-center flex gap-3">
+      <NuxtLink to="/editor/links" class="flex align-middle gap-1">
+        <Icon name="tabler:link" size="24" />
+        Links
+      </NuxtLink>
+      <NuxtLink to="/editor/profile" class="flex align-middle gap-1">
+        <Icon name="tabler:user-circle" size="24" />
+        Profile Details
       </NuxtLink>
     </div>
 
