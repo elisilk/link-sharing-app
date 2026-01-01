@@ -1,29 +1,42 @@
+<script setup lang="ts">
+const authStore = useAuthStore();
+</script>
+
 <template>
-  <div>
-    <button
-      popovertarget="nav-menu-full"
+  <div class="dropdown">
+    <div
+      tabindex="0"
+      role="button"
       class="cursor-pointer"
-      style="anchor-name:--nav-menu-full-anchor"
     >
       <img src="~/assets/images/logo-devlinks-large.svg" alt="">
-    </button>
-
-    <ul
-      id="nav-menu-full"
-      class="dropdown menu w-52 rounded-box bg-base-100 shadow-sm"
-      popover
-      style="position-anchor:--nav-menu-full-anchor"
-    >
+    </div>
+    <ul tabindex="-1" class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+      <li>
+        <div v-if="!authStore.loading && authStore.user">
+          <Icon name="tabler:user-check" />
+          {{ authStore.user.email }}
+        </div>
+        <div v-else>
+          User is NOT logged in
+        </div>
+      </li>
       <li>
         <NuxtLink to="/" active-class="menu-active">
           <Icon name="tabler:user-check" />
-          Login
+          Sign In
         </NuxtLink>
       </li>
       <li>
-        <NuxtLink to="/register" active-class="menu-active">
+        <NuxtLink to="/sign-up" active-class="menu-active">
           <Icon name="tabler:user-plus" />
-          Register
+          Sign Up
+        </NuxtLink>
+      </li>
+      <li>
+        <NuxtLink to="/sign-out" active-class="menu-active">
+          <Icon name="tabler:user-x" />
+          Sign Out
         </NuxtLink>
       </li>
       <li>
