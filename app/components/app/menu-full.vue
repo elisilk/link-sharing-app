@@ -27,6 +27,12 @@
         </NuxtLink>
       </li>
       <li>
+        <NuxtLink to="/error" active-class="menu-active">
+          <Icon name="tabler:face-id-error" />
+          Error
+        </NuxtLink>
+      </li>
+      <li>
         <NuxtLink to="/editor" active-class="menu-active">
           <Icon name="tabler:edit" />
           Editor
