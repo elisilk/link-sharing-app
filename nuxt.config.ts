@@ -6,7 +6,12 @@ import "./server/utils/env";
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
-  modules: ["@nuxt/eslint", "@nuxt/icon", "@pinia/nuxt"],
+  modules: [
+    "@nuxt/eslint",
+    "@nuxt/icon",
+    "@pinia/nuxt",
+    "nuxt-auth-utils",
+  ],
   css: ["./app/assets/css/main.css"],
   eslint: {
     config: {

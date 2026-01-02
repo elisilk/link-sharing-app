@@ -1,9 +1,15 @@
 import { authClient } from "~~/server/utils/auth-client";
 
 export const useAuthStore = defineStore("useAuthStore", () => {
-  const session = authClient.useSession();
-  const user = computed(() => session.value.data?.user);
-  const loading = computed(() => session.value.isPending || session.value.isRefetching);
+  const session = ref<Awaited<ReturnType<typeof authClient.useSession>> | null>(null);
+
+  async function init() {
+    const data = await authClient.useSession(useFetch);
+    session.value = data;
+  }
+
+  const user = computed(() => session.value?.data?.user);
+  const loading = computed(() => session.value?.isPending);
 
   async function signUp(email: string, password: string) {
     const { data, error } = await authClient.signUp.email({
@@ -26,7 +32,7 @@ export const useAuthStore = defineStore("useAuthStore", () => {
       email, // required
       password, // required
       rememberMe: true,
-      callbackURL: "/",
+      callbackURL: "/editor",
     });
 
     if (error) {
@@ -38,8 +44,16 @@ export const useAuthStore = defineStore("useAuthStore", () => {
   }
 
   async function signOut() {
-    await authClient.signOut();
+    await authClient.signOut({
+      fetchOptions: {
+        onSuccess: async () => {
+          // console.log("signOut success", session.value?.data);
+          await navigateTo("/", { replace: true });
+          // router.push("/login"); // redirect to login page
+        },
+      },
+    });
   }
 
-  return { user, loading, signUp, signIn, signOut };
+  return { init, user, loading, signUp, signIn, signOut };
 });
