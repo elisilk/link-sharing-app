@@ -1,7 +1,8 @@
 <script setup lang="ts">
 definePageMeta({
-  layout: "editor",
+  middleware: ["auth"],
   alias: ["/editor/"],
+  layout: "editor",
 });
 </script>
 

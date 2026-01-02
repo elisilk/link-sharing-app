@@ -1,5 +1,10 @@
 <script setup lang="ts">
-const authStore = useAuthStore();
+const { loggedIn, user, clear } = useUserSession();
+
+async function handleLogout() {
+  await clear();
+  await navigateTo("/");
+}
 </script>
 
 <template>
@@ -13,14 +18,14 @@ const authStore = useAuthStore();
     </div>
 
     <ul
-      v-if="authStore.user"
+      v-if="loggedIn"
       tabindex="-1"
       class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
     >
       <li>
         <div>
           <Icon name="tabler:user-check" />
-          {{ authStore.user.email }}
+          {{ user?.email }}
         </div>
       </li>
       <li>
@@ -48,10 +53,10 @@ const authStore = useAuthStore();
         </NuxtLink>
       </li>
       <li>
-        <NuxtLink to="/sign-out" active-class="menu-active">
+        <button class="btn btn-ghost" @click="handleLogout">
           <Icon name="tabler:user-x" />
-          Sign Out
-        </NuxtLink>
+          Logout
+        </button>
       </li>
     </ul>
 
@@ -66,13 +71,13 @@ const authStore = useAuthStore();
       <li>
         <NuxtLink to="/" active-class="menu-active">
           <Icon name="tabler:user-check" />
-          Sign In
+          Login
         </NuxtLink>
       </li>
       <li>
-        <NuxtLink to="/sign-up" active-class="menu-active">
+        <NuxtLink to="/register" active-class="menu-active">
           <Icon name="tabler:user-plus" />
-          Sign Up
+          Register
         </NuxtLink>
       </li>
       <li>
