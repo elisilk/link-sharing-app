@@ -1,5 +1,3 @@
-import tailwindcss from "@tailwindcss/vite";
-
 import "./server/utils/env";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
@@ -8,20 +6,15 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
     "@nuxt/eslint",
-    "@nuxt/icon",
+    "@nuxt/ui",
     "@pinia/nuxt",
     "nuxt-auth-utils",
   ],
-  css: ["./app/assets/css/main.css"],
+  css: ["~/assets/css/main.css"],
   eslint: {
     config: {
       standalone: false,
     },
-  },
-  vite: {
-    plugins: [
-      tailwindcss(),
-    ],
   },
   imports: {
     dirs: [

@@ -6,16 +6,13 @@ definePageMeta({
 </script>
 
 <template>
-  <div class="container mx-auto mt-4 flex justify-center">
-    <h1 class="sr-only">
-      Preview
-    </h1>
-
-    <div class="mockup-phone">
-      <div class="mockup-phone-camera" />
-      <div class="mockup-phone-display text-white grid place-content-center bg-neutral-900">
-        It's Glowtime.
-      </div>
-    </div>
-  </div>
+  <UContainer>
+    <UCard class="mt-4  mx-auto">
+      <template #header>
+        <h1 class="text-5xl font-bold">
+          Preview
+        </h1>
+      </template>
+    </UCard>
+  </UContainer>
 </template>

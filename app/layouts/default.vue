@@ -1,11 +1,13 @@
 <template>
-  <div class="min-h-screen flex flex-col">
-    <header>
-      <AppLandingNavBar />
-    </header>
+  <UApp>
+    <UHeader>
+      <template #left>
+        <AppHeaderLogoWithMenu />
+      </template>
+    </UHeader>
 
-    <main>
+    <UMain>
       <slot />
-    </main>
-  </div>
+    </UMain>
+  </UApp>
 </template>
