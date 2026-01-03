@@ -1,16 +1,20 @@
 <script setup lang="ts">
 definePageMeta({
   middleware: ["auth"],
-  alias: ["/editor/"],
+  alias: ["/editor"],
   layout: "editor",
 });
 </script>
 
 <template>
-  <div class="container mx-auto mt-4">
-    <h1 class="text-3xl font-bold">
-      Customize your links
-    </h1>
-    <p>Add/edit/remove links below and then share all your profiles with the world!</p>
-  </div>
+  <UContainer>
+    <UCard class="mt-4  mx-auto">
+      <template #header>
+        <h1 class="text-5xl font-bold">
+          Customize your links
+        </h1>
+        <p>Add/edit/remove links below and then share all your profiles with the world!</p>
+      </template>
+    </UCard>
+  </UContainer>
 </template>

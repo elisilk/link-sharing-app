@@ -6,10 +6,14 @@ definePageMeta({
 </script>
 
 <template>
-  <div class="container mx-auto mt-4">
-    <h1 class="text-3xl font-bold">
-      Profile Details
-    </h1>
-    <p>Add your details to create a personal touch to your profile.</p>
-  </div>
+  <UContainer>
+    <UCard class="mt-4  mx-auto">
+      <template #header>
+        <h1 class="text-5xl font-bold">
+          Profile Details
+        </h1>
+        <p>Add your details to create a personal touch to your profile.</p>
+      </template>
+    </UCard>
+  </UContainer>
 </template>

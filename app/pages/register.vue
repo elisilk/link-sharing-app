@@ -1,58 +1,57 @@
 <script setup lang="ts">
-import { toTypedSchema } from "@vee-validate/zod";
+import type { FormSubmitEvent } from "@nuxt/ui";
+
 import { FetchError } from "ofetch";
-import { useField, useForm } from "vee-validate";
 import * as z from "zod";
 
 definePageMeta({
   middleware: ["guest"],
 });
 
-const { fetch, loggedIn } = useUserSession();
+const schema = z.object({
+  email: z.string("Can't be empty").check(z.email("Invalid email")),
+  password: z.string("Can't be empty").min(8, { message: "Must be at least 8 characters" }),
+  passwordConfirm: z.string("Can't be empty"),
+}).refine(data => data.password === data.passwordConfirm, {
+  message: "Passwords don't match",
+  path: ["passwordConfirm"],
+});
+;
 
-const schema = toTypedSchema(
-  z.object({
-    email: z.string({ message: "Can't be empty" })
-      .trim()
-      .nonempty({ message: "Can't be empty" })
-      .check(z.email({ message: "Must be a valid email" })),
-    password: z.string({ message: "Can't be empty" })
-      .trim()
-      .nonempty({ message: "Can't be empty" })
-      .min(8, { message: "Must be at least 8 characters" }),
-    passwordConfirm: z.string({ message: "Can't be empty" })
-      .trim()
-      .nonempty({ message: "Can't be empty" })
-      .min(8, { message: "Must be at least 8 characters" }),
-  }),
-);
+// password: z.string({ message: "Can't be empty" })
+//   .trim()
+//   .nonempty({ message: "Can't be empty" })
+//   .min(8, { message: "Must be at least 8 characters" }),
 
-const { handleSubmit } = useForm({
-  validationSchema: schema,
-  // validateOnChange: false,
+type Schema = z.output<typeof schema>;
+
+const state = reactive<Partial<Schema>>({
+  email: undefined,
+  password: undefined,
+  passwordConfirm: undefined,
 });
 
-const { value: email, errorMessage: emailFieldError, meta: emailFieldMeta } = useField("email");
-const { value: password, errorMessage: passwordFieldError, meta: passwordFieldMeta } = useField("password");
-const { value: passwordConfirm, errorMessage: passwordConfirmFieldError, meta: passwordConfirmFieldMeta } = useField("passwordConfirm");
+const { fetch, loggedIn } = useUserSession();
+const toast = useToast();
 
-const onSubmit = handleSubmit(async (values) => {
+async function onSubmit(event: FormSubmitEvent<Schema>) {
   try {
     await $fetch("/auth/register", {
       method: "POST",
-      body: values,
+      body: event.data,
     });
     fetch();
+    toast.add({ title: "Registration Success", description: "Thank you for registering!", color: "success" });
   }
   catch (error) {
     if (error instanceof FetchError) {
-      console.error("Fetch error registering:", error.data.message);
+      toast.add({ title: "Error Registering", description: error.data.message, color: "error" });
     }
     else {
-      console.error("Uknown error registering:", error);
+      toast.add({ title: "Error Registering", description: "There was an issue.", color: "error" });
     }
   }
-});
+}
 
 watch(loggedIn, () => {
   if (loggedIn.value)
@@ -61,81 +60,65 @@ watch(loggedIn, () => {
 </script>
 
 <template>
-  <div class="hero bg-base-200 container mx-auto mt-4">
-    <div class="hero-content">
-      <div class="max-w-md">
-        <h1 class="text-5xl font-bold">
-          Create account
-        </h1>
+  <UCard class="mt-4 max-w-md mx-auto">
+    <template #header>
+      <h1 class="text-5xl font-bold">
+        Create account
+      </h1>
+      <p>Let’s get you started sharing your links!</p>
+    </template>
 
-        <p>Let’s get you started sharing your links!</p>
+    <UForm
+      :schema="schema"
+      :state="state"
+      class="space-y-4"
+      @submit="onSubmit"
+    >
+      <UFormField label="Email address" name="email">
+        <!-- <UIcon name="i-lucide-mail" /> -->
+        <UInput
+          v-model="state.email"
+          placeholder="e.g. alex@email.com"
+          autocomplete="email"
+          class="w-full"
+        />
+      </UFormField>
 
-        <form
-          novalidate
-          class="grid gap-4"
-          @submit="onSubmit"
-        >
-          <div class="grid gap-2">
-            <label for="email">Email address</label>
-            <!-- <Icon name="tabler:mail" /> -->
-            <input
-              id="email"
-              v-model="email"
-              type="email"
-              class="input w-full"
-              placeholder="e.g. alex@email.com"
-              autocomplete="email"
-            >
-            <span v-if="emailFieldError && emailFieldMeta.dirty">
-              {{ emailFieldError }}
-            </span>
-          </div>
+      <UFormField label="Create password" name="password">
+        <!-- <UIcon name="i-lucide-lock-keyhole" /> -->
+        <UInput
+          v-model="state.password"
+          type="password"
+          placeholder="At least 8 characters"
+          autocomplete="new-password"
+          class="w-full"
+        />
+      </UFormField>
 
-          <div class="grid gap-2">
-            <label for="password">Create password</label>
-            <!-- <Icon name="tabler:lock-password" /> -->
-            <input
-              id="password"
-              v-model="password"
-              type="password"
-              class="input w-full"
-              placeholder="At least 8 characters"
-              autocomplete="new-password"
-            >
-            <span v-if="passwordFieldError && passwordFieldMeta.dirty">
-              {{ passwordFieldError }}
-            </span>
-          </div>
+      <UFormField label="Confirm password" name="passwordConfirm">
+        <!-- <UIcon name="i-lucide-lock-keyhole" /> -->
+        <UInput
+          v-model="state.passwordConfirm"
+          type="password"
+          placeholder="At least 8 characters"
+          autocomplete="new-password"
+          class="w-full"
+        />
+      </UFormField>
 
-          <div class="grid gap-2">
-            <label for="passwordConfirm">Confirm password</label>
-            <!-- <Icon name="tabler:lock-password" /> -->
-            <input
-              id="passwordConfirm"
-              v-model="passwordConfirm"
-              type="password"
-              class="input w-full"
-              placeholder="At least 8 characters"
-              autocomplete="new-password"
-            >
-            <span v-if="passwordConfirmFieldError && passwordConfirmFieldMeta.dirty">
-              {{ passwordConfirmFieldError }}
-            </span>
-          </div>
+      <p>Password must contain at least 8 characters</p>
 
-          <p>Password must contain at least 8 characters</p>
+      <UButton type="submit" block>
+        Create new account
+      </UButton>
+    </UForm>
 
-          <button class="btn btn-primary">
-            Create new account
-          </button>
-        </form>
-
-        <p>
-          Already have an account? <NuxtLink to="/" class="link link-primary link-hover">
-            Login
-          </NuxtLink>
-        </p>
-      </div>
-    </div>
-  </div>
+    <template #footer>
+      <p class="text-center">
+        Already have an account? <ULink to="/" class="text-primary">
+          Login
+        </ULink>
+      </p>
+    </template>
+  </UCard>
 </template>

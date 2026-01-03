@@ -1,4 +1,2 @@
-@import "tailwindcss";
-@plugin "daisyui" {
-  themes: light --default;
-}
+@import "tailwindcss" theme(static);
+@import "@nuxt/ui";

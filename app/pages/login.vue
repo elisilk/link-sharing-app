@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { toTypedSchema } from "@vee-validate/zod";
+import type { FormSubmitEvent } from "@nuxt/ui";
+
 import { FetchError } from "ofetch";
-import { useField, useForm } from "vee-validate";
 import * as z from "zod";
 
 definePageMeta({
@@ -9,45 +9,39 @@ definePageMeta({
   alias: ["/"],
 });
 
-const { fetch, loggedIn } = useUserSession();
-
-const schema = toTypedSchema(
-  z.object({
-    email: z.string({ message: "Can't be empty" })
-      .trim()
-      .nonempty({ message: "Can't be empty" })
-      .check(z.email({ message: "Must be a valid email" })),
-    password: z.string({ message: "Can't be empty" })
-      .trim()
-      .nonempty({ message: "Can't be empty" }),
-  }),
-);
-
-const { handleSubmit } = useForm({
-  validationSchema: schema,
-  // validateOnChange: false,
+const schema = z.object({
+  email: z.string("Can't be empty").check(z.email("Invalid email")),
+  password: z.string("Password is required"),
 });
 
-const { value: email, errorMessage: emailFieldError, meta: emailFieldMeta } = useField("email");
-const { value: password, errorMessage: passwordFieldError, meta: passwordFieldMeta } = useField("password");
+type Schema = z.output<typeof schema>;
 
-const onSubmit = handleSubmit(async (values) => {
+const state = reactive<Partial<Schema>>({
+  email: undefined,
+  password: undefined,
+});
+
+const { fetch, loggedIn } = useUserSession();
+const toast = useToast();
+
+async function onSubmit(event: FormSubmitEvent<Schema>) {
   try {
     await $fetch("/auth/login", {
       method: "POST",
-      body: values,
+      body: event.data,
     });
     fetch();
+    toast.add({ title: "Login Success", description: "Welcome back!", color: "success" });
   }
   catch (error) {
     if (error instanceof FetchError) {
-      console.error("Fetch error logging in:", error.data.message);
+      toast.add({ title: "Error Logging In", description: error.data.message, color: "error" });
     }
     else {
-      console.error("Uknown error logging in:", error);
+      toast.add({ title: "Error Logging In", description: "There was an issue.", color: "error" });
     }
   }
-});
+}
 
 watch(loggedIn, () => {
   if (loggedIn.value)
@@ -56,63 +50,52 @@ watch(loggedIn, () => {
 </script>
 
 <template>
-  <div class="hero bg-base-200 container mx-auto mt-4">
-    <div class="hero-content">
-      <div class="max-w-md">
-        <h1 class="text-5xl font-bold">
-          Login
-        </h1>
+  <UCard class="mt-4 max-w-md mx-auto">
+    <template #header>
+      <h1 class="text-5xl font-bold">
+        Login
+      </h1>
+      <p>Add your details below to get back into the app</p>
+    </template>
 
-        <p>Add your details below to get back into the app</p>
+    <UForm
+      :schema="schema"
+      :state="state"
+      class="space-y-4"
+      @submit="onSubmit"
+    >
+      <UFormField label="Email address" name="email">
+        <!-- <UIcon name="i-lucide-mail" /> -->
+        <UInput
+          v-model="state.email"
+          placeholder="e.g. alex@email.com"
+          autocomplete="email"
+          class="w-full"
+        />
+      </UFormField>
 
-        <form
-          novalidate
-          class="grid gap-4"
-          @submit="onSubmit"
-        >
-          <div class="grid gap-2">
-            <label for="email">Email address</label>
-            <!-- <Icon name="tabler:mail" /> -->
-            <input
-              id="email"
-              v-model="email"
-              type="email"
-              class="input w-full"
-              placeholder="e.g. alex@email.com"
-              autocomplete="email"
-            >
-            <span v-if="emailFieldError && emailFieldMeta.dirty">
-              {{ emailFieldError }}
-            </span>
-          </div>
+      <UFormField label="Password" name="password">
+        <!-- <UIcon name="i-lucide-lock-keyhole" /> -->
+        <UInput
+          v-model="state.password"
+          type="password"
+          placeholder="Enter your password"
+          autocomplete="current-password"
+          class="w-full"
+        />
+      </UFormField>
 
-          <div class="grid gap-2">
-            <label for="password">Password</label>
-            <!-- <Icon name="tabler:lock-password" /> -->
-            <input
-              id="password"
-              v-model="password"
-              type="password"
-              class="input w-full"
-              placeholder="Enter your password"
-              autocomplete="current-password"
-            >
-            <span v-if="passwordFieldError && passwordFieldMeta.dirty">
-              {{ passwordFieldError }}
-            </span>
-          </div>
+      <UButton type="submit" block>
+        Login
+      </UButton>
+    </UForm>
 
-          <button class="btn btn-primary">
-            Login
-          </button>
-        </form>
-
-        <p>
-          Don’t have an account? <NuxtLink to="/register" class="link link-primary link-hover">
-            Create account
-          </NuxtLink>
-        </p>
-      </div>
-    </div>
-  </div>
+    <template #footer>
+      <p class="text-center">
+        Don’t have an account? <ULink to="/register" class="text-primary">
+          Create account
+        </ULink>
+      </p>
+    </template>
+  </UCard>
 </template>

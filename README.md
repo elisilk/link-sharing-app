@@ -57,6 +57,7 @@ As always, so many cool :sunglasses: things. Here are some of the key resources 
 #### Building the App
 
 - [Full Stack App Build | Travel Log w/ Nuxt, Vue, Better Auth, Drizzle, Tailwind, DaisyUI, MapLibre](https://www.youtube.com/watch?v=DK93dqmJJYg) - I learned so much from watching and following along with this video. I adopted/adapted much the same approach and tech stack. Thanks, CJ!
+- [Nuxt Auth Utils: Secure, Simple, and Flexible Logins](https://vueschool.io/courses/nuxt-auth-utils-secure-simple-and-flexible-logins) - I learned a ton from this video course too, and an [associated blog post](https://vueschool.io/articles/vuejs-tutorials/email-password-logins-with-nuxt-auth-utils-and-nuxt-ui/). Among other things, helped me to realize that I preferred using Nuxt UI rather than DaisyUI. Thank you, Daniel!
 
 #### Testing the App
 
