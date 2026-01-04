@@ -69,7 +69,10 @@ Hmm 🤔 ...
 
 Feature requests - specific enhancements to make:
 
-Hmm 🤔 ...
+- [ ] Method for updating login info, including login email and password
+- [ ] Method for retrieving/changing a forgotten password
+- [ ] Implement [next level security features to prevent brute force attacks](https://vueschool.io/lessons/next-level-security-features-attempt-locks-to-prevent-brute-force-attacks)
+- [ ] Implement [protection of sensitive data in API routes with requireUserSession](https://vueschool.io/lessons/protect-sensitive-data-in-api-routes-with-requireusersession)
 
 More general ideas to consider:
 

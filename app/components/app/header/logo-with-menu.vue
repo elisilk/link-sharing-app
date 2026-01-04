@@ -11,7 +11,7 @@ async function handleLogout() {
 const guestItems = ref<NavigationMenuItem[]>([
   {
     label: "devlinks",
-    icon: "i-lucide-book-open",
+    icon: "i-custom-icon-changes-saved",
     children: [
       {
         label: "Guest",
