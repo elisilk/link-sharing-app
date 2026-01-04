@@ -10,12 +10,25 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "nuxt-auth-utils",
   ],
+
+  /* Nuxt UI */
   css: ["~/assets/css/main.css"],
+  ui: {
+    colorMode: false,
+  },
+  icon: {
+    customCollections: [{
+      prefix: "custom",
+      dir: "./app/assets/icons",
+    }],
+  },
+
   eslint: {
     config: {
       standalone: false,
     },
   },
+
   imports: {
     dirs: [
       "server/db/schema",

@@ -60,9 +60,18 @@ watch(loggedIn, () => {
 </script>
 
 <template>
-  <UCard class="mt-4 max-w-md mx-auto">
+  <UCard
+    variant="soft"
+    class="bg-white divide-y-0"
+    :ui="{
+      root: 'sm:p-10 rounded-xl',
+      header: 'p-0 sm:px-0',
+      body: 'p-0 mt-10 mb-6 sm:p-0',
+      footer: 'p-0 sm:px-0',
+    }"
+  >
     <template #header>
-      <h1 class="text-5xl font-bold">
+      <h1 class="text-5xl font-bold text-grey-900">
         Create account
       </h1>
       <p>Let’s get you started sharing your links!</p>
@@ -78,6 +87,7 @@ watch(loggedIn, () => {
         <!-- <UIcon name="i-lucide-mail" /> -->
         <UInput
           v-model="state.email"
+          icon="i-custom-icon-email"
           placeholder="e.g. alex@email.com"
           autocomplete="email"
           class="w-full"
@@ -85,9 +95,9 @@ watch(loggedIn, () => {
       </UFormField>
 
       <UFormField label="Create password" name="password">
-        <!-- <UIcon name="i-lucide-lock-keyhole" /> -->
         <UInput
           v-model="state.password"
+          icon="i-custom-icon-password"
           type="password"
           placeholder="At least 8 characters"
           autocomplete="new-password"
@@ -96,9 +106,9 @@ watch(loggedIn, () => {
       </UFormField>
 
       <UFormField label="Confirm password" name="passwordConfirm">
-        <!-- <UIcon name="i-lucide-lock-keyhole" /> -->
         <UInput
           v-model="state.passwordConfirm"
+          icon="i-custom-icon-password"
           type="password"
           placeholder="At least 8 characters"
           autocomplete="new-password"
