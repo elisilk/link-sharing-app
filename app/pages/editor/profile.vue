@@ -6,8 +6,8 @@ definePageMeta({
 </script>
 
 <template>
-  <UContainer>
-    <UCard class="mt-4  mx-auto">
+  <UContainer class="py-4">
+    <UCard class="mx-auto">
       <template #header>
         <h1 class="text-5xl font-bold">
           Profile Details
