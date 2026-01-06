@@ -42,7 +42,7 @@ const authItems = [
 </script>
 
 <template>
-  <UApp>
+  <div>
     <UHeader
       :ui="{
         toggle: 'hidden',
@@ -85,15 +85,18 @@ const authItems = [
         <UButton
           to="/preview"
           variant="outline"
-        >
-          <UIcon name="i-custom-icon-preview-header" class="sm:hidden" />
-          <span class="hidden sm:inline">Preview</span>
-        </UButton>
+          icon="i-custom-icon-preview-header"
+          label="Preview"
+          :ui="{
+            label: 'hidden sm:inline',
+            leadingIcon: 'sm:hidden',
+          }"
+        />
       </template>
     </UHeader>
 
     <UMain>
       <slot />
     </UMain>
-  </UApp>
+  </div>
 </template>

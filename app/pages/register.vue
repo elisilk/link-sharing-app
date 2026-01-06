@@ -88,6 +88,7 @@ watch(loggedIn, () => {
         <UInput
           v-model="state.email"
           icon="i-custom-icon-email"
+          type="email"
           placeholder="e.g. alex@email.com"
           autocomplete="email"
           class="w-full"
