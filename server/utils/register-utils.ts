@@ -30,3 +30,20 @@ export async function registerUser(email: string, password: string) {
 
   return newUser;
 }
+
+export async function createProfileForNewUser(userId: number) {
+  const result = await useDb().insert(schema.profile).values({
+    userId,
+  }).returning();
+
+  const newProfile = result.at(0);
+
+  if (!newProfile) {
+    throw createError({
+      statusCode: 500,
+      statusMessage: "Failed to create profile for new user.",
+    });
+  }
+
+  return newProfile;
+}
