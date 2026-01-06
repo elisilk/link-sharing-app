@@ -21,59 +21,61 @@ const tabItems = ref<NavigationMenuItem[]>([
   },
 ]);
 
-const authItems = [
+const authItems = ref<NavigationMenuItem[]>([
   {
-    slot: "logo" as const,
     label: "Login Items",
-    children: [
-      {
-        label: "Update",
-        icon: "i-lucide-user-pen",
-        to: "/editor/profile",
-      },
-      {
-        label: "Logout",
-        icon: "i-lucide-log-out",
-        onClick: handleLogout,
-      },
-    ],
+    type: "label",
   },
-] satisfies NavigationMenuItem[];
+  {
+    label: "Update",
+    icon: "i-lucide-user-pen",
+    to: "/editor/profile",
+  },
+  {
+    label: "Logout",
+    icon: "i-lucide-log-out",
+    onClick: handleLogout,
+  },
+]);
 </script>
 
 <template>
   <div>
     <UHeader
+      mode="slideover"
       :ui="{
-        toggle: 'hidden',
-        center: 'flex',
         root: 'border-0',
+        left: 'flex-1',
+        right: 'flex-1',
+        center: 'flex',
+        toggle: 'lg:block',
+        content: 'lg:block',
+        overlay: 'lg:block',
       }"
     >
-      <template #left>
+      <!-- toggle menu for auth items -->
+      <!--
+        class="-mx-2.5"
+        -->
+      <template #body>
         <UNavigationMenu
           :items="authItems"
-          :unmount-on-hide="false"
-          popover
-          collapsed
           orientation="vertical"
-          :ui="{
-            item: 'py-0',
-            link: 'px-0 py-0',
-          }"
-        >
-          <template #logo>
-            <picture class="cursor-pointer">
-              <source media="(min-width: 40rem)" srcset="/logo-devlinks-large.svg">
-              <img
-                src="/logo-devlinks-small.svg"
-                alt="Devlinks logo"
-              >
-            </picture>
-          </template>
-        </UNavigationMenu>
+        />
       </template>
 
+      <!-- right/title slot for logo -->
+      <template #title>
+        <picture>
+          <source media="(min-width: 40rem)" srcset="/logo-devlinks-large.svg">
+          <img
+            src="/logo-devlinks-small.svg"
+            alt="Devlinks logo"
+          >
+        </picture>
+      </template>
+
+      <!-- center/default slot for editor tabs -->
       <UNavigationMenu
         :items="tabItems"
         :ui="{
@@ -81,6 +83,7 @@ const authItems = [
         }"
       />
 
+      <!-- right slot for preview link -->
       <template #right>
         <UButton
           to="/preview"
