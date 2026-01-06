@@ -36,12 +36,21 @@ watchEffect(() => {
       variant="solid"
     >
       <template #header>
-        <USkeleton class="h-26 w-26 rounded-full mb-6 animate-none" />
-        <h1 class="text-3xl font-bold mb-2">
+        <USkeleton class="w-26 h-26 rounded-full mb-6 animate-none" />
+
+        <h1
+          v-if="profile.firstName || profile.lastName"
+          class="text-3xl font-bold mb-2"
+        >
           {{ profile.firstName }}
           {{ profile.lastName }}
         </h1>
-        <h2>{{ profile.email }}</h2>
+        <USkeleton v-else class="w-40 h-4 rounded-full mb-3 animate-none" />
+
+        <h2 v-if="profile.email">
+          {{ profile.email }}
+        </h2>
+        <USkeleton v-else class="w-18 h-2 rounded-full animate-none" />
       </template>
 
       <!-- <pre>{{ profile }}</pre> -->
