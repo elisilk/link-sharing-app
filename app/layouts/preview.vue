@@ -23,7 +23,7 @@ async function handleShareLink() {
       toast.add({
         title: "Something went wrong!",
         description: error.message,
-        icon: "i-custom-icon-link-copied-to-clipboard",
+        icon: "i-lucide-angry",
         color: "error",
       });
     }

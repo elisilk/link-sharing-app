@@ -17,5 +17,8 @@ export default defineEventHandler(async (event) => {
     user: userWithoutPassword,
   });
 
+  // create empty profile for the new user
+  await createProfileForNewUser(newUser.id);
+
   return userWithoutPassword;
 });
