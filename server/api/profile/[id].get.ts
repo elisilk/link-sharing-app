@@ -1,3 +1,5 @@
+import type { SelectProfileWithLinks } from "~~/server/db/schema/index";
+
 import { eq } from "drizzle-orm";
 
 export default defineEventHandler(async (event) => {
@@ -21,19 +23,19 @@ export default defineEventHandler(async (event) => {
 
   const userId: number = Number(routerParamId);
 
-  const profileWithLinks = await useDb().query.profile.findFirst({
+  const profile: SelectProfileWithLinks | undefined = await useDb().query.profile.findFirst({
     where: eq(schema.profile.userId, userId),
     with: {
       links: true,
     },
   });
 
-  if (!profileWithLinks) {
+  if (!profile) {
     throw createError({
       statusCode: 401,
       statusMessage: "Profile not found.",
     });
   }
 
-  return profileWithLinks;
+  return profile;
 });
