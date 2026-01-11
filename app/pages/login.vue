@@ -24,7 +24,7 @@ const state = reactive<Partial<Schema>>({
 const { fetch, loggedIn } = useUserSession();
 const toast = useToast();
 
-async function onSubmit(event: FormSubmitEvent<Schema>) {
+async function handleSubmit(event: FormSubmitEvent<Schema>) {
   try {
     await $fetch("/auth/login", {
       method: "POST",
@@ -71,7 +71,7 @@ watch(loggedIn, () => {
       :schema="schema"
       :state="state"
       class="space-y-4"
-      @submit="onSubmit"
+      @submit="handleSubmit"
     >
       <UFormField label="Email address" name="email">
         <UInput

@@ -15,3 +15,13 @@ export const profileRelations = relations(profile, ({ many }) => ({
 export const linkRelations = relations(profileLink, ({ one }) => ({
   profile: one(profile, { fields: [profileLink.profileId], references: [profile.id] }),
 }));
+
+export type SelectProfile = typeof profile.$inferSelect;
+export type InsertProfile = typeof profile.$inferInsert;
+
+export type SelectProfileLink = typeof profileLink.$inferSelect;
+export type InsertProfileLink = typeof profileLink.$inferInsert;
+
+export type SelectProfileWithLinks = SelectProfile & {
+  links: SelectProfileLink[];
+};

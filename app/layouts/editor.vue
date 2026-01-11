@@ -54,9 +54,6 @@ const authItems = ref<NavigationMenuItem[]>([
       }"
     >
       <!-- toggle menu for auth items -->
-      <!--
-        class="-mx-2.5"
-        -->
       <template #body>
         <UNavigationMenu
           :items="authItems"
@@ -64,8 +61,8 @@ const authItems = ref<NavigationMenuItem[]>([
         />
       </template>
 
-      <!-- right/title slot for logo -->
-      <template #title>
+      <!-- left/title slot for logo -->
+      <template #left>
         <picture>
           <source media="(min-width: 40rem)" srcset="/logo-devlinks-large.svg">
           <img

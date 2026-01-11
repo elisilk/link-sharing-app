@@ -65,7 +65,10 @@ As always, so many cool :sunglasses: things. Here are some of the key resources 
 
 Known issues - specific areas that the solution should be improved:
 
-Hmm 🤔 ...
+- [ ] When viewing the page on a mobile device, the page zooms in automatically when going into an input field. That behavior is fine, but the issue is more when the form is submitted and the user is navigated to the next page, it seems to maintain that zoom instead of resetting fully to the original zoom of the page. How to fix? Hmm 🤔
+  - [Google search: "nuxt mobile zoom out to full page on navigation to new page"](https://www.google.com/search?q=nuxt+mobile+zoom+out+to+full+page+on+navigation+to+new+page)
+  - [Disable Auto Zoom in Input "Text" tag - Safari on iPhone](https://stackoverflow.com/questions/2989263/disable-auto-zoom-in-input-text-tag-safari-on-iphone)
+- [ ] Issue of warning message that occurs on Chrome when opening up the toggled navigation menu from the header: "Blocked aria-hidden on an element because its descendant retained focus". The issue doesn't seem to arise on Firefox so far.
 
 Feature requests - specific enhancements to make:
 
