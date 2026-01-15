@@ -41,11 +41,11 @@ async function handleShareLink() {
 </script>
 
 <template>
-  <div class="preview-layout-container">
+  <UContainer class="min-h-dvh px-0 sm:px-0 lg:px-0 preview-layout-container">
     <UHeader
       :ui="{
         toggle: 'hidden',
-        root: 'border-0 static z-0 h-auto sm:p-6 sm:bg-primary sm:rounded-b-4xl',
+        root: 'border-0 h-auto sm:p-6 sm:bg-primary sm:rounded-b-4xl',
         container: 'px-6 py-4 lg:px-6 sm:h-auto sm:bg-white sm:rounded-xl',
       }"
     >
@@ -65,10 +65,10 @@ async function handleShareLink() {
       </template>
     </UHeader>
 
-    <UMain class="min-h-0 sm:z-1">
+    <UMain class="min-h-0">
       <slot />
     </UMain>
-  </div>
+  </UContainer>
 </template>
 
 <style scoped>
@@ -93,11 +93,14 @@ async function handleShareLink() {
   .preview-layout-container > :first-child {
     grid-column: 1 / -1;
     grid-row: 1 / 3;
+    z-index: 1;
+    position: relative;
   }
 
   .preview-layout-container > :last-child {
     grid-column: 1 / -1;
     grid-row: 2 / -1;
+    z-index: 2;
   }
 }
 </style>

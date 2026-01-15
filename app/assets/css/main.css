@@ -42,6 +42,9 @@
 }
 
 :root {
+  /* sizing */
+  --ui-header-height: --spacing(21);
+
   /* colors */
   /*
   --ui-primary: var(--color-purple-600);
@@ -63,4 +66,15 @@
 
   /* background */
   /* --ui-bg:  var(--color-grey-50); */
+}
+
+/* Tailwind CSS breakpoints - https://tailwindcss.com/docs/responsive-design */
+
+/* sm: 40rem (640px) */
+@media (width >= 40rem) {
+  :root {
+    /* sizing */
+    --ui-header-height: --spacing(34);
+    --ui-container: 90rem; /* 1440px */
+  }
 }
