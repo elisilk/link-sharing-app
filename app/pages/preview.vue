@@ -28,6 +28,10 @@ watchEffect(() => {
       </div>
     </UCard>
 
-    <AppPreviewContent v-else-if="profile" :profile />
+    <AppPreviewContent
+      v-else-if="profile"
+      :profile
+      variant="card"
+    />
   </UContainer>
 </template>

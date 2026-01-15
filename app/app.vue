@@ -1,3 +1,9 @@
+<script setup lang="ts">
+onMounted(() => {
+  document.body.classList.add("sm:bg-gray-50");
+});
+</script>
+
 <template>
   <UApp
     :toaster="{

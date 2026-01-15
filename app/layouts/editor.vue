@@ -2,6 +2,7 @@
 import type { NavigationMenuItem } from "@nuxt/ui";
 
 const { clear } = useUserSession();
+await useProfile();
 
 async function handleLogout() {
   await clear();
@@ -40,11 +41,12 @@ const authItems = ref<NavigationMenuItem[]>([
 </script>
 
 <template>
-  <div>
+  <UContainer class="min-h-dvh px-0 sm:px-0 lg:px-0">
     <UHeader
       mode="slideover"
       :ui="{
-        root: 'border-0',
+        root: 'border-0 sm:p-6 sm:bg-transparent',
+        container: 'pl-6 pr-4 py-4 sm:bg-default sm:rounded-xl sm:pl-6 sm:pr-4 sm:py-4 lg:pl-6 lg:pr-4 lg:py-4',
         left: 'flex-1',
         right: 'flex-1',
         center: 'flex',
@@ -77,6 +79,8 @@ const authItems = ref<NavigationMenuItem[]>([
         :items="tabItems"
         :ui="{
           linkLabel: 'hidden sm:inline',
+          item: 'py-0',
+          link: 'h-13 sm:h-14 px-6 gap-2',
         }"
       />
 
@@ -88,6 +92,7 @@ const authItems = ref<NavigationMenuItem[]>([
           icon="i-custom-icon-preview-header"
           label="Preview"
           :ui="{
+            base: 'h-13 sm:h-14 px-4',
             label: 'hidden sm:inline',
             leadingIcon: 'sm:hidden',
           }"
@@ -96,7 +101,25 @@ const authItems = ref<NavigationMenuItem[]>([
     </UHeader>
 
     <UMain>
-      <slot />
+      <UContainer class="px-4 pb-4 lg:px-6 lg:pb-6">
+        <UPage
+          :ui="{
+            root: 'lg:gap-6',
+            left: 'lg:col-span-4',
+            center: 'lg:col-span-6',
+          }"
+        >
+          <template #left>
+            <UPageAside class="lg:flex items-center justify-center bg-default rounded-xl lg:ms-0 lg:p-6">
+              <AppPreviewContent />
+            </UPageAside>
+          </template>
+
+          <UPageBody class="mt-0 pb-0 h-full">
+            <slot />
+          </UPageBody>
+        </UPage>
+      </UContainer>
     </UMain>
-  </div>
+  </UContainer>
 </template>

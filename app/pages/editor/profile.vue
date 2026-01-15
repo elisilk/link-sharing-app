@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { FormSubmitEvent } from "@nuxt/ui";
+import type { SelectProfileWithLinks } from "~~/server/db/schema/index";
 
 import * as z from "zod";
 
@@ -10,7 +11,7 @@ definePageMeta({
 
 const toast = useToast();
 const { user } = useUserSession();
-const { profile, pending, error, refresh } = await useProfile();
+const { data: profile } = useNuxtData<SelectProfileWithLinks>("profile");
 
 const schema = z.object({
   firstName: z.string("Can't be empty"),
@@ -24,12 +25,6 @@ const state = reactive<Partial<Schema>>({
   firstName: profile.value?.firstName || undefined,
   lastName: profile.value?.lastName || undefined,
   email: profile.value?.email || undefined,
-});
-
-watchEffect(() => {
-  if (error.value) {
-    throw createError({ ...error.value, fatal: true });
-  }
 });
 
 watch(
@@ -54,7 +49,7 @@ async function handleSave(event: FormSubmitEvent<Schema>) {
       body: { firstName, lastName, email },
     });
     if (result.success) {
-      refresh();
+      refreshNuxtData("profile");
       toast.add({
         title: "Your changes have been successfully saved!",
         icon: "i-custom-icon-changes-saved",
@@ -82,95 +77,78 @@ async function handleSave(event: FormSubmitEvent<Schema>) {
 </script>
 
 <template>
-  <UContainer class="py-4">
-    <div v-if="pending">
-      <p>Loading ...</p>
-    </div>
-
-    <div v-else-if="error">
-      <p>Profile not found</p>
-      <p>Error: {{ error.message }}</p>
-    </div>
-
-    <UPage
-      v-else-if="profile"
+  <UForm
+    v-if="profile"
+    :schema="schema"
+    :state="state"
+    class="h-full"
+    @submit="handleSave"
+  >
+    <UCard
+      class="h-full flex flex-col"
       :ui="{
-        left: 'lg:col-span-4',
-        center: 'lg:col-span-6',
+        root: 'bg-default text-default rounded-xl',
+        header: 'border-b-0',
+        body: 'flex-1',
       }"
+      variant="soft"
     >
-      <template #left>
-        <UPageAside>
-          <AppPreviewContent :profile />
-        </UPageAside>
+      <template #header>
+        <h1 class="text-5xl font-bold">
+          Profile Details
+        </h1>
+        <p>Add your details to create a personal touch to your profile.</p>
       </template>
 
-      <UPageBody>
-        <UForm
-          :schema="schema"
-          :state="state"
-          @submit="handleSave"
-        >
-          <UCard>
-            <template #header>
-              <h1 class="text-5xl font-bold">
-                Profile Details
-              </h1>
-              <p>Add your details to create a personal touch to your profile.</p>
-            </template>
+      <UFieldGroup orientation="vertical">
+        <UFormField label="Profile picture" name="picture">
+          <UFileUpload />
+          <UIcon name="i-custom-icon-upload-image" />
+          <p>Image must be below 1024x1024px. Use PNG or JPG format.</p>
+        </UFormField>
+      </UFieldGroup>
 
-            <UFieldGroup orientation="vertical">
-              <UFormField label="Profile picture" name="picture">
-                <UFileUpload />
-                <UIcon name="i-custom-icon-upload-image" />
-                <p>Image must be below 1024x1024px. Use PNG or JPG format.</p>
-              </UFormField>
-            </UFieldGroup>
+      <UFieldGroup orientation="vertical">
+        <UFormField label="First name" name="firstName">
+          <UInput
+            v-model="state.firstName"
+            placeholder="e.g. John"
+            autocomplete="given-name"
+            class="w-full"
+            required
+          />
+        </UFormField>
 
-            <UFieldGroup orientation="vertical">
-              <UFormField label="First name" name="firstName">
-                <UInput
-                  v-model="state.firstName"
-                  placeholder="e.g. John"
-                  autocomplete="given-name"
-                  class="w-full"
-                  required
-                />
-              </UFormField>
+        <UFormField label="Last name" name="lastName">
+          <UInput
+            v-model="state.lastName"
+            placeholder="e.g. Appleseed"
+            autocomplete="family-name"
+            class="w-full"
+            required
+          />
+        </UFormField>
 
-              <UFormField label="Last name" name="lastName">
-                <UInput
-                  v-model="state.lastName"
-                  placeholder="e.g. Appleseed"
-                  autocomplete="family-name"
-                  class="w-full"
-                  required
-                />
-              </UFormField>
+        <UFormField label="Email" name="email">
+          <UInput
+            v-model="state.email"
+            type="email"
+            placeholder="e.g. email@example.com"
+            autocomplete="email"
+            class="w-full"
+          />
+        </UFormField>
+      </UFieldGroup>
 
-              <UFormField label="Email" name="email">
-                <UInput
-                  v-model="state.email"
-                  type="email"
-                  placeholder="e.g. email@example.com"
-                  autocomplete="email"
-                  class="w-full"
-                />
-              </UFormField>
-            </UFieldGroup>
-
-            <template #footer>
-              <div class="text-right">
-                <UButton
-                  type="submit"
-                  label="Save"
-                  class="w-full justify-center sm:w-auto"
-                />
-              </div>
-            </template>
-          </UCard>
-        </UForm>
-      </UPageBody>
-    </UPage>
-  </UContainer>
+      <template #footer>
+        <div class="text-right">
+          <UButton
+            type="submit"
+            label="Save"
+            class="w-full justify-center sm:w-auto"
+          />
+        </div>
+      </template>
+    </UCard>
+  </UForm>
 </template>
