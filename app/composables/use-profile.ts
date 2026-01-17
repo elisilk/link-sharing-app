@@ -9,7 +9,8 @@ export async function useProfile() {
     {
       key: "profile",
       lazy: true,
-      pick: ["firstName", "lastName", "email", "links"],
+      pick: ["userId", "id", "firstName", "lastName", "email", "links"],
+      deep: true,
     },
   );
 
