@@ -1,11 +1,16 @@
 <script setup lang="ts">
+import { AppConfirmDialog } from "#components";
 import * as z from "zod";
+
+const emit = defineEmits(["removeLink"]);
 
 const profileLinkSchema = z.object({
   id: z.any(),
   platform: z.string("Can't be empty").nonempty("Can't be empty"),
   url: z.string("Can't be empty").nonempty("Can't be empty").check(z.url("Please check the URL")),
   order: z.any(),
+  profileId: z.any(),
+  userId: z.any(),
 });
 
 type ProfileLinkSchema = z.output<typeof profileLinkSchema>;
@@ -26,10 +31,12 @@ function maxLinkItemOrder(links: PartialProfileLinkSchema[]) {
 function handleAddLink() {
   // add a new link to the local array
   profileLinksForm.value.push({
-    id: undefined,
+    id: null,
     platform: "",
     url: "",
     order: maxLinkItemOrder(profileLinksForm.value) + 1,
+    profileId: null,
+    userId: null,
   });
   toast.add({
     title: "A new link was added!",
@@ -38,12 +45,27 @@ function handleAddLink() {
   });
 }
 
-function handleRemoveLink(linkId: number) {
-  toast.add({
-    title: `The link was removed! (${linkId})`,
-    icon: "i-custom-icon-changes-saved",
-    color: "success",
+const overlay = useOverlay();
+const modal = overlay.create(AppConfirmDialog);
+
+async function handleRemoveLink(linkId: number) {
+  const instance = modal.open({
+    title: "Are you sure?",
+    description: "If you confirm, deleting this link can't be undone.",
+    confirm: "Yes, I'm sure",
+    cancel: "No, cancel",
   });
+
+  const confirmDelete = await instance.result;
+
+  if (confirmDelete) {
+    emit("removeLink", linkId);
+    toast.add({
+      title: `The link was removed! (${linkId})`,
+      icon: "i-custom-icon-changes-saved",
+      color: "success",
+    });
+  }
 }
 
 const platformItems = platforms.map((platform) => {
