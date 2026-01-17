@@ -1,6 +1,6 @@
 const platforms = [
   { name: "GitHub", icon: "i-custom-icon-github", backgroundColor: "#1A1A1A", placeholder: "e.g. https://www.github.com/johnappleseed" },
-  { name: "Frontend Mentor", icon: "i-custom-icon-frontend-mentor", backgroundColor: "#FFFFFF", color: "#333333", border: "var(--border-width) solid #D9D9D9", iconColor: "#737373", placeholder: "e.g. https://www.frontendmentor.io/profile/johnappleseed" },
+  { name: "Frontend Mentor", icon: "i-custom-icon-frontend-mentor", backgroundColor: "#FFFFFF", color: "#333333", border: "1px solid #D9D9D9", iconColor: "#737373", placeholder: "e.g. https://www.frontendmentor.io/profile/johnappleseed" },
   { name: "Twitter", icon: "i-custom-icon-twitter", backgroundColor: "#43B7E9", placeholder: "e.g., https://x.com/johnappleseed" },
   { name: "LinkedIn", icon: "i-custom-icon-linkedin", backgroundColor: "#2D68FF", placeholder: "e.g. https://www.linkedin.com/in/johnappleseed" },
   { name: "YouTube", icon: "i-custom-icon-youtube", backgroundColor: "#EE3939", placeholder: "e.g. https://www.youtube.com/user/johnappleseed" },
