@@ -19,10 +19,18 @@ type ProfileLinksForm = {
   userId?: number;
 };
 
-const localProfileLinks = ref<ProfileLinksForm[]>([]);
+const localProfileLinks = ref<ProfileLinksForm[]>(
+  (profile.value && profile.value.links.length > 0)
+    ? profile.value?.links.map(({ id, platform, url, order, profileId, userId }) => ({ id, platform, url, order, profileId, userId }))
+    : [],
+);
 
-if (profile.value && profile.value.links.length > 0)
-  localProfileLinks.value = [...profile.value?.links.map(({ id, platform, url, order }) => ({ id, platform, url, order }))];
+watch(profile, () => {
+  // console.warn("global profile has changed", profile.value);
+  localProfileLinks.value = (profile.value && profile.value.links.length > 0)
+    ? profile.value?.links.map(({ id, platform, url, order, profileId, userId }) => ({ id, platform, url, order, profileId, userId }))
+    : [];
+}, { deep: true });
 
 async function handleUpdate() {
   // Add (insert) the new links
@@ -110,8 +118,44 @@ async function handleUpdate() {
     }
   }
 }
+
+async function handleRemoveLink(linkId: number) {
+  try {
+    const result = await $fetch(`/api/link/${linkId}`, {
+      method: "DELETE",
+    });
+    if (result.success) {
+      refreshNuxtData("profile");
+      toast.add({
+        title: "The link was successfully deleted!",
+        icon: "i-custom-icon-changes-saved",
+        color: "success",
+      });
+    }
+    else {
+      toast.add({
+        title: "Something went wrong!",
+        description: result.message,
+        icon: "i-custom-icon-changes-saved",
+        color: "error",
+      });
+    }
+  }
+  catch (error) {
+    console.error(error);
+    toast.add({
+      title: "Error",
+      description: "Something went wrong.",
+      color: "error",
+    });
+  }
+}
 </script>
 
 <template>
-  <AppFormProfileLinks v-model="localProfileLinks" @update:model-value="handleUpdate" />
+  <AppFormProfileLinks
+    v-model="localProfileLinks"
+    @update:model-value="handleUpdate"
+    @remove-link="handleRemoveLink"
+  />
 </template>
