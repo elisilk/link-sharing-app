@@ -14,6 +14,9 @@ const platform = computed(() => platforms.find(item => item.name === props.platf
     :label="platform.name"
     :icon="platform.icon"
     trailing-icon="i-custom-icon-arrow-right"
+    :ui="{
+      trailingIcon: 'ms-auto',
+    }"
     class="p-4"
     :style="{ backgroundColor: platform.backgroundColor,
               color: platform.color,

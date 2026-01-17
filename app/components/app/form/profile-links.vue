@@ -84,6 +84,15 @@ function findPlatformIcon(platformName: string | undefined) {
     return null;
   return platform.icon;
 }
+
+function findPlatformPlaceholder(platformName: string | undefined) {
+  if (!platformName)
+    return "";
+  const platform = platforms.find(item => item.name === platformName);
+  if (!platform)
+    return "";
+  return platform.placeholder;
+}
 </script>
 
 <template>
@@ -175,6 +184,7 @@ function findPlatformIcon(platformName: string | undefined) {
         >
           <UInput
             v-model="link.url"
+            :placeholder="findPlatformPlaceholder(link.platform)"
             type="url"
             class="w-full"
             required
