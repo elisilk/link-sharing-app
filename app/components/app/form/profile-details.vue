@@ -45,46 +45,54 @@ const { form: profileDetailsForm, handleSubmit } = useForm<PartialProfileDetails
         <p>Add your details to create a personal touch to your profile.</p>
       </template>
 
-      <UFieldGroup orientation="vertical">
+      <div class="bg-grey-50 rounded-xl p-6">
         <UFormField label="Profile picture" name="picture">
           <UFileUpload />
           <UIcon name="i-custom-icon-upload-image" />
           <p>Image must be below 1024x1024px. Use PNG or JPG format.</p>
         </UFormField>
-      </UFieldGroup>
+      </div>
 
-      <UFieldGroup orientation="vertical">
-        <UFormField label="First name" name="firstName">
+      <div class="bg-grey-50 rounded-xl p-6 space-y-2 sm:space-y-4">
+        <UFormField
+          label="First name"
+          name="firstName"
+          orientation="horizontal"
+          required
+        >
           <UInput
             v-model="profileDetailsForm.firstName"
             placeholder="e.g. John"
             autocomplete="given-name"
-            class="w-full"
-            required
           />
         </UFormField>
 
-        <UFormField label="Last name" name="lastName">
+        <UFormField
+          label="Last name"
+          name="lastName"
+          orientation="horizontal"
+          required
+        >
           <UInput
             v-model="profileDetailsForm.lastName"
             placeholder="e.g. Appleseed"
             autocomplete="family-name"
-            class="w-full"
-            required
           />
         </UFormField>
 
-        <UFormField label="Email" name="email">
+        <UFormField
+          label="Email"
+          name="email"
+          orientation="horizontal"
+        >
           <UInput
             v-model="profileDetailsForm.email"
             type="email"
             placeholder="e.g. email@example.com"
             autocomplete="email"
-            class="w-full"
-            required
           />
         </UFormField>
-      </UFieldGroup>
+      </div>
 
       <template #footer>
         <div class="text-right">

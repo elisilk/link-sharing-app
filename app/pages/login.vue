@@ -80,7 +80,6 @@ watch(loggedIn, () => {
           type="email"
           placeholder="e.g. alex@email.com"
           autocomplete="email"
-          class="w-full"
         />
       </UFormField>
 
@@ -91,7 +90,6 @@ watch(loggedIn, () => {
           type="password"
           placeholder="Enter your password"
           autocomplete="current-password"
-          class="w-full"
         />
       </UFormField>
 
