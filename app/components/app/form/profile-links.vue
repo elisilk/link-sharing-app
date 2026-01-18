@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import type { SortableEvent } from "sortablejs";
+
+import { moveArrayElement, useSortable } from "@vueuse/integrations/useSortable";
 import { AppConfirmDialog } from "#components";
 import * as z from "zod";
 
@@ -28,6 +31,16 @@ function maxLinkItemOrder(links: PartialProfileLinkSchema[]) {
   return links.reduce((prevMax, currentItem) => currentItem.order > prevMax ? currentItem.order : prevMax, -Infinity);
 }
 
+function normalizeLinkOrder(links: PartialProfileLinkSchema[]) {
+  if (links.length === 0)
+    return 0;
+  links.forEach((link, index) => {
+    link.order = index + 1;
+  });
+}
+
+/* Add Link */
+
 function handleAddLink() {
   // add a new link to the local array
   profileLinksForm.value.push({
@@ -44,6 +57,8 @@ function handleAddLink() {
     color: "success",
   });
 }
+
+/* Remove Link + Confirmation Modal */
 
 const overlay = useOverlay();
 const modal = overlay.create(AppConfirmDialog);
@@ -67,6 +82,24 @@ async function handleRemoveLink(linkId: number) {
     });
   }
 }
+
+/* Drag and Drop */
+
+const linksContainer = useTemplateRef("linksContainer");
+useSortable(linksContainer, profileLinksForm, {
+  handle: ".drag-and-drop-handle",
+  onUpdate: (e: SortableEvent) => {
+    if (e.oldIndex !== undefined && e.newIndex !== undefined) {
+      moveArrayElement(profileLinksForm, e.oldIndex, e.newIndex, e);
+    }
+
+    nextTick(() => {
+      normalizeLinkOrder(profileLinksForm.value);
+    });
+  },
+});
+
+/* Platforms List/Options + Utils */
 
 const platformItems = platforms.map((platform) => {
   return {
@@ -139,58 +172,60 @@ function findPlatformPlaceholder(platformName: string | undefined) {
         </p>
       </div>
 
-      <UForm
-        v-for="link, count in profileLinksForm"
-        :key="link.id"
-        :name="`${count}`"
-        :schema="profileLinkSchema"
-        class="bg-gray-50 rounded-xl p-4 sm:p-6"
-        nested
-      >
-        <div class="flex items-center">
-          <UButton
-            variant="ghost"
-            icon="i-custom-icon-drag-and-drop"
-            class="xs"
-          />
-          <span>Link #{{ count + 1 }}</span>
-          <UButton
-            label="Remove"
-            variant="ghost"
-            class="ms-auto"
-            @click="handleRemoveLink(link.id)"
-          />
-        </div>
-
-        <UFormField
-          label="Platform"
-          name="platform"
+      <div ref="linksContainer" class="space-y-6">
+        <UForm
+          v-for="link, count in profileLinksForm"
+          :key="link.id"
+          :name="`${count}`"
+          :schema="profileLinkSchema"
+          class="bg-gray-50 rounded-xl p-4 sm:p-6"
+          nested
         >
-          <USelect
-            v-model="link.platform"
-            :items="platformItems"
-            :icon="findPlatformIcon(link.platform)"
-            class="w-full"
-            :ui="{
-              base: 'py-4',
-            }"
-            required
-          />
-        </UFormField>
+          <div class="flex items-center">
+            <UButton
+              variant="ghost"
+              icon="i-custom-icon-drag-and-drop"
+              class="drag-and-drop-handle xs cursor-grab active:cursor-grabbing"
+            />
+            <span>Link #{{ count + 1 }}</span>
+            <UButton
+              label="Remove"
+              variant="ghost"
+              class="ms-auto"
+              @click="handleRemoveLink(link.id)"
+            />
+          </div>
 
-        <UFormField
-          label="Link"
-          name="url"
-        >
-          <UInput
-            v-model="link.url"
-            :placeholder="findPlatformPlaceholder(link.platform)"
-            type="url"
-            class="w-full"
-            required
-          />
-        </UFormField>
-      </UForm>
+          <UFormField
+            label="Platform"
+            name="platform"
+          >
+            <USelect
+              v-model="link.platform"
+              :items="platformItems"
+              :icon="findPlatformIcon(link.platform)"
+              class="w-full"
+              :ui="{
+                base: 'py-4',
+              }"
+              required
+            />
+          </UFormField>
+
+          <UFormField
+            label="Link"
+            name="url"
+          >
+            <UInput
+              v-model="link.url"
+              :placeholder="findPlatformPlaceholder(link.platform)"
+              type="url"
+              class="w-full"
+              required
+            />
+          </UFormField>
+        </UForm>
+      </div>
 
       <template #footer>
         <div class="text-right">
@@ -204,3 +239,14 @@ function findPlatformPlaceholder(platformName: string | undefined) {
     </UCard>
   </UForm>
 </template>
+
+<style scoped>
+.sortable-ghost {
+  opacity: 0.1;
+  border: 1px dashed var(--color-grey-950);
+}
+
+.sortable-drag {
+  border: 1px dashed var(--color-primary);
+}
+</style>
