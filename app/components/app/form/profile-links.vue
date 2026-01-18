@@ -204,10 +204,7 @@ function findPlatformPlaceholder(platformName: string | undefined) {
               v-model="link.platform"
               :items="platformItems"
               :icon="findPlatformIcon(link.platform)"
-              class="w-full"
-              :ui="{
-                base: 'py-4',
-              }"
+              trailing-icon="i-custom-icon-chevron-down"
               required
             />
           </UFormField>
@@ -218,9 +215,9 @@ function findPlatformPlaceholder(platformName: string | undefined) {
           >
             <UInput
               v-model="link.url"
+              icon="i-custom-icon-link"
               :placeholder="findPlatformPlaceholder(link.platform)"
               type="url"
-              class="w-full"
               required
             />
           </UFormField>

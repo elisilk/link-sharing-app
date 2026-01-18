@@ -64,6 +64,9 @@
   --ui-text: var(--color-grey-500);
   --ui-text-highlighted: var(--color-grey-900);
 
+  --ui-text-dimmed: var(--ui-color-neutral-900);
+  --ui-border-accented: var(--ui-color-neutral-200);
+
   /* background */
   /* --ui-bg:  var(--color-grey-50); */
 }
