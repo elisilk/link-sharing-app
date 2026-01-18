@@ -21,14 +21,14 @@ type ProfileLinksForm = {
 
 const localProfileLinks = ref<ProfileLinksForm[]>(
   (profile.value && profile.value.links.length > 0)
-    ? profile.value?.links.map(({ id, platform, url, order, profileId, userId }) => ({ id, platform, url, order, profileId, userId }))
+    ? profile.value?.links.map(({ id, platform, url, order, profileId, userId }) => ({ id, platform, url, order, profileId, userId })).sort((a, b) => a.order - b.order)
     : [],
 );
 
 watch(profile, () => {
   // console.warn("global profile has changed", profile.value);
   localProfileLinks.value = (profile.value && profile.value.links.length > 0)
-    ? profile.value?.links.map(({ id, platform, url, order, profileId, userId }) => ({ id, platform, url, order, profileId, userId }))
+    ? profile.value?.links.map(({ id, platform, url, order, profileId, userId }) => ({ id, platform, url, order, profileId, userId })).sort((a, b) => a.order - b.order)
     : [];
 }, { deep: true });
 
