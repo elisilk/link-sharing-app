@@ -139,13 +139,14 @@ function findPlatformPlaceholder(platformName: string | undefined) {
       class="h-full flex flex-col"
       :ui="{
         root: 'bg-default text-default rounded-xl',
-        header: 'border-b-0',
-        body: 'flex-1 space-y-6',
+        header: 'border-b-0 p-6 sm:p-10',
+        body: 'flex-1 space-y-6 pt-0 pb-6 px-6 sm:pt-0 sm:pb-10 sm:px-10',
+        footer: 'sm:px-10 sm:py-6',
       }"
       variant="soft"
     >
       <template #header>
-        <h1 class="text-5xl font-bold">
+        <h1 class="mb-2 text-gray-900 font-bold text-2xl sm:text-[2rem]">
           Customize your links
         </h1>
         <p>Add/edit/remove links below and then share all your profiles with the world!</p>
@@ -154,7 +155,7 @@ function findPlatformPlaceholder(platformName: string | undefined) {
       <UButton
         variant="outline"
         label="+ Add new link"
-        class="w-full justify-center mb-6"
+        class="font-semibold h-10 sm:h-14 w-full justify-center mb-6 cursor-pointer"
         @click="handleAddLink"
       />
 
@@ -178,20 +179,23 @@ function findPlatformPlaceholder(platformName: string | undefined) {
           :key="link.id"
           :name="`${count}`"
           :schema="profileLinkSchema"
-          class="bg-gray-50 rounded-xl p-4 sm:p-6"
+          class="bg-gray-50 rounded-xl p-4 sm:p-6 space-y-4"
           nested
         >
-          <div class="flex items-center">
+          <div class="flex items-center gap-2">
             <UButton
-              variant="ghost"
               icon="i-custom-icon-drag-and-drop"
-              class="drag-and-drop-handle xs cursor-grab active:cursor-grabbing"
+              size="xs"
+              color="neutral"
+              variant="ghost"
+              class="p-0 drag-and-drop-handle cursor-grab active:cursor-grabbing"
             />
-            <span>Link #{{ count + 1 }}</span>
+            <span class="font-bold">Link #{{ count + 1 }}</span>
             <UButton
               label="Remove"
+              color="neutral"
               variant="ghost"
-              class="ms-auto"
+              class="ms-auto p-0 cursor-pointer hover:bg-transparent hover:text-primary focus-visible:bg-transparent focus-visible:text-primary"
               @click="handleRemoveLink(link.id)"
             />
           </div>
@@ -229,7 +233,7 @@ function findPlatformPlaceholder(platformName: string | undefined) {
           <UButton
             type="submit"
             label="Save"
-            class="w-full justify-center sm:w-auto"
+            class="font-semibold h-14 w-full justify-center sm:w-auto sm:px-6"
           />
         </div>
       </template>
