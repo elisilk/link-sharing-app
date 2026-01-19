@@ -5,8 +5,18 @@ export default defineAppConfig({
       secondary: "blue",
       neutral: "grey",
     },
+    button: {
+      variants: {
+        size: {
+          xs: {
+            leadingIcon: "size-3",
+          },
+        },
+      },
+    },
     formField: {
       slots: {
+        label: "text-xs",
         error: "text-xs text-right sm:mt-0 sm:mr-4 sm:absolute sm:right-0 sm:top-1/2 sm:-translate-y-1/2",
       },
       variants: {
@@ -76,6 +86,23 @@ export default defineAppConfig({
           class: "pe-11",
         },
       ],
+    },
+    fileUpload: {
+      slots: {
+        root: "w-37.5 h-37.5 sm:w-48.25 sm:h-48.25 shrink-0",
+        base: [
+          "bg-gray-100 border-0 rounded-xl",
+        ],
+        label: "text-primary font-semibold",
+      },
+      variants: {
+        variant: {
+          area: {
+            wrapper: "p-2",
+            base: "p-0",
+          },
+        },
+      },
     },
   },
 });
