@@ -27,6 +27,13 @@ export default defineNuxtConfig({
   nitro: {
     storage: {
       uploads: {
+        driver: "vercel-blob",
+        access: "public",
+        base: "uploads",
+      },
+    },
+    devStorage: {
+      uploads: {
         driver: "fs",
         base: "./public/uploads",
       },
