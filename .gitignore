@@ -30,3 +30,6 @@ logs
 
 # Database
 local.db*
+
+# Uploads
+public/uploads/*

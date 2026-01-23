@@ -23,6 +23,16 @@ export default defineNuxtConfig({
     }],
   },
 
+  /* storage */
+  nitro: {
+    storage: {
+      uploads: {
+        driver: "fs",
+        base: "./public/uploads",
+      },
+    },
+  },
+
   eslint: {
     config: {
       standalone: false,

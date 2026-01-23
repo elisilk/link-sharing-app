@@ -1,7 +1,15 @@
 export default defineEventHandler(async (event) => {
+  const routerParamId = getRouterParam(event, "id");
+
+  if (!routerParamId) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: "User ID is required",
+    });
+  }
+
   const linksToAdd: {
     userId: number;
-    profileId: number;
     platform: string;
     url: string;
     order: number;

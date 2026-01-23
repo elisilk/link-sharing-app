@@ -13,11 +13,24 @@ export default defineAppConfig({
           },
         },
       },
+      compoundVariants: [
+        {
+          color: "primary",
+          variant: "solid",
+          class: "font-semibold h-14 px-6 rounded-lg cursor-pointer active:shadow-(--shadow-purple-600)",
+        },
+        {
+          color: "primary",
+          variant: "outline",
+          class: "font-semibold h-14 px-6 rounded-lg cursor-pointer active:shadow-(--shadow-purple-600)",
+        },
+      ],
     },
     formField: {
       slots: {
         label: "text-xs",
         error: "text-xs text-right sm:mt-0 sm:mr-4 sm:absolute sm:right-0 sm:top-1/2 sm:-translate-y-1/2",
+        help: "text-xs",
       },
       variants: {
         required: {
@@ -89,11 +102,13 @@ export default defineAppConfig({
     },
     fileUpload: {
       slots: {
-        root: "w-37.5 h-37.5 sm:w-48.25 sm:h-48.25 shrink-0",
+        root: "w-37.5 h-37.5 sm:w-48.25 sm:h-48.25 shrink-0 rounded-xl bg-gray-100",
         base: [
-          "bg-gray-100 border-0 rounded-xl",
+          "rounded-xl bg-transparent border-0 z-1 text-primary hover:text-primary/75 focus-visible:text-primary/75 data-[dragging=true]:text-primary/75 hover:bg-inverted",
         ],
-        label: "text-primary font-semibold",
+        icon: "text-inherit size-10",
+        label: "font-semibold text-inherit",
+        file: "z-0 rounded-xl after:rounded-xl after:absolute after:inset-0 after:bg-black after:opacity-50",
       },
       variants: {
         variant: {

@@ -8,6 +8,7 @@ definePageMeta({
 });
 
 const toast = useToast();
+const { user } = useUserSession();
 const { data: profile } = useNuxtData<SelectProfileWithLinks>("profile");
 
 type ProfileLinksForm = {
@@ -15,20 +16,19 @@ type ProfileLinksForm = {
   platform: string;
   url: string;
   order: number;
-  profileId?: number;
   userId?: number;
 };
 
 const localProfileLinks = ref<ProfileLinksForm[]>(
   (profile.value && profile.value.links.length > 0)
-    ? profile.value?.links.map(({ id, platform, url, order, profileId, userId }) => ({ id, platform, url, order, profileId, userId })).sort((a, b) => a.order - b.order)
+    ? profile.value?.links.map(({ id, platform, url, order, userId }) => ({ id, platform, url, order, userId }))
     : [],
 );
 
 watch(profile, () => {
   // console.warn("global profile has changed", profile.value);
   localProfileLinks.value = (profile.value && profile.value.links.length > 0)
-    ? profile.value?.links.map(({ id, platform, url, order, profileId, userId }) => ({ id, platform, url, order, profileId, userId })).sort((a, b) => a.order - b.order)
+    ? profile.value?.links.map(({ id, platform, url, order, userId }) => ({ id, platform, url, order, userId }))
     : [];
 }, { deep: true });
 
@@ -38,11 +38,10 @@ async function handleUpdate() {
   if (newLinksToAdd.length > 0) {
     newLinksToAdd.forEach((link) => {
       link.userId = profile.value?.userId;
-      link.profileId = profile.value?.id;
     });
-    // console.table(newLinksToAdd);
+
     try {
-      const result = await $fetch(`/api/links`, {
+      const result = await $fetch(`/api/user/${user.value?.id}/links`, {
         method: "POST",
         body: newLinksToAdd,
       });
@@ -76,17 +75,10 @@ async function handleUpdate() {
 
   // Update the existing links
   const existingLinksToUpdate = localProfileLinks.value.filter(link => !!link.id);
-  // console.table(existingLinksToUpdate);
   if (existingLinksToUpdate.length > 0) {
     try {
-    // updating just one link item
-    // const result = await $fetch(`/api/link/${existingLinksToUpdate[0]?.id}`, {
-    //   method: "PUT",
-    //   body: existingLinksToUpdate[0],
-    // });
-
-      // udpating an array of link items
-      const result = await $fetch(`/api/links`, {
+      // udpate the array of link items
+      const result = await $fetch(`/api/user/${user.value?.id}/links`, {
         method: "PUT",
         body: existingLinksToUpdate,
       });
@@ -121,7 +113,7 @@ async function handleUpdate() {
 
 async function handleRemoveLink(linkId: number) {
   try {
-    const result = await $fetch(`/api/link/${linkId}`, {
+    const result = await $fetch(`/api/user/${user.value?.id}/link/${linkId}`, {
       method: "DELETE",
     });
     if (result.success) {

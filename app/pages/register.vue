@@ -71,7 +71,7 @@ watch(loggedIn, () => {
     }"
   >
     <template #header>
-      <h1 class="text-5xl font-bold text-grey-900">
+      <h1 class="mb-2 text-gray-900 font-bold text-2xl sm:text-[2rem]">
         Create account
       </h1>
       <p>Let’s get you started sharing your links!</p>
@@ -80,8 +80,9 @@ watch(loggedIn, () => {
     <UForm
       :schema="schema"
       :state="state"
-      class="space-y-4"
-      @submit="onSubmit"
+      class="space-y-6"
+      novalidate
+      @submit.prevent="onSubmit"
     >
       <UFormField label="Email address" name="email">
         <!-- <UIcon name="i-lucide-mail" /> -->
@@ -104,7 +105,11 @@ watch(loggedIn, () => {
         />
       </UFormField>
 
-      <UFormField label="Confirm password" name="passwordConfirm">
+      <UFormField
+        label="Confirm password"
+        name="passwordConfirm"
+        help="Password must contain at least 8 characters"
+      >
         <UInput
           v-model="state.passwordConfirm"
           icon="i-custom-icon-password"
@@ -114,15 +119,15 @@ watch(loggedIn, () => {
         />
       </UFormField>
 
-      <p>Password must contain at least 8 characters</p>
-
-      <UButton type="submit" block>
-        Create new account
-      </UButton>
+      <UButton
+        type="submit"
+        label="Create new account"
+        block
+      />
     </UForm>
 
     <template #footer>
-      <p class="text-center">
+      <p class="text-center text-balance px-4">
         Already have an account? <ULink to="/" class="text-primary">
           Login
         </ULink>

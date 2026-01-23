@@ -54,6 +54,26 @@ Users should be able to:
 
 As always, so many cool :sunglasses: things. Here are some of the key resources I used.
 
+#### Database
+
+To update/reset the database locally (development):
+
+- delete the ~/server/db/migrations folder
+- delete each of the ~/local.db\* files
+- update the schema files in ~/server/db/schema/
+- run `pnpm drizzle-kit generate` to regenerate the migration files
+- run `pnpm drizzle-kit migrate` to apply the generated SQL migration files to the database
+
+To update/reset the database on Turso (production):
+
+- do all of the above first on the local/development environment
+- **may have to go online to the Turso database and delete the existing rows and tables**
+- change the `.env` to the production version
+- run `pnpm drizzle-kit push` (the same two commands as above)
+- change the `.env` back to the development version
+
+See: [Migrations with Drizzle Kit](https://orm.drizzle.team/docs/kit-overview)
+
 #### Building the App
 
 - [Full Stack App Build | Travel Log w/ Nuxt, Vue, Better Auth, Drizzle, Tailwind, DaisyUI, MapLibre](https://www.youtube.com/watch?v=DK93dqmJJYg) - I learned so much from watching and following along with this video. I adopted/adapted much the same approach and tech stack. Thanks, CJ!

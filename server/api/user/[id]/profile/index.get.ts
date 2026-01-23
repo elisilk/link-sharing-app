@@ -1,6 +1,6 @@
 import type { SelectProfileWithLinks } from "~~/server/db/schema/index";
 
-import { eq } from "drizzle-orm";
+import { asc, eq } from "drizzle-orm";
 
 export default defineEventHandler(async (event) => {
   // TESTING: only include if want to protect api from guest users
@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
   if (!routerParamId) {
     throw createError({
       statusCode: 400,
-      message: "ID is required",
+      message: "User ID is required",
     });
   }
 
@@ -26,7 +26,10 @@ export default defineEventHandler(async (event) => {
   const profile: SelectProfileWithLinks | undefined = await useDb().query.profile.findFirst({
     where: eq(schema.profile.userId, userId),
     with: {
-      links: true,
+      // links: true,
+      links: {
+        orderBy: ({ order }) => [asc(order)],
+      },
     },
   });
 

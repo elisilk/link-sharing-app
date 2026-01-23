@@ -12,7 +12,6 @@ const profileLinkSchema = z.object({
   platform: z.string("Can't be empty").nonempty("Can't be empty"),
   url: z.string("Can't be empty").nonempty("Can't be empty").check(z.url("Please check the URL")),
   order: z.any(),
-  profileId: z.any(),
   userId: z.any(),
 });
 
@@ -48,7 +47,6 @@ function handleAddLink() {
     platform: "",
     url: "",
     order: maxLinkItemOrder(profileLinksForm.value) + 1,
-    profileId: null,
     userId: null,
   });
   toast.add({
@@ -229,11 +227,11 @@ function findPlatformPlaceholder(platformName: string | undefined) {
       </div>
 
       <template #footer>
-        <div class="text-right">
+        <div class="sm:text-right">
           <UButton
             type="submit"
             label="Save"
-            class="font-semibold h-14 w-full justify-center sm:w-auto sm:px-6"
+            class="justify-center w-full sm:w-auto"
           />
         </div>
       </template>

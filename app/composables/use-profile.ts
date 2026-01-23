@@ -4,13 +4,16 @@ import type { SelectProfileWithLinks } from "~~/server/db/schema/index";
 export async function useProfile() {
   const { user } = useUserSession();
 
-  const { data: profile, pending, error, refresh } = useFetch<SelectProfileWithLinks>(
-    `/api/profile/${user.value?.id}`,
+  const { data: profile, pending, error, refresh } = useAsyncData<SelectProfileWithLinks>(
+    "profile",
+    async () => {
+      const profileResult = await $fetch<SelectProfileWithLinks>(`/api/user/${user.value?.id}/profile/`);
+      return profileResult;
+    },
     {
-      key: "profile",
       lazy: true,
-      pick: ["userId", "id", "firstName", "lastName", "email", "links"],
       deep: true,
+      pick: ["userId", "id", "firstName", "lastName", "email", "picture", "links", "pictureUrl"],
     },
   );
 
