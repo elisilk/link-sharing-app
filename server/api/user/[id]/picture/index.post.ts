@@ -1,5 +1,7 @@
 import { H3Error } from "h3";
 
+const STORAGE_BASE = "uploads";
+
 export default defineEventHandler(async (event) => {
   type UploadedFile = {
     filename: string;
@@ -28,7 +30,9 @@ export default defineEventHandler(async (event) => {
   }
 
   // Get storage instance
-  const storage = useStorage("uploads");
+  // const storage = useStorage("uploads");
+  // const storage = useStorage(STORAGE_BASE);
+  const storage = useStorage();
   const uploadedFiles: UploadedFile[] = [];
 
   try {
@@ -67,7 +71,7 @@ export default defineEventHandler(async (event) => {
       const fileName = `user-${userId}-${crypto.randomUUID()}.jpg`;
       // const fileName = `user-${userId}-${Date.now()}.jpg`;
 
-      await storage.setItemRaw(`${fileName}`, file.data);
+      await storage.setItemRaw(`${STORAGE_BASE}:${fileName}`, file.data);
       uploadedFiles.push({
         filename: fileName,
         url: `/uploads/${fileName}`,

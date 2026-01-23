@@ -1,6 +1,7 @@
+// const STORAGE_URL = "https://dmcdkdurs83kjmfp.public.blob.vercel-storage.com";
+const STORAGE_BASE = "uploads";
+
 export default defineEventHandler(async (event) => {
-  // const storage = useStorage("uploads");
-  const storage = useStorage();
   const path = getRouterParam(event, "path");
 
   if (!path) {
@@ -10,8 +11,13 @@ export default defineEventHandler(async (event) => {
     });
   }
 
+  // const imageUrl = `${STORAGE_URL}/${STORAGE_BASE}/${}`;
+
+  // const storage = useStorage("uploads");
+  // const storage = useStorage(STORAGE_BASE);
   // const imageBuffer = await storage.getItemRaw(path);
-  const imageBuffer = await storage.getItemRaw(`uploads:${path}`);
+
+  const imageBuffer = await useStorage().getItemRaw(`${STORAGE_BASE}:${path}`);
 
   if (!imageBuffer) {
     throw createError({
