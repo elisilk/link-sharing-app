@@ -1,5 +1,6 @@
 export default defineEventHandler(async (event) => {
-  const storage = useStorage("uploads");
+  // const storage = useStorage("uploads");
+  const storage = useStorage();
   const path = getRouterParam(event, "path");
 
   if (!path) {
@@ -9,7 +10,8 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const imageBuffer = await storage.getItemRaw(path);
+  // const imageBuffer = await storage.getItemRaw(path);
+  const imageBuffer = await storage.getItemRaw(`uploads:${path}`);
 
   if (!imageBuffer) {
     throw createError({
@@ -18,8 +20,5 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  return {
-    filename: path,
-    image: imageBuffer,
-  };
+  return imageBuffer;
 });
