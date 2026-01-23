@@ -1,12 +1,12 @@
 import { eq } from "drizzle-orm";
 
 export default defineEventHandler(async (event) => {
-  const routerParamId = getRouterParam(event, "id");
+  const routerParamId = getRouterParam(event, "link-id");
 
   if (!routerParamId) {
     throw createError({
       statusCode: 400,
-      message: "ID is required",
+      message: "Link ID is required",
     });
   }
 

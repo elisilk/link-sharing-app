@@ -9,7 +9,9 @@ const { variant = "phone" } = defineProps<Props>();
 
 const { data: profile } = useNuxtData<SelectProfileWithLinks>("profile");
 
-const orderedLinks = computed(() => profile.value && profile.value.links ? [...profile.value.links].sort((a, b) => a.order - b.order) : []);
+const profilePictureSrc = computed<string | null>(() =>
+  profile.value?.picture ? `/uploads/${profile.value?.picture}` : null,
+);
 </script>
 
 <template>
@@ -29,7 +31,12 @@ const orderedLinks = computed(() => profile.value && profile.value.links ? [...p
     <template #header>
       <div v-if="profile" class="grid justify-items-center relative">
         <!-- profile picture -->
-        <USkeleton class="animate-none h-24 w-24 rounded-full shrink-0 mb-6" />
+        <img
+          v-if="profilePictureSrc"
+          class="h-24 w-24 rounded-full mb-6 object-cover"
+          :src="profilePictureSrc"
+        >
+        <USkeleton v-else class="animate-none h-24 w-24 rounded-full shrink-0 mb-6" />
 
         <!-- profile name -->
         <h2
@@ -49,15 +56,15 @@ const orderedLinks = computed(() => profile.value && profile.value.links ? [...p
       </div>
     </template>
 
-    <div class="grid gap-5">
+    <div v-if="profile" class="grid gap-5">
       <AppPreviewLink
-        v-for="link in orderedLinks"
+        v-for="link in profile.links"
         :key="link.id"
         :platform="link.platform"
         :url="link.url"
       />
       <USkeleton
-        v-for="index in 5 - orderedLinks.length"
+        v-for="index in 5 - profile.links.length"
         :key="`link-placeholder-${index}`"
         class="animate-none h-11 w-59.25"
       />

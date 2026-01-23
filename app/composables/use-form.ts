@@ -12,6 +12,16 @@ export function useForm<T>(defaultValue: T, modelValue?: ModelRef<T | null | und
     }, { deep: true });
   }
 
+  // function replacer(key: string, value: any) {
+  //   console.log(value, typeof value);
+  //   // if (value instanceof File) {
+  //   // if (value instanceof Object) {
+  //   if (key === "image") {
+  //     return "image file";
+  //   }
+  //   return value;
+  // }
+
   function clone(obj: any) {
     return JSON.parse(JSON.stringify(obj));
   }

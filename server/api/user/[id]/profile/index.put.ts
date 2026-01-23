@@ -8,22 +8,22 @@ export default defineEventHandler(async (event) => {
   if (!routerParamId) {
     throw createError({
       statusCode: 400,
-      message: "ID is required",
+      message: "User ID is required",
     });
   }
 
   const userId: number = Number(routerParamId);
 
-  const { firstName, lastName, email } = await readBody(event);
+  const { firstName, lastName, email, picture } = await readBody(event);
   if (!firstName || !lastName || !email) {
     throw createError({
-      message: "Missing fields!",
+      message: "Missing required fields!",
       statusCode: 400,
     });
   }
 
   try {
-    const result = await useDb().update(schema.profile).set({ firstName, lastName, email }).where(eq(schema.profile.userId, userId));
+    const result = await useDb().update(schema.profile).set({ firstName, lastName, email, picture }).where(eq(schema.profile.userId, userId));
 
     if (result.rowsAffected > 0) {
       return {

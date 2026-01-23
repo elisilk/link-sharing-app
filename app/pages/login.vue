@@ -30,7 +30,7 @@ async function handleSubmit(event: FormSubmitEvent<Schema>) {
       method: "POST",
       body: event.data,
     });
-    fetch();
+    await fetch();
     toast.add({ title: "Login Success", description: "Welcome back!", color: "success" });
   }
   catch (error) {
@@ -61,7 +61,7 @@ watch(loggedIn, () => {
     }"
   >
     <template #header>
-      <h1 class="text-5xl font-bold text-grey-900">
+      <h1 class="mb-2 text-gray-900 font-bold text-2xl sm:text-[2rem]">
         Login
       </h1>
       <p>Add your details below to get back into the app</p>
@@ -70,8 +70,9 @@ watch(loggedIn, () => {
     <UForm
       :schema="schema"
       :state="state"
-      class="space-y-4"
-      @submit="handleSubmit"
+      class="space-y-6"
+      novalidate
+      @submit.prevent="handleSubmit"
     >
       <UFormField label="Email address" name="email">
         <UInput
@@ -93,13 +94,15 @@ watch(loggedIn, () => {
         />
       </UFormField>
 
-      <UButton type="submit" block>
-        Login
-      </UButton>
+      <UButton
+        type="submit"
+        label="Login"
+        block
+      />
     </UForm>
 
     <template #footer>
-      <p class="text-center">
+      <p class="text-center text-balance px-4">
         Don’t have an account? <ULink to="/register" class="text-primary">
           Create account
         </ULink>
