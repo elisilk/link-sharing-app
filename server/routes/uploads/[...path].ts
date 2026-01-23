@@ -26,8 +26,5 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  return {
-    filename: path,
-    image: imageBuffer,
-  };
+  return imageBuffer;
 });
