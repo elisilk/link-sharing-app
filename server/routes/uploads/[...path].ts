@@ -17,7 +17,23 @@ export default defineEventHandler(async (event) => {
   // const storage = useStorage(STORAGE_BASE);
   // const imageBuffer = await storage.getItemRaw(path);
 
-  const imageBuffer = await useStorage().getItemRaw(`${STORAGE_BASE}:${path}`);
+  const storage = useStorage();
+  const itemKey = `${STORAGE_BASE}:${path}`;
+
+  // const itemExists = await storage.hasItem(itemKey);
+  // const itemMeta = await storage.getMeta(itemKey);
+
+  // console.log("(server) key:", itemKey);
+  // console.log("(server) exists:", itemExists);
+  // console.log("(server) meta:", itemMeta);
+  // console.log("(server) meta keys:", Object.keys(itemMeta));
+
+  const imageBuffer = await storage.getItemRaw(itemKey);
+
+  // setHeader(event, "Content-Type", itemMeta.contentType);
+  // setHeader(event, "Content-Length", itemMeta.size);
+
+  // console.log("(server) item data:", imageBuffer);
 
   if (!imageBuffer) {
     throw createError({
@@ -27,4 +43,5 @@ export default defineEventHandler(async (event) => {
   }
 
   return imageBuffer;
+  // return send(event, imageBuffer);
 });

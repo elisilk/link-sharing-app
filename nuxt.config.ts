@@ -23,6 +23,14 @@ export default defineNuxtConfig({
     }],
   },
 
+  /* environment variables */
+  runtimeConfig: {
+    public: {
+      blobStorageUrl: "",
+      blobStorageBase: "",
+    },
+  },
+
   /* storage */
   nitro: {
     storage: {
