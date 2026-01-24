@@ -9,8 +9,10 @@ const { variant = "phone" } = defineProps<Props>();
 
 const { data: profile } = useNuxtData<SelectProfileWithLinks>("profile");
 
+const config = useRuntimeConfig();
+
 const profilePictureSrc = computed<string | null>(() =>
-  profile.value?.picture ? `/uploads/${profile.value?.picture}` : null,
+  profile.value?.picture ? `${config.public.blobStorageUrl}/${config.public.blobStorageBase}/${profile.value?.picture}` : null,
 );
 </script>
 
