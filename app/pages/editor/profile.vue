@@ -14,10 +14,8 @@ definePageMeta({
 });
 
 useSeoMeta({
-  title: "Link-sharing app | Edit your profile details",
-  ogTitle: "Link-sharing app | Edit your profile details",
-  description: "For developers to have a single place to share their multiple developer profiles across the web.",
-  ogDescription: "For developers to have a single place to share their multiple developer profiles across the web.",
+  title: "Edit your profile details",
+  ogTitle: "devlinks - Edit your profile details",
 });
 
 const toast = useToast();

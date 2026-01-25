@@ -5,10 +5,8 @@ definePageMeta({
 });
 
 useSeoMeta({
-  title: "Link-sharing app | Preview your profile",
-  ogTitle: "Link-sharing app | Preview your profile",
-  description: "For developers to have a single place to share their multiple developer profiles across the web.",
-  ogDescription: "For developers to have a single place to share their multiple developer profiles across the web.",
+  title: "Preview your profile",
+  ogTitle: "devlinks - Preview your profile",
 });
 
 const { profile, pending, error } = await useProfile();
