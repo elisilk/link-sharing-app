@@ -6,7 +6,7 @@ import * as z from "zod";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 const MIN_DIMENSIONS = { width: 200, height: 200 };
-const MAX_DIMENSIONS = { width: 5622, height: 5622 };
+const MAX_DIMENSIONS = { width: 6000, height: 6000 };
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png"]; // "image/webp"
 
 function formatBytes(bytes: number, decimals = 2) {
@@ -156,7 +156,7 @@ function handleRemoveCurrentPicture() {
               <img
                 :src="currentProfilePictureSrc"
                 alt="current profile picture"
-                class="absolute z-1 inset-0 object-cover"
+                class="absolute z-1 size-full object-cover"
               >
               <button
                 type="button"
