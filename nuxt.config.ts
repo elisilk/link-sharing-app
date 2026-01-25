@@ -12,6 +12,19 @@ export default defineNuxtConfig({
   ],
 
   /* Nuxt UI */
+  app: {
+    head: {
+      title: "Link-sharing app",
+      htmlAttrs: {
+        lang: "en",
+      },
+      link: [
+        { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
+      ],
+    },
+  },
+
+  /* Nuxt UI */
   css: ["~/assets/css/main.css"],
   ui: {
     colorMode: false,

@@ -48,13 +48,33 @@ Users should be able to:
 
 ### Built with
 
-- [Nuxt](https://nuxt.com/)
+- [GitHub](https://github.com/) - code repository
+- [Nuxt](https://nuxt.com/) - full-stack web framework (built on Vue, Vite, and Nitro)
+- [Vercel](https://vercel.com/docs/getting-started-with-vercel) - web host deployment
+- [Vercel Blob](https://vercel.com/docs/vercel-blob) - storage (for the profile picture images)
+- [Nuxt UI](https://ui.nuxt.com/) - UI component library (built on Tailwind and Reka UI)
+  - [Lucide icons](https://icon-sets.iconify.design/lucide/?keyword=lucide)
+  - [VueUse useSortable](https://vueuse.org/integrations/useSortable/) - based on [sortable.js](https://github.com/SortableJS/Sortable)
+- [Nuxt Auth Utils](https://github.com/Atinux/nuxt-auth-utils) - user authentication
+- [Drizzle](https://orm.drizzle.team/) - ORM library
+- [Turso](https://turso.tech/) - database
+
+Other libraries I made use of, primarily for the workflow setup:
+
+- [Husky](https://github.com/typicode/husky)
+- [Concurrently](https://github.com/open-cli-tools/concurrently)
+- [Lint-staged](https://github.com/lint-staged/lint-staged)
+- [ESLint](https://eslint.org/)
+  - [Nuxt ESLint](https://eslint.nuxt.com/)
+  - [Anthony Fu's ESLint config preset](https://github.com/antfu/eslint-config)
 
 ### What I learned
 
 As always, so many cool :sunglasses: things. Here are some of the key resources I used.
 
 #### Database
+
+[My database schema](https://mermaid.ai/d/c1808b67-d215-4c2e-8ed1-f856fbcdebc9)
 
 To update/reset the database locally (development):
 
@@ -78,6 +98,11 @@ See: [Migrations with Drizzle Kit](https://orm.drizzle.team/docs/kit-overview)
 
 - [Full Stack App Build | Travel Log w/ Nuxt, Vue, Better Auth, Drizzle, Tailwind, DaisyUI, MapLibre](https://www.youtube.com/watch?v=DK93dqmJJYg) - I learned so much from watching and following along with this video. I adopted/adapted much the same approach and tech stack. Thanks, CJ!
 - [Nuxt Auth Utils: Secure, Simple, and Flexible Logins](https://vueschool.io/courses/nuxt-auth-utils-secure-simple-and-flexible-logins) - I learned a ton from this video course too, and an [associated blog post](https://vueschool.io/articles/vuejs-tutorials/email-password-logins-with-nuxt-auth-utils-and-nuxt-ui/). Among other things, helped me to realize that I preferred using Nuxt UI rather than DaisyUI. Thank you, Daniel!
+- [File Uploads in Vue.js](https://vueschool.io/courses/file-uploads-in-vue-js) - This video course and [associated blog post](https://vueschool.io/articles/vuejs-tutorials/handling-file-uploads-in-nuxt-with-usestorage/) led me to using [unstorage](https://unstorage.unjs.io/guide) with Vercel Blob storage to store the profile picture files.
+  - [Store files and K/Vs in Nuxt and Nitro - Powered by unstorage](https://www.youtube.com/watch?v=iE67C7ldjEk&t=49s)
+  - [unstorage - Vercel driver](https://unstorage.unjs.io/drivers/vercel)
+  - [unstorage - feat: raw data support (experimental)](https://github.com/unjs/unstorage/pull/141) - I had some issues using the [`getItemRaw()` function](https://unstorage.unjs.io/guide#getitemrawkey-opts), which is experimental, and so had to abandon that for now. But I hope to come back to it at some point, because it is so nice to have such a nice, simple solution built in to Nuxt.
+- [The Vue Form Component Pattern: Robust Forms Without the Fuss](https://vueschool.io/articles/vuejs-tutorials/the-vue-form-component-pattern-robust-forms-without-the-fuss/) - A great, reusable component to maintain a local copy of form data rather than directly binding to the state data, so that updates are only visisble to the user upon hitting the save button.
 
 #### Testing the App
 
@@ -85,17 +110,21 @@ See: [Migrations with Drizzle Kit](https://orm.drizzle.team/docs/kit-overview)
 
 Known issues - specific areas that the solution should be improved:
 
-- [ ] When viewing the page on a mobile device, the page zooms in automatically when going into an input field. That behavior is fine, but the issue is more when the form is submitted and the user is navigated to the next page, it seems to maintain that zoom instead of resetting fully to the original zoom of the page. How to fix? Hmm 🤔
+- [x] When viewing the page on a mobile device, the page zooms in automatically when going into an input field. That behavior is fine, but the issue is more when the form is submitted and the user is navigated to the next page, it seems to maintain that zoom instead of resetting fully to the original zoom of the page. How to fix? Hmm 🤔
+  - Solved: had to just change the font size of the inputs to 16px
   - [Google search: "nuxt mobile zoom out to full page on navigation to new page"](https://www.google.com/search?q=nuxt+mobile+zoom+out+to+full+page+on+navigation+to+new+page)
   - [Disable Auto Zoom in Input "Text" tag - Safari on iPhone](https://stackoverflow.com/questions/2989263/disable-auto-zoom-in-input-text-tag-safari-on-iphone)
-- [ ] Issue of warning message that occurs on Chrome when opening up the toggled navigation menu from the header: "Blocked aria-hidden on an element because its descendant retained focus". The issue doesn't seem to arise on Firefox so far.
+- [ ] Warning message that occurs on Chrome when opening up the toggled navigation menu from the header: "Blocked aria-hidden on an element because its descendant retained focus". The issue doesn't seem to arise on Firefox so far.
+- [ ] Issue with the [`getItemRaw()` unstorage function](https://unstorage.unjs.io/guide#getitemrawkey-opts) not properly returning the image buffer when called in the picture uploads server route when using Vercel Blob.
 
 Feature requests - specific enhancements to make:
 
+- [ ] Ability to delete the current profile picture without having to replace it with a new one
 - [ ] Method for updating login info, including login email and password
 - [ ] Method for retrieving/changing a forgotten password
 - [ ] Implement [next level security features to prevent brute force attacks](https://vueschool.io/lessons/next-level-security-features-attempt-locks-to-prevent-brute-force-attacks)
 - [ ] Implement [protection of sensitive data in API routes with requireUserSession](https://vueschool.io/lessons/protect-sensitive-data-in-api-routes-with-requireusersession)
+- [ ] [Optimistic updates](https://nuxt.com/docs/4.x/api/composables/use-nuxt-data#optimistic-updates)
 
 More general ideas to consider:
 
