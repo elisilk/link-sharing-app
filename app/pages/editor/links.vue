@@ -7,6 +7,13 @@ definePageMeta({
   layout: "editor",
 });
 
+useSeoMeta({
+  title: "Link-sharing app | Edit your profile links",
+  ogTitle: "Link-sharing app | Edit your profile links",
+  description: "For developers to have a single place to share their multiple developer profiles across the web.",
+  ogDescription: "For developers to have a single place to share their multiple developer profiles across the web.",
+});
+
 const toast = useToast();
 const { user } = useUserSession();
 const { data: profile } = useNuxtData<SelectProfileWithLinks>("profile");

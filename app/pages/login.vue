@@ -9,6 +9,13 @@ definePageMeta({
   alias: ["/"],
 });
 
+useSeoMeta({
+  title: "Link-sharing app | Login",
+  ogTitle: "Link-sharing app | Login",
+  description: "For developers to have a single place to share their multiple developer profiles across the web.",
+  ogDescription: "For developers to have a single place to share their multiple developer profiles across the web.",
+});
+
 const schema = z.object({
   email: z.string("Can't be empty").check(z.email("Invalid email")),
   password: z.string("Password is required"),
