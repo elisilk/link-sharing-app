@@ -23,9 +23,9 @@ const { user } = useUserSession();
 const { data: profile } = useNuxtData<SelectProfileWithLinks>("profile");
 
 const localProfileDetails = ref({
-  firstName: profile.value?.firstName || undefined,
-  lastName: profile.value?.lastName || undefined,
-  email: profile.value?.email || undefined,
+  firstName: profile.value?.firstName || "",
+  lastName: profile.value?.lastName || "",
+  email: profile.value?.email || "",
   pictureFile: undefined,
 });
 
@@ -211,11 +211,12 @@ async function handleUpdate() {
   }
   catch (error) {
     console.error(error);
-    toast.add({
-      title: "Error",
-      description: "Something went wrong.",
-      color: "error",
-    });
+    if (error instanceof FetchError) {
+      toast.add({ title: "Error Updating Profile", description: error.data.message, color: "error" });
+    }
+    else {
+      toast.add({ title: "Error Updating Profile", description: "Something went wrong.", color: "error" });
+    }
   }
 }
 </script>

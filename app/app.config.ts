@@ -100,24 +100,5 @@ export default defineAppConfig({
         },
       ],
     },
-    fileUpload: {
-      slots: {
-        root: "w-37.5 h-37.5 sm:w-48.25 sm:h-48.25 shrink-0 rounded-xl bg-gray-100",
-        base: [
-          "rounded-xl bg-transparent border-0 z-1 text-primary hover:text-primary/75 focus-visible:text-primary/75 data-[dragging=true]:text-primary/75 hover:bg-inverted",
-        ],
-        icon: "text-inherit size-10",
-        label: "font-semibold text-inherit",
-        file: "z-0 rounded-xl after:rounded-xl after:absolute after:inset-0 after:bg-black after:opacity-50",
-      },
-      variants: {
-        variant: {
-          area: {
-            wrapper: "p-2",
-            base: "p-0",
-          },
-        },
-      },
-    },
   },
 });
