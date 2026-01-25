@@ -4,10 +4,10 @@ import type { SelectProfileWithLinks } from "~~/server/db/schema/index";
 
 import * as z from "zod";
 
-const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 const MIN_DIMENSIONS = { width: 200, height: 200 };
-const MAX_DIMENSIONS = { width: 1024, height: 1024 };
-const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
+const MAX_DIMENSIONS = { width: 5622, height: 5622 };
+const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png"]; // "image/webp"
 
 function formatBytes(bytes: number, decimals = 2) {
   if (bytes === 0)
@@ -124,7 +124,7 @@ function handleSubmit(event: FormSubmitEvent<ProfileDetailsSchema>) {
         <UFormField
           label="Profile picture"
           name="pictureFile"
-          help="Image must be below 1024x1024px. Use PNG or JPG format."
+          :help="`Image must be below ${MAX_DIMENSIONS.width}x${MAX_DIMENSIONS.height}px. Use PNG or JPG format.`"
           orientation="horizontal"
           :ui="{
             root: 'gap-4 sm:[&>*:last-child]:flex sm:[&>*:last-child]:gap-6 sm:[&>*:last-child]:items-center',

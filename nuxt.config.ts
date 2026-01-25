@@ -11,15 +11,31 @@ export default defineNuxtConfig({
     "nuxt-auth-utils",
   ],
 
-  /* Nuxt UI */
+  /* app config */
   app: {
     head: {
-      title: "Link-sharing app",
+      titleTemplate: "devlinks - %s",
+      title: "devlinks",
       htmlAttrs: {
         lang: "en",
       },
       link: [
         { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
+        { rel: "manifest", href: "/site.webmanifest" },
+      ],
+      meta: [
+        {
+          name: "description",
+          content: "For developers to have a single place to share their multiple developer profiles across the web.",
+        },
+        {
+          property: "og:description",
+          content: "For developers to have a single place to share their multiple developer profiles across the web.",
+        },
+        {
+          property: "og:type",
+          content: "website",
+        },
       ],
     },
   },

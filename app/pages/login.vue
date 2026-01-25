@@ -10,10 +10,8 @@ definePageMeta({
 });
 
 useSeoMeta({
-  title: "Link-sharing app | Login",
-  ogTitle: "Link-sharing app | Login",
-  description: "For developers to have a single place to share their multiple developer profiles across the web.",
-  ogDescription: "For developers to have a single place to share their multiple developer profiles across the web.",
+  title: "Login - A link-sharing app for developers",
+  ogTitle: "devlinks - Login - A link-sharing app for developers",
 });
 
 const schema = z.object({
