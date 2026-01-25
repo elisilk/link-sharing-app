@@ -22,7 +22,14 @@ function formatBytes(bytes: number, decimals = 2) {
 const profileDetailsSchema = z.object({
   firstName: z.string("Can't be empty").nonempty("Can't be empty"),
   lastName: z.string("Can't be empty").nonempty("Can't be empty"),
-  email: z.string("Can't be empty").nonempty("Can't be empty").check(z.email("Invalid email")),
+  email: z.preprocess(
+    value => (value === "" ? null : value), // Convert empty string to undefined
+    z.email({ message: "Email is invalid" }).nullable(), // Now optional() works
+  ),
+  // email: z.string()
+  //   .transform(e => e === "" ? undefined : e)
+  //   .pipe(z.email("Invalid email").optional()),
+  // email: z.email("Invalid email").optional(),
   pictureFile: z
     .instanceof(File)
     .optional()
@@ -73,9 +80,9 @@ type PartialProfileDetailsSchema = Partial<ProfileDetailsSchema>;
 const profileDetailsModel = defineModel<PartialProfileDetailsSchema>();
 
 const profileDetailsState = reactive<Partial<ProfileDetailsSchema>>({
-  firstName: profileDetailsModel.value?.firstName || undefined,
-  lastName: profileDetailsModel.value?.lastName || undefined,
-  email: profileDetailsModel.value?.email || undefined,
+  firstName: profileDetailsModel.value?.firstName || "",
+  lastName: profileDetailsModel.value?.lastName || "",
+  email: profileDetailsModel.value?.email || "",
   pictureFile: profileDetailsModel.value?.pictureFile || undefined,
 });
 
@@ -90,6 +97,10 @@ const currentProfilePictureSrc = computed<string | null>(() =>
 function handleSubmit(event: FormSubmitEvent<ProfileDetailsSchema>) {
   // can't use the useForm composable because form data includes a File, which can't be stringified, so instead on submit just copy the form data back to the parent's v-model copy
   profileDetailsModel.value = { ...event.data };
+}
+
+function handleRemoveCurrentPicture() {
+  console.log("remove current picture");
 }
 </script>
 
@@ -128,25 +139,54 @@ function handleSubmit(event: FormSubmitEvent<ProfileDetailsSchema>) {
           orientation="horizontal"
           :ui="{
             root: 'gap-4 sm:[&>*:last-child]:flex sm:[&>*:last-child]:gap-6 sm:[&>*:last-child]:items-center',
-            help: 'mt-6 sm:mt-0',
+            help: 'mt-6 sm:mt-0 text-balance',
             error: 'sm:relative sm:translate-0 text-balance',
           }"
         >
-          <!-- display the current profile picture -->
-          <img
-            v-if="currentProfilePictureSrc"
-            class="absolute w-37.5 h-37.5 sm:w-48.25 sm:h-48.25 rounded-xl translate-20 object-cover"
-            :src="currentProfilePictureSrc"
-            alt="current profile picture"
-          >
-          <!-- upload a new profile picture -->
-          <UFileUpload
-            v-model="profileDetailsState.pictureFile"
-            label="+ Upload Image"
-            icon="i-custom-icon-upload-image"
-            accept="image/*"
-            class="cursor-pointer"
-          />
+          <div class="shrink-0 relative rounded-xl overflow-hidden w-37.5 h-37.5 sm:w-48.25 sm:h-48.25">
+            <!-- picture overlay -->
+            <div
+              v-if="currentProfilePictureSrc || profileDetailsState.pictureFile"
+              class="absolute z-2 inset-0 bg-black opacity-50"
+            />
+            <!-- current profile picture display -->
+            <div
+              v-if="currentProfilePictureSrc && !profileDetailsState.pictureFile"
+            >
+              <img
+                :src="currentProfilePictureSrc"
+                alt="current profile picture"
+                class="absolute z-1 inset-0 object-cover"
+              >
+              <button
+                type="button"
+                aria-label="Remove erik-lucatero-d2MSDujJl2g-unsplash-resized.jpg"
+                data-slot="base"
+                class="font-medium inline-flex items-center disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:opacity-75 transition-colors text-xs gap-1 text-inverted bg-inverted hover:bg-inverted/90 active:bg-inverted/90 disabled:bg-inverted aria-disabled:bg-inverted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-inverted p-0 rounded-full border-2 border-bg absolute z-4 top-1.5 end-1.5 cursor-pointer hover:text-white/75 hover:border-white/75"
+                @click="handleRemoveCurrentPicture"
+              >
+                <UIcon
+                  name="i-lucide-x"
+                  class="size-4"
+                  aria-hidden="true"
+                />
+              </button>
+            </div>
+            <!-- new profile picture upload and preview -->
+            <UFileUpload
+              v-model="profileDetailsState.pictureFile"
+              :label="currentProfilePictureSrc || profileDetailsState.pictureFile ? 'Change Image' : '+ Upload Image'"
+              icon="i-custom-icon-upload-image"
+              accept="image/*"
+              class="cursor-pointer static size-full bg-gray-100"
+              :ui="{
+                base: 'z-3 bg-transparent border-0',
+                label: 'font-semibold text-white',
+                fileTrailingButton: 'z-4 cursor-pointer top-1.5 end-1.5 hover:text-white/75 hover:border-white/75',
+                avatar: 'bg-transparent size-10 rounded-0 *:text-white *:size-8',
+              }"
+            />
+          </div>
         </UFormField>
       </div>
 

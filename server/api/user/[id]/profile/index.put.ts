@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
   const userId: number = Number(routerParamId);
 
   const { firstName, lastName, email, picture } = await readBody(event);
-  if (!firstName || !lastName || !email) {
+  if (!firstName || !lastName) {
     throw createError({
       message: "Missing required fields!",
       statusCode: 400,
