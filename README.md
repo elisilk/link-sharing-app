@@ -116,14 +116,16 @@ Known issues - specific areas that the solution should be improved:
   - [Disable Auto Zoom in Input "Text" tag - Safari on iPhone](https://stackoverflow.com/questions/2989263/disable-auto-zoom-in-input-text-tag-safari-on-iphone)
 - [ ] Warning message that occurs on Chrome when opening up the toggled navigation menu from the header: "Blocked aria-hidden on an element because its descendant retained focus". The issue doesn't seem to arise on Firefox so far.
 - [ ] Issue with the [`getItemRaw()` unstorage function](https://unstorage.unjs.io/guide#getitemrawkey-opts) not properly returning the image buffer when called in the picture uploads server route when using Vercel Blob.
+- [ ] Vertical orientation photos uploaded as the profile picture are viewed in the incorrect orientation (as horizontal). May need to [read the EXIF data and rotate those photos](https://www.google.com/search?q=javascript+upload+photo+from+mac+photos+vertical+in+wrong+orientation).
+  - [Fixing wrongly oriented iphone photos](https://medium.com/@manoj_makkuboy/fixing-wrongly-oriented-iphone-photos-f6375d32ef73)
 
 Feature requests - specific enhancements to make:
 
-- [ ] Ability to delete the current profile picture without having to replace it with a new one
+- [x] Ability to delete the current profile picture without having to replace it with a new one
 - [ ] Method for updating login info, including login email and password
 - [ ] Method for retrieving/changing a forgotten password
-- [ ] Implement [next level security features to prevent brute force attacks](https://vueschool.io/lessons/next-level-security-features-attempt-locks-to-prevent-brute-force-attacks)
-- [ ] Implement [protection of sensitive data in API routes with requireUserSession](https://vueschool.io/lessons/protect-sensitive-data-in-api-routes-with-requireusersession)
+- [ ] [Next level security features to prevent brute force attacks](https://vueschool.io/lessons/next-level-security-features-attempt-locks-to-prevent-brute-force-attacks)
+- [ ] [Protection of sensitive data in API routes with requireUserSession](https://vueschool.io/lessons/protect-sensitive-data-in-api-routes-with-requireusersession)
 - [ ] [Optimistic updates](https://nuxt.com/docs/4.x/api/composables/use-nuxt-data#optimistic-updates)
 
 More general ideas to consider:

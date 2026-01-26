@@ -13,7 +13,6 @@ useSeoMeta({
 });
 
 const toast = useToast();
-const { user } = useUserSession();
 const { data: profile } = useNuxtData<SelectProfileWithLinks>("profile");
 
 type ProfileLinksForm = {
@@ -38,6 +37,13 @@ watch(profile, () => {
 }, { deep: true });
 
 async function handleUpdate() {
+  if (!profile.value) {
+    return {
+      status: "error",
+      message: "User not logged in.",
+    };
+  }
+
   // Add (insert) the new links
   const newLinksToAdd = localProfileLinks.value.filter(link => !link.id);
   if (newLinksToAdd.length > 0) {
@@ -46,13 +52,13 @@ async function handleUpdate() {
     });
 
     try {
-      const result = await $fetch(`/api/user/${user.value?.id}/links`, {
+      const result = await $fetch(`/api/user/${profile.value.userId}/links`, {
         method: "POST",
         body: newLinksToAdd,
       });
 
       if (result.success) {
-        refreshNuxtData("profile");
+        await refreshNuxtData("profile");
         toast.add({
           title: "The new links were added!",
           icon: "i-custom-icon-changes-saved",
@@ -83,13 +89,13 @@ async function handleUpdate() {
   if (existingLinksToUpdate.length > 0) {
     try {
       // udpate the array of link items
-      const result = await $fetch(`/api/user/${user.value?.id}/links`, {
+      const result = await $fetch(`/api/user/${profile.value.userId}/links`, {
         method: "PUT",
         body: existingLinksToUpdate,
       });
 
       if (result.success) {
-        refreshNuxtData("profile");
+        await refreshNuxtData("profile");
         toast.add({
           title: "The existing links were updated!",
           icon: "i-custom-icon-changes-saved",
@@ -117,12 +123,19 @@ async function handleUpdate() {
 }
 
 async function handleRemoveLink(linkId: number) {
+  if (!profile.value) {
+    return {
+      status: "error",
+      message: "User not logged in.",
+    };
+  }
+
   try {
-    const result = await $fetch(`/api/user/${user.value?.id}/link/${linkId}`, {
+    const result = await $fetch(`/api/user/${profile.value.userId}/link/${linkId}`, {
       method: "DELETE",
     });
     if (result.success) {
-      refreshNuxtData("profile");
+      await refreshNuxtData("profile");
       toast.add({
         title: "The link was successfully deleted!",
         icon: "i-custom-icon-changes-saved",

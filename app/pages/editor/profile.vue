@@ -19,24 +19,31 @@ useSeoMeta({
 });
 
 const toast = useToast();
-const { user } = useUserSession();
 const { data: profile } = useNuxtData<SelectProfileWithLinks>("profile");
 
 const localProfileDetails = ref({
   firstName: profile.value?.firstName || "",
   lastName: profile.value?.lastName || "",
   email: profile.value?.email || "",
-  pictureFile: undefined,
+  newPictureFile: undefined,
+  deleteOldPictureFile: false,
 });
 
 async function uploadNewPicture(newPicture: File) {
+  if (!profile.value) {
+    return {
+      status: "error",
+      message: "User not logged in.",
+    };
+  }
+
   // prepare the file as form data to send to the upload API
   const formData = new FormData();
   formData.append(newPicture.name, newPicture);
 
   // make the API call
   try {
-    const response = await $fetch<{ files: UploadedFile[] }>(`/api/user/${user.value?.id}/picture/`, {
+    const response = await $fetch<{ files: UploadedFile[] }>(`/api/user/${profile.value.userId}/picture/`, {
       method: "POST",
       body: formData,
     });
@@ -63,95 +70,54 @@ async function uploadNewPicture(newPicture: File) {
   }
 }
 
-function getImageDimensions(file: File): Promise<{ width: number; height: number }> {
-  return new Promise((resolve, reject) => {
-    // Ensure the file is an image
-    if (!file.type.startsWith("image/")) {
-      reject(new Error("File is not an image."));
-      return;
+async function deleteOldPicture() {
+  if (!profile.value) {
+    return {
+      status: "error",
+      message: "User not logged in.",
+    };
+  }
+
+  try {
+    const deletePictureResult = await $fetch(`/api/user/${profile.value.userId}/picture/`, {
+      method: "DELETE",
+      body: {
+        filename: profile.value.picture,
+      },
+    });
+    if (deletePictureResult) {
+      toast.add({
+        title: "Old picture successfully deleted!",
+        icon: "i-custom-icon-changes-saved",
+        color: "success",
+      });
     }
-
-    const reader = new FileReader();
-
-    reader.onload = (event: ProgressEvent<FileReader>) => {
-      const img = new Image();
-
-      img.onload = () => {
-        // Access the natural dimensions of the image
-        resolve({
-          width: img.naturalWidth,
-          height: img.naturalHeight,
-        });
-      };
-
-      img.onerror = () => {
-        reject(new Error("Could not load image."));
-      };
-
-      // The result is the data URL of the image
-      if (event.target && typeof event.target.result === "string") {
-        img.src = event.target.result;
-      }
-      else {
-        reject(new Error("FileReader could not read file."));
-      }
-    };
-
-    reader.onerror = () => {
-      reject(new Error("FileReader error."));
-    };
-
-    // Read the image file as a Data URL (Base64 string)
-    reader.readAsDataURL(file);
-  });
-}
-
-const FINAL_DIMENSIONS = { width: 400, height: 400 };
-
-async function preProcessNewPicture(newPicture: File) {
-  const { width, height } = await getImageDimensions(newPicture);
-
-  // Resize image
-  let resizedImage;
-  if (width > height) {
-    const resizeWidth = Math.min(FINAL_DIMENSIONS.width, width);
-    resizedImage = await createImageBitmap(newPicture, {
-      resizeWidth,
-    });
   }
-  else {
-    const resizeHeight = Math.min(FINAL_DIMENSIONS.height, height);
-    resizedImage = await createImageBitmap(newPicture, {
-      resizeHeight,
-    });
+  catch (error) {
+    console.error("old picture file NOT deleted:", profile.value.picture, error);
+    if (error instanceof FetchError) {
+      toast.add({ title: "Error Deleting Old Picture", description: error.data.message, color: "error" });
+    }
+    else {
+      toast.add({ title: "Error Deleting Old Picture", description: "Something went wrong.", color: "error" });
+    }
   }
-
-  // Convert image to JPEG
-  const canvas = new OffscreenCanvas(resizedImage.width, resizedImage.height);
-  canvas.getContext("bitmaprenderer")?.transferFromImageBitmap(resizedImage);
-  const newPictureProcessedBlob = await canvas.convertToBlob({
-    type: "image/jpeg",
-    quality: 0.9,
-  });
-
-  // Convert back to a File
-  const newPictureProcessed = new File([newPictureProcessedBlob], `${newPicture.name}.jpg`, {
-    type: "image/jpeg",
-  });
-
-  // return newPicture;
-  return newPictureProcessed;
 }
 
 async function handleUpdate() {
+  if (!profile.value) {
+    return {
+      status: "error",
+      message: "User not logged in.",
+    };
+  }
+
   let newPicture;
 
   // prepare and upload the profile picture
-  if (localProfileDetails.value.pictureFile) {
-    // console.log("picture file included:", (localProfileDetails.value.pictureFile as File).name);
-
+  if (localProfileDetails.value.newPictureFile) {
     // process the new picture file
-    const processedNewPicture = await preProcessNewPicture(localProfileDetails.value.pictureFile);
+    const processedNewPicture = await preProcessNewPicture(localProfileDetails.value.newPictureFile);
 
     // upload the (processed) new picture file
     const result = await uploadNewPicture(processedNewPicture);
@@ -160,32 +126,24 @@ async function handleUpdate() {
       newPicture = result.data[0]?.filename;
 
       // delete the old picture file
-      if (user.value?.id && profile.value?.picture) {
-        try {
-          const deletePictureResult = await $fetch(`/api/user/${user.value.id}/picture/`, {
-            method: "DELETE",
-            body: {
-              filename: profile.value.picture,
-            },
-          });
-          if (deletePictureResult) {
-            toast.add({
-              title: "Old picture successfully deleted!",
-              icon: "i-custom-icon-changes-saved",
-              color: "success",
-            });
-          }
-        }
-        catch (error) {
-          console.error("old picture file NOT deleted:", profile.value.picture, error);
-        }
+      if (profile.value.picture) {
+        await deleteOldPicture();
       }
+    }
+  }
+  else {
+    if (localProfileDetails.value.deleteOldPictureFile) {
+      // delete the old picture file
+      if (profile.value.picture) {
+        await deleteOldPicture();
+      }
+      newPicture = null;
     }
   }
 
   // update the profile details
   try {
-    const updateProfileResult = await $fetch(`/api/user/${user.value?.id}/profile/`, {
+    const updateProfileResult = await $fetch(`/api/user/${profile.value.userId}/profile/`, {
       method: "PUT",
       body: {
         ...localProfileDetails.value,
@@ -193,12 +151,17 @@ async function handleUpdate() {
       },
     });
     if (updateProfileResult.success) {
-      refreshNuxtData("profile");
+      await refreshNuxtData("profile");
+
       toast.add({
         title: "Your changes have been successfully saved!",
         icon: "i-custom-icon-changes-saved",
         color: "success",
       });
+
+      // reset the new picture file
+      localProfileDetails.value.newPictureFile = undefined;
+      localProfileDetails.value.deleteOldPictureFile = false;
     }
     else {
       toast.add({
@@ -210,7 +173,7 @@ async function handleUpdate() {
     }
   }
   catch (error) {
-    console.error(error);
+    console.error("profile NOT updated:", error);
     if (error instanceof FetchError) {
       toast.add({ title: "Error Updating Profile", description: error.data.message, color: "error" });
     }

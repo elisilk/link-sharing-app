@@ -4,48 +4,30 @@ import type { SelectProfileWithLinks } from "~~/server/db/schema/index";
 
 import * as z from "zod";
 
-const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
-const MIN_DIMENSIONS = { width: 200, height: 200 };
-const MAX_DIMENSIONS = { width: 6000, height: 6000 };
-const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png"]; // "image/webp"
-
-function formatBytes(bytes: number, decimals = 2) {
-  if (bytes === 0)
-    return "0 Bytes";
-  const k = 1024;
-  const dm = decimals < 0 ? 0 : decimals;
-  const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
-  return `${Number.parseFloat((bytes / k ** i).toFixed(dm))} ${sizes[i]}`;
-}
-
 const profileDetailsSchema = z.object({
   firstName: z.string("Can't be empty").nonempty("Can't be empty"),
   lastName: z.string("Can't be empty").nonempty("Can't be empty"),
   email: z.preprocess(
-    value => (value === "" ? null : value), // Convert empty string to undefined
-    z.email({ message: "Email is invalid" }).nullable(), // Now optional() works
+    // first convert empty string to null
+    value => (value === "" ? null : value),
+    z.email({ message: "Email is invalid" }).nullable(),
   ),
-  // email: z.string()
-  //   .transform(e => e === "" ? undefined : e)
-  //   .pipe(z.email("Invalid email").optional()),
-  // email: z.email("Invalid email").optional(),
-  pictureFile: z
+  newPictureFile: z
     .instanceof(File)
     .optional()
     .refine((file) => {
       if (!file)
         return true;
-      return file.size <= MAX_FILE_SIZE;
+      return file.size <= PICTURE_MAX_FILE_SIZE;
     }, {
-      message: `The image is too large. Please choose an image smaller than ${formatBytes(MAX_FILE_SIZE)}.`,
+      message: `The image is too large. Please choose an image smaller than ${formatBytes(PICTURE_MAX_FILE_SIZE)}.`,
     })
     .refine((file) => {
       if (!file)
         return true;
-      return ACCEPTED_IMAGE_TYPES.includes(file.type);
+      return PICTURE_ACCEPTED_TYPES.includes(file.type);
     }, {
-      message: "Please upload a valid image file (JPEG, PNG, or WebP).",
+      message: `Please upload a valid image file (${formattedPictureAcceptedTypes}).`,
     })
     .refine(
       (file) => {
@@ -57,10 +39,10 @@ const profileDetailsSchema = z.object({
             const img = new Image();
             img.onload = () => {
               const meetsDimensions
-                = img.width >= MIN_DIMENSIONS.width
-                  && img.height >= MIN_DIMENSIONS.height
-                  && img.width <= MAX_DIMENSIONS.width
-                  && img.height <= MAX_DIMENSIONS.height;
+                = img.width >= PICTURE_MIN_DIMENSIONS.width
+                  && img.height >= PICTURE_MIN_DIMENSIONS.height
+                  && img.width <= PICTURE_MAX_DIMENSIONS.width
+                  && img.height <= PICTURE_MAX_DIMENSIONS.height;
               resolve(meetsDimensions);
             };
             img.src = e.target?.result as string;
@@ -69,9 +51,10 @@ const profileDetailsSchema = z.object({
         });
       },
       {
-        message: `The image dimensions are invalid. Please upload an image between ${MIN_DIMENSIONS.width}x${MIN_DIMENSIONS.height} and ${MAX_DIMENSIONS.width}x${MAX_DIMENSIONS.height} pixels.`,
+        message: `The image dimensions are invalid. Please upload an image between ${PICTURE_MIN_DIMENSIONS.width}x${PICTURE_MIN_DIMENSIONS.height} and ${PICTURE_MAX_DIMENSIONS.width}x${PICTURE_MAX_DIMENSIONS.height} pixels.`,
       },
     ),
+  deleteOldPictureFile: z.boolean(),
 });
 
 type ProfileDetailsSchema = z.output<typeof profileDetailsSchema>;
@@ -83,8 +66,17 @@ const profileDetailsState = reactive<Partial<ProfileDetailsSchema>>({
   firstName: profileDetailsModel.value?.firstName || "",
   lastName: profileDetailsModel.value?.lastName || "",
   email: profileDetailsModel.value?.email || "",
-  pictureFile: profileDetailsModel.value?.pictureFile || undefined,
+  newPictureFile: profileDetailsModel.value?.newPictureFile || undefined,
+  deleteOldPictureFile: profileDetailsModel.value?.deleteOldPictureFile || false,
 });
+
+watch(profileDetailsModel, () => {
+  profileDetailsState.firstName = profileDetailsModel.value?.firstName || "";
+  profileDetailsState.lastName = profileDetailsModel.value?.lastName || "";
+  profileDetailsState.email = profileDetailsModel.value?.email || "";
+  profileDetailsState.newPictureFile = profileDetailsModel.value?.newPictureFile || undefined;
+  profileDetailsState.deleteOldPictureFile = profileDetailsModel.value?.deleteOldPictureFile || false;
+}, { deep: true });
 
 const { data: profile } = useNuxtData<SelectProfileWithLinks>("profile");
 
@@ -95,12 +87,13 @@ const currentProfilePictureSrc = computed<string | null>(() =>
 );
 
 function handleSubmit(event: FormSubmitEvent<ProfileDetailsSchema>) {
-  // can't use the useForm composable because form data includes a File, which can't be stringified, so instead on submit just copy the form data back to the parent's v-model copy
+  // Can't use the useForm composable because form data includes a File, which can't be stringified. So instead, on submit, just copy the form data back to the parent's v-model copy.
   profileDetailsModel.value = { ...event.data };
 }
 
 function handleRemoveCurrentPicture() {
-  console.log("remove current picture");
+  // console.log("remove current picture");
+  profileDetailsState.deleteOldPictureFile = true;
 }
 </script>
 
@@ -134,56 +127,57 @@ function handleRemoveCurrentPicture() {
       >
         <UFormField
           label="Profile picture"
-          name="pictureFile"
-          :help="`Image must be below ${MAX_DIMENSIONS.width}x${MAX_DIMENSIONS.height}px. Use PNG or JPG format.`"
+          name="newPictureFile"
+          :help="`Image must be below ${PICTURE_MAX_DIMENSIONS.width}x${PICTURE_MAX_DIMENSIONS.height}px. Use PNG or JPG format.`"
           orientation="horizontal"
           :ui="{
             root: 'gap-4 sm:[&>*:last-child]:flex sm:[&>*:last-child]:gap-6 sm:[&>*:last-child]:items-center',
             help: 'mt-6 sm:mt-0 text-balance',
-            error: 'sm:relative sm:translate-0 text-balance',
+            error: 'sm:relative sm:translate-0 text-left text-balance',
           }"
         >
           <div class="shrink-0 relative rounded-xl overflow-hidden w-37.5 h-37.5 sm:w-48.25 sm:h-48.25">
             <!-- picture overlay -->
             <div
-              v-if="currentProfilePictureSrc || profileDetailsState.pictureFile"
+              v-if="(currentProfilePictureSrc && !profileDetailsState.deleteOldPictureFile) || profileDetailsState.newPictureFile"
               class="absolute z-2 inset-0 bg-black opacity-50"
             />
             <!-- current profile picture display -->
             <div
-              v-if="currentProfilePictureSrc && !profileDetailsState.pictureFile"
+              v-if="currentProfilePictureSrc && !profileDetailsState.newPictureFile && !profileDetailsState.deleteOldPictureFile"
             >
               <img
                 :src="currentProfilePictureSrc"
                 alt="current profile picture"
                 class="absolute z-1 size-full object-cover"
               >
-              <button
-                type="button"
-                aria-label="Remove erik-lucatero-d2MSDujJl2g-unsplash-resized.jpg"
-                data-slot="base"
-                class="font-medium inline-flex items-center disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:opacity-75 transition-colors text-xs gap-1 text-inverted bg-inverted hover:bg-inverted/90 active:bg-inverted/90 disabled:bg-inverted aria-disabled:bg-inverted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-inverted p-0 rounded-full border-2 border-bg absolute z-4 top-1.5 end-1.5 cursor-pointer hover:text-white/75 hover:border-white/75"
+              <UButton
+                icon="i-lucide-x"
+                variant="ghost"
+                color="neutral"
+                aria-label="Remove picture"
+                class="absolute z-4 top-1.5 end-1.5 cursor-pointer rounded-full"
                 @click="handleRemoveCurrentPicture"
-              >
-                <UIcon
-                  name="i-lucide-x"
-                  class="size-4"
-                  aria-hidden="true"
-                />
-              </button>
+              />
             </div>
             <!-- new profile picture upload and preview -->
             <UFileUpload
-              v-model="profileDetailsState.pictureFile"
-              :label="currentProfilePictureSrc || profileDetailsState.pictureFile ? 'Change Image' : '+ Upload Image'"
+              v-model="profileDetailsState.newPictureFile"
+              :label="(currentProfilePictureSrc && !profileDetailsState.deleteOldPictureFile) || profileDetailsState.newPictureFile ? 'Change Image' : '+ Upload Image'"
               icon="i-custom-icon-upload-image"
               accept="image/*"
               class="cursor-pointer static size-full bg-gray-100"
               :ui="{
                 base: 'z-3 bg-transparent border-0',
-                label: 'font-semibold text-white',
+                label: [
+                  'font-semibold',
+                  (currentProfilePictureSrc && !profileDetailsState.deleteOldPictureFile) || profileDetailsState.newPictureFile ? 'text-white' : 'text-primary',
+                ],
                 fileTrailingButton: 'z-4 cursor-pointer top-1.5 end-1.5 hover:text-white/75 hover:border-white/75',
-                avatar: 'bg-transparent size-10 rounded-0 *:text-white *:size-8',
+                avatar: [
+                  'bg-transparent rounded-0 size-10 *:size-8',
+                  (currentProfilePictureSrc && !profileDetailsState.deleteOldPictureFile) || profileDetailsState.newPictureFile ? '*:text-white' : '*:text-primary',
+                ],
               }"
             />
           </div>
