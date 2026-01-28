@@ -7,6 +7,8 @@ type Props = {
 
 const { variant = "phone" } = defineProps<Props>();
 
+const isPhoneVariant = computed(() => variant === "phone");
+
 const { data: profile } = useNuxtData<SelectProfileWithLinks>("profile");
 
 const config = useRuntimeConfig();
@@ -14,36 +16,50 @@ const config = useRuntimeConfig();
 const profilePictureSrc = computed<string | null>(() =>
   profile.value?.picture ? `${config.public.blobStorageUrl}/${config.public.blobStorageBase}/${profile.value?.picture}` : null,
 );
+
+const NUM_SKELETON_LINKS = 10;
 </script>
 
 <template>
-  <UCard
-    class="mx-auto w-min"
-    :class="{
-      'variant-phone': variant === 'phone',
-      'variant-card': variant === 'card',
-    }"
-    :ui="{
-      root: 'bg-default text-default py-12 sm:px-14',
-      header: 'w-59.25 mx-auto mb-14 p-0 sm:p-0 grid justify-items-center',
-      body: 'w-59.25 mx-auto p-0 sm:p-0',
-    }"
-    variant="solid"
+  <div
+    v-if="profile"
+    :class="[isPhoneVariant
+      ? 'sm:rounded-[56px] w-77 h-158 overflow-hidden relative after:absolute after:top-0 after:left-0 after:size-full after:bg-[url(/illustration-phone-mockup-outline.svg)] after:bg-no-repeat after:bg-top after:pointer-events-none'
+      : 'sm:rounded-3xl sm:shadow-(--shadow-black-400) w-min mx-auto sm:bg-default sm:py-12 sm:px-14',
+    ]"
   >
-    <template #header>
-      <div v-if="profile" class="grid justify-items-center relative">
+    <div
+      class="h-full overflow-scroll *:w-59.25 *:mx-auto"
+      :class="[isPhoneVariant
+        ? 'pt-[63.5px] pb-12'
+        : '',
+      ]"
+    >
+      <div class="mb-14 grid justify-items-center">
         <!-- profile picture -->
         <img
           v-if="profilePictureSrc"
-          class="h-24 w-24 rounded-full mb-6 object-cover"
+          class="rounded-full object-cover outline-primary outline-4"
+          :class="[isPhoneVariant
+            ? 'h-24 w-24 mb-6.25'
+            : 'h-26 w-26 mb-6']"
           :src="profilePictureSrc"
         >
-        <USkeleton v-else class="animate-none h-24 w-24 rounded-full shrink-0 mb-6" />
+        <USkeleton
+          v-else
+          class="animate-none rounded-full shrink-0"
+          :class="[variant === 'phone'
+            ? 'h-24 w-24 mb-6.25'
+            : 'h-26 w-26 mb-6']"
+        />
 
         <!-- profile name -->
         <h2
           v-if="profile.firstName || profile.lastName"
-          class="text-3xl font-bold"
+          class="text-gray-900"
+          :class="[isPhoneVariant
+            ? 'text-lg font-semibold'
+            : 'text-[32px] font-bold']"
         >
           {{ profile.firstName }}
           {{ profile.lastName }}
@@ -51,39 +67,38 @@ const profilePictureSrc = computed<string | null>(() =>
         <USkeleton v-else class="animate-none h-4 w-40" />
 
         <!-- profile email -->
-        <h3 v-if="profile.email">
+        <span
+          v-if="profile.email"
+          class="mt-2"
+          :class="[isPhoneVariant ? 'text-sm' : 'text-base']"
+        >
           {{ profile.email }}
-        </h3>
-        <USkeleton v-else class="animate-none h-2 w-18 mt-3" />
+        </span>
+        <USkeleton v-else class="animate-none h-2 w-18 mt-3.25" />
       </div>
-    </template>
 
-    <div v-if="profile" class="grid gap-5">
-      <AppPreviewLink
-        v-for="link in profile.links"
-        :key="link.id"
-        :platform="link.platform"
-        :url="link.url"
-      />
-      <USkeleton
-        v-for="index in 5 - profile.links.length"
-        :key="`link-placeholder-${index}`"
-        class="animate-none h-11 w-59.25"
-      />
+      <!-- profile links -->
+      <div
+        class="grid"
+        :class="[variant === 'phone'
+          ? 'gap-5'
+          : 'gap-6']"
+      >
+        <AppPreviewLink
+          v-for="link in profile.links"
+          :key="link.id"
+          :platform="link.platform"
+          :url="link.url"
+          :size="isPhoneVariant ? 'sm' : undefined"
+        />
+        <template v-if="isPhoneVariant">
+          <USkeleton
+            v-for="index in NUM_SKELETON_LINKS - profile.links.length"
+            :key="`link-placeholder-${index}`"
+            class="animate-none h-11 w-59.25"
+          />
+        </template>
+      </div>
     </div>
-  </UCard>
+  </div>
 </template>
-
-<style scoped>
-.variant-phone {
-  background: url("/illustration-phone-mockup-outline.svg") no-repeat center;
-}
-
-/* sm: 40rem (640px) */
-@media (width >= 40rem) {
-  .variant-card {
-    border-radius: var(--radius-3xl);
-    box-shadow: var(--shadow-black-400);
-  }
-}
-</style>
