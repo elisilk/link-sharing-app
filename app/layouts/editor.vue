@@ -104,13 +104,13 @@ const authItems = ref<NavigationMenuItem[]>([
       <UContainer class="px-4 pb-4 lg:px-6 lg:pb-6">
         <UPage
           :ui="{
-            root: 'lg:gap-6',
-            left: 'lg:col-span-4',
-            center: 'lg:col-span-6',
+            root: 'lg:grid-cols-17 lg:gap-6',
+            left: 'lg:col-span-7',
+            center: 'lg:col-span-10',
           }"
         >
           <template #left>
-            <UPageAside class="lg:flex items-center justify-center bg-default rounded-xl lg:ms-0 lg:p-6">
+            <UPageAside class="lg:flex items-center justify-center bg-default rounded-xl lg:ms-0 lg:p-6 lg:min-h-min">
               <AppPreviewContent />
             </UPageAside>
           </template>
