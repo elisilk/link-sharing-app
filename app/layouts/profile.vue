@@ -1,12 +1,29 @@
 <script setup lang="ts">
 const toast = useToast();
 
-const { user } = useUserSession();
+const { loggedIn, user } = useUserSession();
 const url = useRequestURL();
+const route = useRoute();
 
-const shareLink = computed(() => `${url.protocol}://${url.host}/profile/${user.value?.id}`);
+const profileUserId = computed(() => {
+  // if a route param, then use that
+  if (route.params.id) {
+    return route.params.id;
+  }
+  // if no route param, but a user is logged in, then use that
+  if (loggedIn.value && user.value) {
+    return user.value.id;
+  }
+  // else something is wrong
+  return null;
+});
+
+const shareLink = computed(() => profileUserId.value ? `${url.protocol}://${url.host}/profile/${profileUserId.value}` : null);
 
 async function handleShareLink() {
+  if (!shareLink.value)
+    return;
+
   try {
     await navigator.clipboard.writeText(shareLink.value);
     toast.add({
@@ -14,8 +31,6 @@ async function handleShareLink() {
       description: shareLink.value,
       icon: "i-custom-icon-link-copied-to-clipboard",
       color: "success",
-      // close: false,
-      // progress: false,
     });
   }
   catch (error) {
@@ -51,8 +66,15 @@ async function handleShareLink() {
     >
       <template #left>
         <UButton
-          to="/editor"
+          v-if="loggedIn"
           label="Back to Editor"
+          variant="outline"
+          @click="$router.back()"
+        />
+        <UButton
+          v-else
+          to="/"
+          label="Back to Home"
           variant="outline"
         />
       </template>
@@ -60,6 +82,7 @@ async function handleShareLink() {
         <UButton
           label="Share Link"
           class="cursor-pointer"
+          :disabled="!profileUserId"
           @click="handleShareLink"
         />
       </template>
@@ -73,9 +96,9 @@ async function handleShareLink() {
 
 <style scoped>
 .preview-layout-container {
-  --preview-inline-size-max: 90rem; /* 1440px */
-  --preview-block-size-header-row: 14rem; /* 224px */
-  --preview-block-size-header-overlap: 8.3125rem; /* 133px */
+  --profile-inline-size-max: 90rem; /* 1440px */
+  --profile-block-size-header-row: 14rem; /* 224px */
+  --profile-block-size-header-overlap: 8.3125rem; /* 133px */
 
   display: grid;
   grid-template-rows: auto 1fr;
@@ -85,8 +108,8 @@ async function handleShareLink() {
 @media (min-width: 40rem) {
   .preview-layout-container {
     grid-template-rows:
-      var(--preview-block-size-header-row)
-      var(--preview-block-size-header-overlap)
+      var(--profile-block-size-header-row)
+      var(--profile-block-size-header-overlap)
       1fr;
   }
 

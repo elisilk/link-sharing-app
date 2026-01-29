@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { NavigationMenuItem } from "@nuxt/ui";
+import type { SelectProfileWithLinks } from "~~/server/db/schema/index";
 
 const { clear } = useUserSession();
 await useProfile();
@@ -18,7 +19,7 @@ const tabItems = ref<NavigationMenuItem[]>([
   {
     label: "Profile Details",
     icon: "i-custom-icon-profile-details-header",
-    to: "/editor/profile",
+    to: "/editor/details",
   },
 ]);
 
@@ -30,7 +31,7 @@ const authItems = ref<NavigationMenuItem[]>([
   {
     label: "Update",
     icon: "i-lucide-user-pen",
-    to: "/editor/profile",
+    to: "/editor/details",
   },
   {
     label: "Logout",
@@ -38,6 +39,8 @@ const authItems = ref<NavigationMenuItem[]>([
     onClick: handleLogout,
   },
 ]);
+
+const { data: profile } = useNuxtData<SelectProfileWithLinks | undefined>("profile");
 </script>
 
 <template>
@@ -87,7 +90,7 @@ const authItems = ref<NavigationMenuItem[]>([
       <!-- right slot for preview link -->
       <template #right>
         <UButton
-          to="/preview"
+          to="/profile"
           variant="outline"
           icon="i-custom-icon-preview-header"
           label="Preview"
@@ -111,7 +114,10 @@ const authItems = ref<NavigationMenuItem[]>([
         >
           <template #left>
             <UPageAside class="lg:flex items-center justify-center bg-default rounded-xl lg:ms-0 lg:p-6 lg:min-h-min">
-              <AppPreviewContent />
+              <AppProfileContent v-if="profile" :profile />
+              <div v-else>
+                Error: Profile not found
+              </div>
             </UPageAside>
           </template>
 
