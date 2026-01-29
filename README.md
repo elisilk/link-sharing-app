@@ -122,7 +122,7 @@ Known issues - specific areas that the solution should be improved:
 Feature requests - specific enhancements to make:
 
 - [x] Ability to delete the current profile picture without having to replace it with a new one
-- [ ] Method for updating login info, including login email and password
+- [x] Method for updating login info (email and password)
 - [ ] Method for retrieving/changing a forgotten password
 - [ ] [Next level security features to prevent brute force attacks](https://vueschool.io/lessons/next-level-security-features-attempt-locks-to-prevent-brute-force-attacks)
 - [ ] [Protection of sensitive data in API routes with requireUserSession](https://vueschool.io/lessons/protect-sensitive-data-in-api-routes-with-requireusersession)
