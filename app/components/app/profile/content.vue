@@ -2,22 +2,23 @@
 import type { SelectProfileWithLinks } from "~~/server/db/schema/index";
 
 type Props = {
+  profile: SelectProfileWithLinks;
   variant?: "card" | "phone";
 };
 
-const { variant = "phone" } = defineProps<Props>();
+const { profile, variant = "phone" } = defineProps<Props>();
 
 const isPhoneVariant = computed(() => variant === "phone");
 
-const { data: profile } = useNuxtData<SelectProfileWithLinks>("profile");
+// const { data: profile } = useNuxtData<SelectProfileWithLinks>("profile");
 
 const config = useRuntimeConfig();
 
 const profilePictureSrc = computed<string | null>(() =>
-  profile.value?.picture ? `${config.public.blobStorageUrl}/${config.public.blobStorageBase}/${profile.value?.picture}` : null,
+  profile.picture ? `${config.public.blobStorageUrl}/${config.public.blobStorageBase}/${profile.picture}` : null,
 );
 
-const NUM_SKELETON_LINKS = 10;
+const NUM_SKELETON_LINKS = 5;
 </script>
 
 <template>
@@ -25,13 +26,13 @@ const NUM_SKELETON_LINKS = 10;
     v-if="profile"
     :class="[isPhoneVariant
       ? 'sm:rounded-[56px] w-77 h-158 overflow-hidden relative after:absolute after:top-0 after:left-0 after:size-full after:bg-[url(/illustration-phone-mockup-outline.svg)] after:bg-no-repeat after:bg-top after:pointer-events-none'
-      : 'sm:rounded-3xl sm:shadow-(--shadow-black-400) w-min mx-auto sm:bg-default sm:py-12 sm:px-14',
+      : 'sm:rounded-3xl sm:shadow-(--shadow-black-400) w-min mx-auto sm:bg-default py-8.5 sm:py-12 sm:px-14',
     ]"
   >
     <div
-      class="h-full overflow-scroll *:w-59.25 *:mx-auto"
+      class="*:w-59.25 *:mx-auto"
       :class="[isPhoneVariant
-        ? 'pt-[63.5px] pb-12'
+        ? 'h-full overflow-scroll pt-[63.5px] pb-12'
         : '',
       ]"
     >
@@ -84,7 +85,7 @@ const NUM_SKELETON_LINKS = 10;
           ? 'gap-5'
           : 'gap-6']"
       >
-        <AppPreviewLink
+        <AppProfileLink
           v-for="link in profile.links"
           :key="link.id"
           :platform="link.platform"
