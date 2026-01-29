@@ -16,7 +16,7 @@ useSeoMeta({
 const schema = z.object({
   email: z.string("Can't be empty").check(z.email("Invalid email")),
   password: z.string("Can't be empty").min(8, { message: "Must be at least 8 characters" }),
-  passwordConfirm: z.string("Can't be empty"),
+  passwordConfirm: z.string("Can't be empty").min(8, { message: "Must be at least 8 characters" }),
 }).refine(data => data.password === data.passwordConfirm, {
   message: "Passwords don't match",
   path: ["passwordConfirm"],
@@ -45,7 +45,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       method: "POST",
       body: event.data,
     });
-    fetch();
+    await fetch();
     toast.add({ title: "Registration Success", description: "Thank you for registering!", color: "success" });
   }
   catch (error) {
@@ -97,6 +97,8 @@ watch(loggedIn, () => {
           type="email"
           placeholder="e.g. alex@email.com"
           autocomplete="email"
+          required
+          autofocus
         />
       </UFormField>
 
@@ -107,6 +109,7 @@ watch(loggedIn, () => {
           type="password"
           placeholder="At least 8 characters"
           autocomplete="new-password"
+          required
         />
       </UFormField>
 
@@ -121,6 +124,7 @@ watch(loggedIn, () => {
           type="password"
           placeholder="At least 8 characters"
           autocomplete="new-password"
+          required
         />
       </UFormField>
 
@@ -133,7 +137,8 @@ watch(loggedIn, () => {
 
     <template #footer>
       <p class="text-center text-balance px-4">
-        Already have an account? <ULink to="/" class="text-primary">
+        Already have an account?
+        <ULink to="/" class="text-primary">
           Login
         </ULink>
       </p>

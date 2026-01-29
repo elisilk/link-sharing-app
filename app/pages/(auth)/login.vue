@@ -86,6 +86,8 @@ watch(loggedIn, () => {
           type="email"
           placeholder="e.g. alex@email.com"
           autocomplete="email"
+          required
+          autofocus
         />
       </UFormField>
 
@@ -96,6 +98,7 @@ watch(loggedIn, () => {
           type="password"
           placeholder="Enter your password"
           autocomplete="current-password"
+          required
         />
       </UFormField>
 
@@ -108,7 +111,8 @@ watch(loggedIn, () => {
 
     <template #footer>
       <p class="text-center text-balance px-4">
-        Don’t have an account? <ULink to="/register" class="text-primary">
+        Don’t have an account?
+        <ULink to="/register" class="text-primary">
           Create account
         </ULink>
       </p>

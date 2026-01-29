@@ -29,9 +29,14 @@ const authItems = ref<NavigationMenuItem[]>([
     type: "label",
   },
   {
-    label: "Update",
-    icon: "i-lucide-user-pen",
-    to: "/editor/details",
+    label: "Update Email",
+    icon: "i-custom-icon-email",
+    to: "/update/email",
+  },
+  {
+    label: "Update Password",
+    icon: "i-custom-icon-password",
+    to: "/update/password",
   },
   {
     label: "Logout",
@@ -51,7 +56,7 @@ const { data: profile } = useNuxtData<SelectProfileWithLinks | undefined>("profi
         root: 'border-0 sm:p-6 sm:bg-transparent',
         container: 'pl-6 pr-4 py-4 sm:bg-default sm:rounded-xl sm:pl-6 sm:pr-4 sm:py-4 lg:pl-6 lg:pr-4 lg:py-4',
         left: 'flex-1',
-        right: 'flex-1',
+        right: 'flex-1 [&>button:where([data-slot=base])]:lg:inline-flex',
         center: 'flex',
         toggle: 'lg:block',
         content: 'lg:block',
@@ -68,13 +73,15 @@ const { data: profile } = useNuxtData<SelectProfileWithLinks | undefined>("profi
 
       <!-- left/title slot for logo -->
       <template #left>
-        <picture>
-          <source media="(min-width: 40rem)" srcset="/logo-devlinks-large.svg">
-          <img
-            src="/logo-devlinks-small.svg"
-            alt="Devlinks logo"
-          >
-        </picture>
+        <NuxtLink to="/">
+          <picture>
+            <source media="(min-width: 40rem)" srcset="/logo-devlinks-large.svg">
+            <img
+              src="/logo-devlinks-small.svg"
+              alt="Devlinks logo"
+            >
+          </picture>
+        </NuxtLink>
       </template>
 
       <!-- center/default slot for editor tabs -->
