@@ -35,9 +35,11 @@ Users should be able to:
 
 ### Screenshots
 
-|        Mobile designed at 375px:         |        Tablet designed at 1440px:        | Desktop designed at 1440px:               |
-| :--------------------------------------: | :--------------------------------------: | ----------------------------------------- |
-| ![](./screenshots/screenshot-mobile.png) | ![](./screenshots/screenshot-tablet.png) | ![](./screenshots/screenshot-desktop.png) |
+|                Mobile designed at 375px:                |               Tablet designed at 1440px:                | Desktop designed at 1440px:                              |
+| :-----------------------------------------------------: | :-----------------------------------------------------: | -------------------------------------------------------- |
+|  ![](./screenshots/screenshot-editor-links-mobile.png)  |  ![](./screenshots/screenshot-editor-links-tablet.png)  | ![](./screenshots/screenshot-editor-links-desktop.png)   |
+| ![](./screenshots/screenshot-editor-details-mobile.png) | ![](./screenshots/screenshot-editor-details-tablet.png) | ![](./screenshots/screenshot-editor-details-desktop.png) |
+|    ![](./screenshots/screenshot-preview-mobile.png)     |    ![](./screenshots/screenshot-preview-tablet.png)     | ![](./screenshots/screenshot-preview-desktop.png)        |
 
 ### Links
 
@@ -121,6 +123,7 @@ Known issues - specific areas that the solution should be improved:
   - [Fixing wrongly oriented iphone photos](https://medium.com/@manoj_makkuboy/fixing-wrongly-oriented-iphone-photos-f6375d32ef73)
 - [ ] improve the page header flex items as transition to a smaller viewport/container width so that the crowding is minimized and the left/logo side doesn't take up disproportionate space
 - [x] improve the hover/active/focus state of the image upload input
+- [ ] improve the design of the toast components so it better matches the design
 
 Feature requests - specific enhancements to make:
 
