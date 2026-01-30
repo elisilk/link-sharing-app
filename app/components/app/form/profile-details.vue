@@ -123,7 +123,7 @@ function handleRemoveCurrentPicture() {
       </template>
 
       <div
-        class="bg-grey-50 rounded-xl p-6"
+        class="@container bg-grey-50 rounded-xl p-6"
       >
         <UFormField
           label="Profile picture"
@@ -131,9 +131,10 @@ function handleRemoveCurrentPicture() {
           :help="`Image must be below ${PICTURE_MAX_DIMENSIONS.width}x${PICTURE_MAX_DIMENSIONS.height}px. Use PNG or JPG format.`"
           orientation="horizontal"
           :ui="{
-            root: 'gap-4 sm:[&>*:last-child]:flex sm:[&>*:last-child]:gap-6 sm:[&>*:last-child]:items-center',
-            help: 'mt-6 sm:mt-0 text-balance',
-            error: 'sm:relative sm:translate-0 text-left text-balance',
+            root: '@xs:[&>*:last-child]:flex @xs:[&>*:last-child]:gap-6 @xs:[&>*:last-child]:items-center',
+            label: 'mb-4 @xs:mb-0',
+            help: 'text-pretty mt-6 @xs:mt-0',
+            error: 'text-left mt-6 text-pretty @xs:relative @xs:translate-0 @xs:mt-0 @xs:mr-0',
           }"
         >
           <div class="shrink-0 relative rounded-xl overflow-hidden w-37.5 h-37.5 sm:w-48.25 sm:h-48.25">
@@ -184,7 +185,7 @@ function handleRemoveCurrentPicture() {
         </UFormField>
       </div>
 
-      <div class="bg-grey-50 rounded-xl p-6 space-y-2 sm:space-y-4">
+      <div class="@container bg-grey-50 rounded-xl p-6">
         <UFormField
           label="First name"
           name="firstName"
