@@ -137,12 +137,13 @@ function handleRemoveCurrentPicture() {
             error: 'text-left mt-6 text-pretty @xs:relative @xs:translate-0 @xs:mt-0 @xs:mr-0',
           }"
         >
-          <div class="shrink-0 relative rounded-xl overflow-hidden w-37.5 h-37.5 sm:w-48.25 sm:h-48.25">
+          <div class="shrink-0 relative w-37.5 h-37.5 @xs:w-48.25 @xs:h-48.25">
             <!-- picture overlay -->
             <div
               v-if="(currentProfilePictureSrc && !profileDetailsState.deleteOldPictureFile) || profileDetailsState.newPictureFile"
-              class="absolute z-2 inset-0 bg-black opacity-50"
+              class="absolute z-2 inset-0 bg-black opacity-50  rounded-xl"
             />
+
             <!-- current profile picture display -->
             <div
               v-if="currentProfilePictureSrc && !profileDetailsState.newPictureFile && !profileDetailsState.deleteOldPictureFile"
@@ -150,33 +151,35 @@ function handleRemoveCurrentPicture() {
               <img
                 :src="currentProfilePictureSrc"
                 alt="current profile picture"
-                class="absolute z-1 size-full object-cover"
+                class="absolute z-1 size-full object-cover  rounded-xl"
               >
               <UButton
                 icon="i-lucide-x"
                 variant="ghost"
                 color="neutral"
+                size="sm"
                 aria-label="Remove picture"
-                class="absolute z-4 top-1.5 end-1.5 cursor-pointer rounded-full"
+                class="absolute z-4 top-1.5 end-1.5 cursor-pointer rounded-full p-0 bg-inverted text-white/50 border-white/50 border-2 ring-primary hover:bg-inverted/90 hover:text-white hover:border-white focus-visible:bg-inverted/90 focus-visible:text-white focus-visible:border-white focus-visible:ring-2"
                 @click="handleRemoveCurrentPicture"
               />
             </div>
+
             <!-- new profile picture upload and preview -->
             <UFileUpload
               v-model="profileDetailsState.newPictureFile"
               :label="(currentProfilePictureSrc && !profileDetailsState.deleteOldPictureFile) || profileDetailsState.newPictureFile ? 'Change Image' : '+ Upload Image'"
               icon="i-custom-icon-upload-image"
               accept="image/*"
-              class="cursor-pointer static size-full bg-gray-100"
+              class="cursor-pointer static size-full rounded-xl bg-gray-100 hover:bg-gray-200 has-focus:bg-gray-200"
               :ui="{
-                base: 'z-3 bg-transparent border-0',
+                base: 'z-3 bg-transparent border-0 rounded-xl focus:shadow-(--shadow-purple-600)',
                 label: [
                   'font-semibold',
                   (currentProfilePictureSrc && !profileDetailsState.deleteOldPictureFile) || profileDetailsState.newPictureFile ? 'text-white' : 'text-primary',
                 ],
-                fileTrailingButton: 'z-4 cursor-pointer top-1.5 end-1.5 hover:text-white/75 hover:border-white/75',
+                fileTrailingButton: 'z-4 cursor-pointer top-1.5 end-1.5 text-white/50 border-white/50 ring-primary hover:text-white hover:border-white focus-visible:bg-inverted/90 focus-visible:text-white focus-visible:border-white focus-visible:outline-0 focus-visible:ring-2',
                 avatar: [
-                  'bg-transparent rounded-0 size-10 *:size-8',
+                  'bg-transparent rounded-xl size-10 *:size-8',
                   (currentProfilePictureSrc && !profileDetailsState.deleteOldPictureFile) || profileDetailsState.newPictureFile ? '*:text-white' : '*:text-primary',
                 ],
               }"
