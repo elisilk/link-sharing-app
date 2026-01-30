@@ -1,10 +1,22 @@
 export default defineEventHandler(async (event) => {
+  // restrict api only to logged in users
+  const { user: loggedInUser } = await requireUserSession(event);
+
   const routerParamId = getRouterParam(event, "id");
 
   if (!routerParamId) {
     throw createError({
       statusCode: 400,
       statusMessage: "User ID is required",
+    });
+  }
+
+  const userId: number = Number(routerParamId);
+
+  if (loggedInUser.id !== userId) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: "User/data mismatch.",
     });
   }
 

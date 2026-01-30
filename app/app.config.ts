@@ -43,8 +43,8 @@ export default defineAppConfig({
             container: "mt-2",
           },
           horizontal: {
-            root: "flex-col gap-2 place-items-stretch sm:flex-row sm:gap-4 sm:place-items-baseline sm:justify-normal sm:[&>*:last-child]:flex-1 sm:[&>*:last-child]:m-w-0",
-            wrapper: "w-60",
+            root: "flex-col gap-2 place-items-stretch sm:flex-row sm:gap-4 sm:place-items-baseline sm:justify-normal [&>:first-child]:flex-none [&>:first-child]:sm:w-60 [&>:last-child]:sm:w-84.25 [&>:last-child]:sm:flex-auto",
+            // wrapper: "w-60",
           },
         },
       },

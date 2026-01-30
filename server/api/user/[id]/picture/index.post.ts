@@ -8,6 +8,9 @@ export default defineEventHandler(async (event) => {
     url: string;
   };
 
+  // restrict api only to logged in users
+  const { user: loggedInUser } = await requireUserSession(event);
+
   const routerParamId = getRouterParam(event, "id");
 
   if (!routerParamId) {
@@ -18,6 +21,13 @@ export default defineEventHandler(async (event) => {
   }
 
   const userId: number = Number(routerParamId);
+
+  if (loggedInUser.id !== userId) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: "User/data mismatch.",
+    });
+  }
 
   // Parse multipart form data
   const formData = await readMultipartFormData(event);
