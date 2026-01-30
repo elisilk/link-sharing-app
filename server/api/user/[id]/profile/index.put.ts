@@ -3,6 +3,9 @@
 import { eq } from "drizzle-orm";
 
 export default defineEventHandler(async (event) => {
+  // restrict api only to logged in users
+  const { user: loggedInUser } = await requireUserSession(event);
+
   const routerParamId = getRouterParam(event, "id");
 
   if (!routerParamId) {
@@ -13,6 +16,13 @@ export default defineEventHandler(async (event) => {
   }
 
   const userId: number = Number(routerParamId);
+
+  if (loggedInUser.id !== userId) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: "User/data mismatch.",
+    });
+  }
 
   const { firstName, lastName, email, picture } = await readBody(event);
   if (!firstName || !lastName) {

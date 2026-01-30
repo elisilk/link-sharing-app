@@ -77,7 +77,7 @@
 @media (width >= 40rem) {
   :root {
     /* sizing */
-    --ui-header-height: --spacing(34);
+    --ui-header-height: --spacing(34); /* 34 + 4 */
     --ui-container: 90rem; /* 1440px */
   }
 }

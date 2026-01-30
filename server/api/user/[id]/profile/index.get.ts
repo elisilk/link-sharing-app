@@ -3,7 +3,7 @@ import type { SelectProfileWithLinks } from "~~/server/db/schema/index";
 import { asc, eq } from "drizzle-orm";
 
 export default defineEventHandler(async (event) => {
-  // TESTING: only include if want to protect api from guest users
+  // restrict api only to logged in users
   // await requireUserSession(event);
 
   // TESTING: handle response to different error status codes

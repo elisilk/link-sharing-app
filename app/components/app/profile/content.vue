@@ -32,7 +32,7 @@ const NUM_SKELETON_LINKS = 5;
     <div
       class="*:w-59.25 *:mx-auto"
       :class="[isPhoneVariant
-        ? 'h-full overflow-scroll pt-[63.5px] pb-12'
+        ? 'h-full overflow-scroll pt-[63.5px] pb-8'
         : '',
       ]"
     >

@@ -114,6 +114,7 @@ Known issues - specific areas that the solution should be improved:
   - Solved: had to just change the font size of the inputs to 16px
   - [Google search: "nuxt mobile zoom out to full page on navigation to new page"](https://www.google.com/search?q=nuxt+mobile+zoom+out+to+full+page+on+navigation+to+new+page)
   - [Disable Auto Zoom in Input "Text" tag - Safari on iPhone](https://stackoverflow.com/questions/2989263/disable-auto-zoom-in-input-text-tag-safari-on-iphone)
+- [ ] Remove the extra unneccsary vertical scrolling in the large viewport due to the height of the `aside` container calculating its height incorrectly. It likely has something to do with the [`--ui-header-height` CSS variable](https://ui.nuxt.com/docs/getting-started/theme/css-variables#header).
 - [ ] Warning message that occurs on Chrome when opening up the toggled navigation menu from the header: "Blocked aria-hidden on an element because its descendant retained focus". The issue doesn't seem to arise on Firefox so far.
 - [ ] Issue with the [`getItemRaw()` unstorage function](https://unstorage.unjs.io/guide#getitemrawkey-opts) not properly returning the image buffer when called in the picture uploads server route when using Vercel Blob.
 - [ ] Vertical orientation photos uploaded as the profile picture are viewed in the incorrect orientation (as horizontal). May need to [read the EXIF data and rotate those photos](https://www.google.com/search?q=javascript+upload+photo+from+mac+photos+vertical+in+wrong+orientation).
@@ -124,9 +125,14 @@ Feature requests - specific enhancements to make:
 - [x] Ability to delete the current profile picture without having to replace it with a new one
 - [x] Method for updating login info (email and password)
 - [ ] Method for retrieving/changing a forgotten password
+  - [Password reset links in Nuxt](https://v2.lucia-auth.com/guidebook/password-reset-link/nuxt/) - although a different framework, this seems like a good model for the steps that are needed.
+  - [Google "nuxt auth utils forgot password"](https://www.google.com/search?q=nuxt+auth+utils+forgot+password)
+- [ ] Method for deleting an account
 - [ ] [Next level security features to prevent brute force attacks](https://vueschool.io/lessons/next-level-security-features-attempt-locks-to-prevent-brute-force-attacks)
-- [ ] [Protection of sensitive data in API routes with requireUserSession](https://vueschool.io/lessons/protect-sensitive-data-in-api-routes-with-requireusersession)
+- [x] [Protection of sensitive data in API routes with requireUserSession](https://vueschool.io/lessons/protect-sensitive-data-in-api-routes-with-requireusersession)
 - [ ] [Optimistic updates](https://nuxt.com/docs/4.x/api/composables/use-nuxt-data#optimistic-updates)
+- [ ] Disable form buttons and inputs after submission until the server action is completed; show loading state
+- [ ] Make sure all tabbable elements have a clear focused state (e.g., with outlines)
 
 More general ideas to consider:
 
