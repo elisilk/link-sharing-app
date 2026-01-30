@@ -186,14 +186,14 @@ function findPlatformPlaceholder(platformName: string | undefined) {
               size="xs"
               color="neutral"
               variant="ghost"
-              class="p-0 drag-and-drop-handle cursor-grab active:cursor-grabbing"
+              class="p-0 drag-and-drop-handle cursor-grab ring-offset-4 ring-primary active:cursor-grabbing active:bg-transparent active:text-primary hover:bg-transparent hover:text-primary focus-visible:bg-transparent focus-visible:text-primary focus-visible:outline-none focus-visible:ring-2"
             />
             <span class="font-bold">Link #{{ count + 1 }}</span>
             <UButton
               label="Remove"
               color="neutral"
               variant="ghost"
-              class="ms-auto p-0 cursor-pointer hover:bg-transparent hover:text-primary focus-visible:bg-transparent focus-visible:text-primary"
+              class="ms-auto p-0 cursor-pointer ring-offset-6 ring-primary active:bg-transparent active:text-primary hover:bg-transparent hover:text-primary focus-visible:bg-transparent focus-visible:text-primary focus-visible:outline-none focus-visible:ring-2"
               @click="handleRemoveLink(link.id)"
             />
           </div>

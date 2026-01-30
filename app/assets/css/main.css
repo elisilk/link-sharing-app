@@ -7,6 +7,9 @@
 }
 
 @theme static {
+  /* container queries */
+  --container-xs: 30rem; /* creates a new @xs variant */
+
   /* color palette */
   --color-white: hsl(0 100% 100%); /* hex FFFFFF / rgb 255 255 255 */
   --color-black: hsl(0 0% 0%); /* hex 000000 / rgb 0 0 0 */

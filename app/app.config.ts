@@ -29,7 +29,7 @@ export default defineAppConfig({
     formField: {
       slots: {
         label: "text-xs",
-        error: "text-xs text-right sm:mt-0 sm:mr-4 sm:absolute sm:right-0 sm:top-1/2 sm:-translate-y-1/2",
+        error: "text-xs text-right",
         help: "text-xs",
       },
       variants: {
@@ -41,10 +41,11 @@ export default defineAppConfig({
         orientation: {
           vertical: {
             container: "mt-2",
+            error: "sm:mt-0 sm:mr-4 sm:absolute sm:right-0 sm:top-1/2 sm:-translate-y-1/2",
           },
           horizontal: {
-            root: "flex-col gap-2 place-items-stretch sm:flex-row sm:gap-4 sm:place-items-baseline sm:justify-normal [&>:first-child]:flex-none [&>:first-child]:sm:w-60 [&>:last-child]:sm:w-84.25 [&>:last-child]:sm:flex-auto",
-            // wrapper: "w-60",
+            root: "flex-col gap-2 items-stretch not-first:mt-2 @xs:flex-row @xs:gap-4 @xs:items-center @xs:not-first:mt-4 @xs:[&>*:first-child]:flex-none @xs:[&>*:first-child]:w-60 @xs:[&>*:last-child]:flex-auto",
+            error: "@xs:mt-0 @xs:mr-4 @xs:absolute @xs:right-0 @xs:top-1/2 @xs:-translate-y-1/2",
           },
         },
       },
