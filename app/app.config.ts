@@ -75,7 +75,7 @@ export default defineAppConfig({
     },
     select: {
       slots: {
-        base: ["w-full rounded-lg focus:shadow-(--shadow-purple-600)"],
+        base: ["w-full rounded-lg cursor-pointer active:shadow-(--shadow-purple-600) focus-visible:shadow-(--shadow-purple-600) aria-expanded:shadow-(--shadow-purple-600) aria-expanded:ring-primary aria-expanded:ring-2"],
       },
       variants: {
         size: {

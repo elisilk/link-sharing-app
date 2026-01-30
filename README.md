@@ -119,6 +119,8 @@ Known issues - specific areas that the solution should be improved:
 - [ ] Issue with the [`getItemRaw()` unstorage function](https://unstorage.unjs.io/guide#getitemrawkey-opts) not properly returning the image buffer when called in the picture uploads server route when using Vercel Blob.
 - [ ] Vertical orientation photos uploaded as the profile picture are viewed in the incorrect orientation (as horizontal). May need to [read the EXIF data and rotate those photos](https://www.google.com/search?q=javascript+upload+photo+from+mac+photos+vertical+in+wrong+orientation).
   - [Fixing wrongly oriented iphone photos](https://medium.com/@manoj_makkuboy/fixing-wrongly-oriented-iphone-photos-f6375d32ef73)
+- [ ] improve the page header flex items as transition to a smaller viewport/container width so that the crowding is minimized and the left/logo side doesn't take up disproportionate space
+- [x] improve the hover/active/focus state of the image upload input
 
 Feature requests - specific enhancements to make:
 
@@ -133,6 +135,7 @@ Feature requests - specific enhancements to make:
 - [ ] [Optimistic updates](https://nuxt.com/docs/4.x/api/composables/use-nuxt-data#optimistic-updates)
 - [ ] Disable form buttons and inputs after submission until the server action is completed; show loading state
 - [ ] Make sure all tabbable elements have a clear focused state (e.g., with outlines)
+- [ ] If make changes in the editor and try to navigate away without saving them, ask to confirm before navigating away (e.g., [video marker: "show confirmation if unsaved changes in form"](https://www.youtube.com/watch?v=DK93dqmJJYg&t=11693s))
 
 More general ideas to consider:
 
