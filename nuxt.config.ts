@@ -36,6 +36,18 @@ export default defineNuxtConfig({
           property: "og:type",
           content: "website",
         },
+        {
+          property: "og:image",
+          content: "https://link-sharing-app-eight-nu.vercel.app/link-sharing-app-share-image.png",
+        },
+        {
+          property: "og:image:width",
+          content: "1200",
+        },
+        {
+          property: "og:image:height",
+          content: "630",
+        },
       ],
     },
   },
