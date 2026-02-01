@@ -5,6 +5,10 @@ import { moveArrayElement, useSortable } from "@vueuse/integrations/useSortable"
 import { AppConfirmDialog } from "#components";
 import * as z from "zod";
 
+defineProps<{
+  loading: boolean;
+}>();
+
 const emit = defineEmits(["removeLink"]);
 
 const profileLinkSchema = z.object({
@@ -61,7 +65,7 @@ function handleAddLink() {
 const overlay = useOverlay();
 const modal = overlay.create(AppConfirmDialog);
 
-async function handleRemoveLink(linkId: number) {
+async function handleRemoveLink(linkIndex: number) {
   const instance = modal.open({
     title: "Are you sure?",
     description: "If you confirm, deleting this link can't be undone.",
@@ -72,9 +76,29 @@ async function handleRemoveLink(linkId: number) {
   const confirmDelete = await instance.result;
 
   if (confirmDelete) {
-    emit("removeLink", linkId);
+    // check if index out of bounds
+    if (linkIndex < 0 || linkIndex > profileLinksForm.value.length)
+      return;
+
+    const linkToDelete = profileLinksForm.value[linkIndex];
+
+    if (!linkToDelete)
+      return;
+
+    if (linkToDelete.id === null) {
+      // a new link that hasn't yet been saved to the state
+      // so just splice it from the local copy of the links array
+      if (linkIndex !== -1) {
+        profileLinksForm.value.splice(linkIndex, 1);
+      }
+    }
+    else {
+      // an already-saved link in the state
+      // so bubble it up and remove it using an API call
+      emit("removeLink", linkToDelete.id);
+    }
     toast.add({
-      title: `The link was removed! (${linkId})`,
+      title: "The link was removed!",
       icon: "i-custom-icon-changes-saved",
       color: "success",
     });
@@ -154,6 +178,7 @@ function findPlatformPlaceholder(platformName: string | undefined) {
         variant="outline"
         label="+ Add new link"
         class="font-semibold h-10 sm:h-14 w-full justify-center mb-6 cursor-pointer"
+        :disabled="loading"
         @click="handleAddLink"
       />
 
@@ -171,11 +196,15 @@ function findPlatformPlaceholder(platformName: string | undefined) {
         </p>
       </div>
 
-      <div ref="linksContainer" class="space-y-6">
+      <fieldset
+        ref="linksContainer"
+        :disabled="loading"
+        class="space-y-6"
+      >
         <UForm
-          v-for="link, count in profileLinksForm"
+          v-for="(link, index) in profileLinksForm"
           :key="link.id"
-          :name="`${count}`"
+          :name="`${index}`"
           :schema="profileLinkSchema"
           class="bg-gray-50 rounded-xl p-4 sm:p-6 space-y-4"
           nested
@@ -188,13 +217,13 @@ function findPlatformPlaceholder(platformName: string | undefined) {
               variant="ghost"
               class="p-0 drag-and-drop-handle cursor-grab outline-primary outline-offset-4 active:cursor-grabbing active:bg-transparent active:text-primary hover:bg-transparent hover:text-primary focus-visible:bg-transparent focus-visible:text-primary focus-visible:outline-solid focus-visible:outline-2"
             />
-            <span class="font-bold">Link #{{ count + 1 }}</span>
+            <span class="font-bold">Link #{{ index + 1 }}</span>
             <UButton
               label="Remove"
               color="neutral"
               variant="ghost"
               class="ms-auto p-0 cursor-pointer outline-primary outline-offset-4 active:bg-transparent active:text-primary hover:bg-transparent hover:text-primary focus-visible:bg-transparent focus-visible:text-primary focus-visible:outline-solid focus-visible:outline-2"
-              @click="handleRemoveLink(link.id)"
+              @click="handleRemoveLink(index)"
             />
           </div>
 
@@ -224,13 +253,15 @@ function findPlatformPlaceholder(platformName: string | undefined) {
             />
           </UFormField>
         </UForm>
-      </div>
+      </fieldset>
 
       <template #footer>
         <div class="sm:text-right">
           <UButton
             type="submit"
-            label="Save"
+            :loading
+            :disabled="loading"
+            :label="loading ? undefined : 'Save'"
             class="justify-center w-full sm:w-auto"
           />
         </div>

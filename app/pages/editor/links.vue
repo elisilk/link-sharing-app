@@ -14,6 +14,7 @@ useSeoMeta({
 
 const toast = useToast();
 const { data: profile } = useNuxtData<SelectProfileWithLinks>("profile");
+const loading = ref<boolean>(false);
 
 type ProfileLinksForm = {
   id: number;
@@ -37,6 +38,8 @@ watch(profile, () => {
 }, { deep: true });
 
 async function handleUpdate() {
+  loading.value = true;
+
   if (!profile.value) {
     return {
       status: "error",
@@ -90,7 +93,7 @@ async function handleUpdate() {
     try {
       // udpate the array of link items
       const result = await $fetch(`/api/user/${profile.value.userId}/links`, {
-        method: "PUT",
+        method: "PATCH",
         body: existingLinksToUpdate,
       });
 
@@ -120,6 +123,8 @@ async function handleUpdate() {
       });
     }
   }
+
+  loading.value = false;
 }
 
 async function handleRemoveLink(linkId: number) {
@@ -127,6 +132,13 @@ async function handleRemoveLink(linkId: number) {
     return {
       status: "error",
       message: "User not logged in.",
+    };
+  }
+
+  if (!linkId) {
+    return {
+      status: "error",
+      message: `Link ID not valid: ${linkId}`,
     };
   }
 
@@ -165,6 +177,7 @@ async function handleRemoveLink(linkId: number) {
 <template>
   <AppFormProfileLinks
     v-model="localProfileLinks"
+    :loading
     @update:model-value="handleUpdate"
     @remove-link="handleRemoveLink"
   />
