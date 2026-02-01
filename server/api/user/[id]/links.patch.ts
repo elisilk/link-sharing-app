@@ -1,6 +1,9 @@
 import { eq } from "drizzle-orm";
 
 export default defineEventHandler(async (event) => {
+  // TESTING: block for an amount of time to test pending state
+  // await sleep(4000);
+
   // restrict api only to logged in users
   const { user: loggedInUser } = await requireUserSession(event);
 

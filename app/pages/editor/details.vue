@@ -20,6 +20,7 @@ useSeoMeta({
 
 const toast = useToast();
 const { data: profile } = useNuxtData<SelectProfileWithLinks>("profile");
+const loading = ref<boolean>(false);
 
 const localProfileDetails = ref({
   firstName: profile.value?.firstName || "",
@@ -105,6 +106,8 @@ async function deleteOldPicture() {
 }
 
 async function handleUpdate() {
+  loading.value = true;
+
   if (!profile.value) {
     return {
       status: "error",
@@ -144,7 +147,7 @@ async function handleUpdate() {
   // update the profile details
   try {
     const updateProfileResult = await $fetch(`/api/user/${profile.value.userId}/profile/`, {
-      method: "PUT",
+      method: "PATCH",
       body: {
         ...localProfileDetails.value,
         picture: newPicture,
@@ -181,9 +184,15 @@ async function handleUpdate() {
       toast.add({ title: "Error Updating Profile", description: "Something went wrong.", color: "error" });
     }
   }
+
+  loading.value = false;
 }
 </script>
 
 <template>
-  <AppFormProfileDetails v-model="localProfileDetails" @update:model-value="handleUpdate" />
+  <AppFormProfileDetails
+    v-model="localProfileDetails"
+    :loading
+    @update:model-value="handleUpdate"
+  />
 </template>

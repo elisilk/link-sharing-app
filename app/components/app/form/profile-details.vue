@@ -4,6 +4,10 @@ import type { SelectProfileWithLinks } from "~~/server/db/schema/index";
 
 import * as z from "zod";
 
+defineProps<{
+  loading: boolean;
+}>();
+
 const profileDetailsSchema = z.object({
   firstName: z.string("Can't be empty").nonempty("Can't be empty"),
   lastName: z.string("Can't be empty").nonempty("Can't be empty"),
@@ -122,7 +126,8 @@ function handleRemoveCurrentPicture() {
         <p>Add your details to create a personal touch to your profile.</p>
       </template>
 
-      <div
+      <fieldset
+        :disabled="loading"
         class="@container bg-grey-50 rounded-xl p-6"
       >
         <UFormField
@@ -186,9 +191,12 @@ function handleRemoveCurrentPicture() {
             />
           </div>
         </UFormField>
-      </div>
+      </fieldset>
 
-      <div class="@container bg-grey-50 rounded-xl p-6">
+      <fieldset
+        :disabled="loading"
+        class="@container bg-grey-50 rounded-xl p-6"
+      >
         <UFormField
           label="First name"
           name="firstName"
@@ -227,13 +235,15 @@ function handleRemoveCurrentPicture() {
             autocomplete="email"
           />
         </UFormField>
-      </div>
+      </fieldset>
 
       <template #footer>
         <div class="sm:text-right">
           <UButton
             type="submit"
-            label="Save"
+            :loading
+            :disabled="loading"
+            :label="loading ? undefined : 'Save'"
             class="justify-center w-full sm:w-auto"
           />
         </div>
