@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { SortableEvent } from "sortablejs";
 
-import { moveArrayElement, useSortable } from "@vueuse/integrations/useSortable";
 import { AppConfirmDialog } from "#components";
+import { moveArrayElement, useSortable } from "@vueuse/integrations/useSortable";
 import * as z from "zod";
 
 defineProps<{

@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import type { SelectProfileWithLinks } from "#server/db/schema/index";
 import type { FormSubmitEvent } from "@nuxt/ui";
-import type { SelectProfileWithLinks } from "~~/server/db/schema/index";
 
 import * as z from "zod";
 
@@ -11,22 +11,21 @@ defineProps<{
 const profileDetailsSchema = z.object({
   firstName: z.string("Can't be empty").nonempty("Can't be empty"),
   lastName: z.string("Can't be empty").nonempty("Can't be empty"),
-  email: z.preprocess(
-    // first convert empty string to null
-    value => (value === "" ? null : value),
-    z.email({ message: "Email is invalid" }).nullable(),
-  ),
+  email: z.union([
+    z.literal(""),
+    z.email({ message: "Email is invalid" }),
+  ]).optional(),
   newPictureFile: z
     .instanceof(File)
     .optional()
-    .refine((file) => {
+    .refine((file: File | undefined) => {
       if (!file)
         return true;
       return file.size <= PICTURE_MAX_FILE_SIZE;
     }, {
       message: `The image is too large. Please choose an image smaller than ${formatBytes(PICTURE_MAX_FILE_SIZE)}.`,
     })
-    .refine((file) => {
+    .refine((file: File | undefined) => {
       if (!file)
         return true;
       return PICTURE_ACCEPTED_TYPES.includes(file.type);
@@ -34,7 +33,7 @@ const profileDetailsSchema = z.object({
       message: `Please upload a valid image file (${formattedPictureAcceptedTypes}).`,
     })
     .refine(
-      (file) => {
+      (file: File | undefined) => {
         if (!file)
           return true;
         return new Promise((resolve) => {
