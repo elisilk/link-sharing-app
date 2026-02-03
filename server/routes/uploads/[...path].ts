@@ -6,8 +6,8 @@ export default defineEventHandler(async (event) => {
 
   if (!path) {
     throw createError({
-      statusCode: 400,
-      statusMessage: "Path is required",
+      status: 400,
+      statusText: "Path is required",
     });
   }
 
@@ -37,8 +37,8 @@ export default defineEventHandler(async (event) => {
 
   if (!imageBuffer) {
     throw createError({
-      statusCode: 404,
-      statusMessage: "Image not found",
+      status: 404,
+      statusText: "Image not found",
     });
   }
 

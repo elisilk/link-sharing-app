@@ -6,8 +6,8 @@ export default defineEventHandler(async (event) => {
 
   if (!routerParamId) {
     throw createError({
-      statusCode: 400,
-      statusMessage: "User ID is required",
+      status: 400,
+      statusText: "User ID is required",
     });
   }
 
@@ -15,8 +15,8 @@ export default defineEventHandler(async (event) => {
 
   if (loggedInUser.id !== userId) {
     throw createError({
-      statusCode: 400,
-      statusMessage: "User/data mismatch.",
+      status: 400,
+      statusText: "User/data mismatch.",
     });
   }
 
@@ -30,8 +30,8 @@ export default defineEventHandler(async (event) => {
   if (!linksToAdd || !Array.isArray(linksToAdd)) {
     // return { status: 'error', message: 'Invalid input' };
     throw createError({
-      message: "Invalid input!",
-      statusCode: 400,
+      status: 400,
+      statusText: "Invalid input!",
     });
   }
 

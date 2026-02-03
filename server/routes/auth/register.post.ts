@@ -3,8 +3,8 @@ export default defineEventHandler(async (event) => {
 
   if (!email || !password) {
     throw createError({
-      statusCode: 400,
-      statusMessage: "Missing required fields.",
+      status: 400,
+      statusText: "Missing required fields.",
     });
   }
 

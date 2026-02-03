@@ -8,8 +8,8 @@ export default defineEventHandler(async (event) => {
 
   if (!routerParamId) {
     throw createError({
-      statusCode: 400,
-      message: "User ID is required",
+      status: 400,
+      statusText: "User ID is required",
     });
   }
 
@@ -17,8 +17,8 @@ export default defineEventHandler(async (event) => {
 
   if (loggedInUser.id !== userId) {
     throw createError({
-      statusCode: 400,
-      statusMessage: "User/data mismatch.",
+      status: 400,
+      statusText: "User/data mismatch.",
     });
   }
 
@@ -26,8 +26,8 @@ export default defineEventHandler(async (event) => {
 
   if (!currentPassword || !newPassword) {
     throw createError({
-      statusCode: 400,
-      statusMessage: "Missing required fields.",
+      status: 400,
+      statusText: "Missing required fields.",
     });
   }
 
@@ -38,8 +38,8 @@ export default defineEventHandler(async (event) => {
 
   if (!existingUser) {
     throw createError({
-      statusCode: 401,
-      statusMessage: "Invalid user.",
+      status: 401,
+      statusText: "Invalid user.",
     });
   }
 
@@ -47,8 +47,8 @@ export default defineEventHandler(async (event) => {
 
   if (!isValid) {
     throw createError({
-      statusCode: 401,
-      statusMessage: "Invalid current password. Please try again.",
+      status: 401,
+      statusText: "Invalid current password. Please try again.",
     });
   }
 
@@ -60,8 +60,8 @@ export default defineEventHandler(async (event) => {
 
     if (!updatedUser) {
       throw createError({
-        statusCode: 500,
-        statusMessage: "Failed to update user.",
+        status: 500,
+        statusText: "Failed to update user.",
       });
     }
 

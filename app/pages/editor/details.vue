@@ -63,7 +63,7 @@ async function uploadNewPicture(newPicture: File) {
   }
   catch (error) {
     if (error instanceof FetchError) {
-      console.error("Fetch error:", error.statusMessage);
+      console.error("Fetch error:", error.statusText);
     }
     else {
       console.error("Unknown error", error);

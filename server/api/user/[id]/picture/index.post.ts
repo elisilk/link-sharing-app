@@ -15,8 +15,8 @@ export default defineEventHandler(async (event) => {
 
   if (!routerParamId) {
     throw createError({
-      statusCode: 400,
-      statusMessage: "User ID is required",
+      status: 400,
+      statusText: "User ID is required",
     });
   }
 
@@ -24,8 +24,8 @@ export default defineEventHandler(async (event) => {
 
   if (loggedInUser.id !== userId) {
     throw createError({
-      statusCode: 400,
-      statusMessage: "User/data mismatch.",
+      status: 400,
+      statusText: "User/data mismatch.",
     });
   }
 
@@ -34,8 +34,8 @@ export default defineEventHandler(async (event) => {
 
   if (!formData || formData.length === 0) {
     throw createError({
-      statusCode: 400,
-      statusMessage: "No files uploaded",
+      status: 400,
+      statusText: "No files uploaded",
     });
   }
 
@@ -52,8 +52,8 @@ export default defineEventHandler(async (event) => {
       const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB in bytes
       if (file.data.length > MAX_FILE_SIZE) {
         throw createError({
-          statusCode: 400,
-          statusMessage: `File ${file.filename} exceeds maximum size of 5MB`,
+          status: 400,
+          statusText: `File ${file.filename} exceeds maximum size of 5MB`,
         });
       }
 
@@ -66,8 +66,8 @@ export default defineEventHandler(async (event) => {
 
       if (!file.type || !allowedTypes.includes(file.type)) {
         throw createError({
-          statusCode: 400,
-          statusMessage: `File type ${file.type || "unknown"
+          status: 400,
+          statusText: `File type ${file.type || "unknown"
           } not allowed. Allowed types: ${allowedTypes.join(", ")}`,
         });
       }
@@ -99,8 +99,8 @@ export default defineEventHandler(async (event) => {
     }
 
     throw createError({
-      statusCode: 500,
-      statusMessage: "Error uploading files",
+      status: 500,
+      statusText: "Error uploading files",
     });
   }
 });
