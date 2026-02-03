@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import type { SelectProfileWithLinks } from "#server/db/schema/index";
 import type { NavigationMenuItem } from "@nuxt/ui";
-import type { SelectProfileWithLinks } from "~~/server/db/schema/index";
 
 const { clear } = useUserSession();
 await useProfile();

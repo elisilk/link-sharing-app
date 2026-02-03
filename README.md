@@ -42,7 +42,7 @@ Users should be able to:
 ### Links
 
 - Solution URL: [https://github.com/elisilk/link-sharing-app](https://github.com/elisilk/link-sharing-app)
-- Live Site URL: [https://link-sharing-app-eight-nu.vercel.app/](https://link-sharing-app-eight-nu.vercel.app/)
+- Live Site URL: [https://devlinks-site.vercel.app/](https://devlinks-site.vercel.app/)
 
 ## My process
 
@@ -78,9 +78,9 @@ As always, so many cool :sunglasses: things. Here are some of the key resources 
 
 To update/reset the database locally (development):
 
-- delete the ~/server/db/migrations folder
+- delete the #server/db/migrations folder
 - delete each of the ~/local.db\* files
-- update the schema files in ~/server/db/schema/
+- update the schema files in #server/db/schema/
 - run `pnpm drizzle-kit generate` to regenerate the migration files
 - run `pnpm drizzle-kit migrate` to apply the generated SQL migration files to the database
 

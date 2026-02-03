@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { SelectProfileWithLinks } from "~~/server/db/schema/index";
+import type { SelectProfileWithLinks } from "#server/db/schema/index";
 
 definePageMeta({
   layout: "profile",

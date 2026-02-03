@@ -1,5 +1,3 @@
-// import type { SelectProfile } from "~~/server/db/schema/index";
-
 import { eq } from "drizzle-orm";
 
 export default defineEventHandler(async (event) => {
