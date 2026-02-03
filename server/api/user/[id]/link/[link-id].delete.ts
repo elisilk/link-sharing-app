@@ -8,8 +8,8 @@ export default defineEventHandler(async (event) => {
 
   if (!routerParamId) {
     throw createError({
-      statusCode: 400,
-      statusMessage: "User ID is required",
+      status: 400,
+      statusText: "User ID is required",
     });
   }
 
@@ -17,8 +17,8 @@ export default defineEventHandler(async (event) => {
 
   if (loggedInUser.id !== userId) {
     throw createError({
-      statusCode: 400,
-      statusMessage: "User/data mismatch.",
+      status: 400,
+      statusText: "User/data mismatch.",
     });
   }
 
@@ -26,8 +26,8 @@ export default defineEventHandler(async (event) => {
 
   if (!routerParamLinkId) {
     throw createError({
-      statusCode: 400,
-      message: "Link ID is required",
+      status: 400,
+      statusText: "Link ID is required",
     });
   }
 

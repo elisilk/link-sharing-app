@@ -11,8 +11,8 @@ export default defineEventHandler(async (event) => {
 
   if (!routerParamId) {
     throw createError({
-      statusCode: 400,
-      message: "User ID is required",
+      status: 400,
+      statusText: "User ID is required",
     });
   }
 
@@ -20,16 +20,16 @@ export default defineEventHandler(async (event) => {
 
   if (loggedInUser.id !== userId) {
     throw createError({
-      statusCode: 400,
-      statusMessage: "User/data mismatch.",
+      status: 400,
+      statusText: "User/data mismatch.",
     });
   }
 
   const { firstName, lastName, email, picture } = await readBody(event);
   if (!firstName || !lastName) {
     throw createError({
-      message: "Missing required fields!",
-      statusCode: 400,
+      status: 400,
+      statusText: "Missing required fields!",
     });
   }
 

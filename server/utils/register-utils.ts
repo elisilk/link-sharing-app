@@ -7,8 +7,8 @@ export async function throwIfUserExists(email: string) {
 
   if (existingUser) {
     throw createError({
-      statusCode: 400,
-      statusMessage: "Account already exists. Please login.",
+      status: 400,
+      statusText: "Account already exists. Please login.",
     });
   }
 }
@@ -23,8 +23,8 @@ export async function registerUser(email: string, password: string) {
 
   if (!newUser) {
     throw createError({
-      statusCode: 500,
-      statusMessage: "Failed to register user.",
+      status: 500,
+      statusText: "Failed to register user.",
     });
   }
 
@@ -40,8 +40,8 @@ export async function createProfileForNewUser(userId: number) {
 
   if (!newProfile) {
     throw createError({
-      statusCode: 500,
-      statusMessage: "Failed to create profile for new user.",
+      status: 500,
+      statusText: "Failed to create profile for new user.",
     });
   }
 

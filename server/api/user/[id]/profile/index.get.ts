@@ -16,8 +16,8 @@ export default defineEventHandler(async (event) => {
 
   if (!routerParamId) {
     throw createError({
-      statusCode: 400,
-      message: "User ID is required",
+      status: 400,
+      statusText: "User ID is required",
     });
   }
 
@@ -35,8 +35,8 @@ export default defineEventHandler(async (event) => {
 
   if (!profile) {
     throw createError({
-      statusCode: 401,
-      statusMessage: "Profile not found.",
+      status: 401,
+      statusText: "Profile not found.",
     });
   }
 

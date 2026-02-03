@@ -5,8 +5,8 @@ export default defineEventHandler(async (event) => {
 
   if (!email || !password) {
     throw createError({
-      statusCode: 400,
-      statusMessage: "Missing required fields.",
+      status: 400,
+      statusText: "Missing required fields.",
     });
   }
 
@@ -16,8 +16,8 @@ export default defineEventHandler(async (event) => {
 
   if (!existingUser) {
     throw createError({
-      statusCode: 401,
-      statusMessage: "Invalid email or password. Please try again.",
+      status: 401,
+      statusText: "Invalid email or password. Please try again.",
     });
   }
 
@@ -25,8 +25,8 @@ export default defineEventHandler(async (event) => {
 
   if (!isValid) {
     throw createError({
-      statusCode: 401,
-      statusMessage: "Invalid email or password. Please try again.",
+      status: 401,
+      statusText: "Invalid email or password. Please try again.",
     });
   }
 

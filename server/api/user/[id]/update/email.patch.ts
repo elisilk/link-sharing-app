@@ -8,8 +8,8 @@ export default defineEventHandler(async (event) => {
 
   if (!routerParamId) {
     throw createError({
-      statusCode: 400,
-      message: "User ID is required",
+      status: 400,
+      statusText: "User ID is required",
     });
   }
 
@@ -17,8 +17,8 @@ export default defineEventHandler(async (event) => {
 
   if (loggedInUser.id !== userId) {
     throw createError({
-      statusCode: 400,
-      statusMessage: "User/data mismatch.",
+      status: 400,
+      statusText: "User/data mismatch.",
     });
   }
 
@@ -26,8 +26,8 @@ export default defineEventHandler(async (event) => {
 
   if (!currentEmail || !newEmail) {
     throw createError({
-      statusCode: 400,
-      statusMessage: "Missing required fields.",
+      status: 400,
+      statusText: "Missing required fields.",
     });
   }
 
@@ -42,8 +42,8 @@ export default defineEventHandler(async (event) => {
 
   if (!existingUserCurrentEmail) {
     throw createError({
-      statusCode: 401,
-      statusMessage: "Invalid current email.",
+      status: 401,
+      statusText: "Invalid current email.",
     });
   }
 
@@ -55,8 +55,8 @@ export default defineEventHandler(async (event) => {
 
   if (existingUserNewEmail) {
     throw createError({
-      statusCode: 401,
-      statusMessage: "Invalid new email. Account with that email already exists.",
+      status: 401,
+      statusText: "Invalid new email. Account with that email already exists.",
     });
   }
 
@@ -68,8 +68,8 @@ export default defineEventHandler(async (event) => {
 
     if (!updatedUser) {
       throw createError({
-        statusCode: 500,
-        statusMessage: "Failed to update user.",
+        status: 500,
+        statusText: "Failed to update user.",
       });
     }
 
