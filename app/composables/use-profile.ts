@@ -1,4 +1,4 @@
-import type { SelectProfileWithLinks } from "~~/server/db/schema/index";
+import type { SelectProfileWithLinks } from "#server/db/schema/index";
 
 // export async function useProfile(userId: string) {
 export async function useProfile() {

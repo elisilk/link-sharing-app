@@ -1,4 +1,4 @@
-import type { SelectProfileWithLinks } from "~~/server/db/schema/index";
+import type { SelectProfileWithLinks } from "#server/db/schema/index";
 
 import { asc, eq } from "drizzle-orm";
 
