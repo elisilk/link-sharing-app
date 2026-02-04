@@ -113,6 +113,9 @@ Hmm 🤔 ... I still have to do this part!
 Known issues - specific areas that the solution should be improved:
 
 - [ ] All of the testing part!
+- [x] Input field error message is obscured by the show password trailing icon
+  - [ ] Figure out if there's a way to use [Auth Form](https://ui.nuxt.com/docs/components/auth-form) while still being able to control the position of the error message for the password fields so it doesn't obscure the show password trailing icon
+- [ ] Prevent input field error message from hiding the input field's help message
 - [ ] Remove the extra unneccsary vertical scrolling in the large viewport due to the height of the `aside` container calculating its height incorrectly. It likely has something to do with the [`--ui-header-height` CSS variable](https://ui.nuxt.com/docs/getting-started/theme/css-variables#header).
 - [ ] Warning message that occurs on Chrome when opening up the toggled navigation menu from the header: "Blocked aria-hidden on an element because its descendant retained focus". The issue doesn't seem to arise on Firefox so far.
 - [ ] Issue with the [`getItemRaw()` unstorage function](https://unstorage.unjs.io/guide#getitemrawkey-opts) not properly returning the image buffer when called in the picture uploads server route when using Vercel Blob.
@@ -128,15 +131,23 @@ Known issues - specific areas that the solution should be improved:
 
 Feature requests - specific enhancements to make:
 
+- [Nuxt v4.3.0](https://github.com/nuxt/nuxt/releases/tag/v4.3.0) - Look at all Nuxt v4.3 changes and upgrade as needed/advantageous
+- [Learn from @AhmadYousif89's solution](https://www.frontendmentor.io/solutions/devlinks-a-link-sharing-app-tvkjym6OMw)
+  - Link Validation: Smart URL validation for different platforms (GitHub, LinkedIn, etc.)
+  - Guest Mode: Try the app without registration with automatic guest session creation
 - [ ] Method for retrieving/changing a forgotten password
   - [Password reset links in Nuxt](https://v2.lucia-auth.com/guidebook/password-reset-link/nuxt/) - although a different framework, this seems like a good model for the steps that are needed.
   - [Google "nuxt auth utils forgot password"](https://www.google.com/search?q=nuxt+auth+utils+forgot+password)
 - [ ] Method for deleting an account
 - [ ] [Next level security features to prevent brute force attacks](https://vueschool.io/lessons/next-level-security-features-attempt-locks-to-prevent-brute-force-attacks)
 - [ ] [Optimistic updates](https://nuxt.com/docs/4.x/api/composables/use-nuxt-data#optimistic-updates)
-- [ ] Disable form buttons and inputs after submission until the server action is completed; show loading state
-- [ ] Make sure all tabbable elements have a clear focused state (e.g., with outlines)
 - [ ] If make changes in the editor and try to navigate away without saving them, ask to confirm before navigating away (e.g., [video marker: "show confirmation if unsaved changes in form"](https://www.youtube.com/watch?v=DK93dqmJJYg&t=11693s))
+- [ ] Make sure all errors are handled appropriately
+  - [Nuxt Error Handling](https://nuxt.com/docs/4.x/getting-started/error-handling)
+  - [HTTP response status codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status)
+  - [Nuxt v4.3.0](https://github.com/nuxt/nuxt/releases/tag/v4.3.0) - use 'status' and 'statusText'
+- [x] Disable form buttons and inputs after submission until the server action is completed; show loading state
+- [x] Make sure all tabbable elements have a clear focused state (e.g., with outlines)
 - [x] Ability to delete the current profile picture without having to replace it with a new one
 - [x] Method for updating login info (email and password)
 - [x] [Protection of sensitive data in API routes with requireUserSession](https://vueschool.io/lessons/protect-sensitive-data-in-api-routes-with-requireusersession)

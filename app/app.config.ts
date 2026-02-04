@@ -53,7 +53,7 @@ export default defineAppConfig({
     input: {
       slots: {
         root: "w-full",
-        base: ["rounded-lg focus:shadow-(--shadow-purple-600) placeholder:opacity-50"],
+        base: ["rounded-lg focus:shadow-(--shadow-purple-600) placeholder:opacity-50 disabled:bg-accented/50 disabled:opacity-50"],
       },
       variants: {
         size: {
@@ -70,6 +70,12 @@ export default defineAppConfig({
           leading: true,
           size: "md",
           class: "ps-12",
+        },
+        {
+          trailing: true,
+          class: {
+            base: "pe-12",
+          },
         },
       ],
     },

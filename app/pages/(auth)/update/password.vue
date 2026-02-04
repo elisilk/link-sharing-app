@@ -14,7 +14,7 @@ useSeoMeta({
 });
 
 const schema = z.object({
-  currentPassword: z.string("Current password is required"),
+  currentPassword: z.string("Can't be empty").min(1, { message: "Current password is required" }),
   newPassword: z.string("Can't be empty").min(8, { message: "Must be at least 8 characters" }),
   newPasswordConfirm: z.string("Can't be empty").min(8, { message: "Must be at least 8 characters" }),
 }).refine(data => data.newPassword === data.newPasswordConfirm, {
@@ -23,6 +23,10 @@ const schema = z.object({
 });
 
 type Schema = z.output<typeof schema>;
+
+const showCurrentPassword = ref(false);
+const showNewPassword = ref(false);
+const showNewPasswordConfirm = ref(false);
 
 const { fetch, user } = useUserSession();
 const toast = useToast();
@@ -33,7 +37,7 @@ const state = reactive<Partial<Schema>>({
   newPasswordConfirm: undefined,
 });
 
-async function onSubmit(event: FormSubmitEvent<Schema>) {
+async function onSubmit(payload: FormSubmitEvent<Schema>) {
   if (!user.value) {
     toast.add({ title: "Error Updating", description: "User not logged in.", color: "error" });
     return;
@@ -42,7 +46,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   try {
     await $fetch(`/api/user/${user.value.id}/update/password`, {
       method: "PATCH",
-      body: event.data,
+      body: payload.data,
     });
     await fetch();
     await navigateTo("/editor");
@@ -50,7 +54,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   }
   catch (error) {
     if (error instanceof FetchError) {
-      toast.add({ title: "Error Updating", description: error.data.message, color: "error" });
+      toast.add({ title: "Error Updating", description: error.statusText, color: "error" });
     }
     else {
       toast.add({ title: "Error Updating", description: "There was an issue.", color: "error" });
@@ -78,47 +82,100 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     </template>
 
     <UForm
-      :schema="schema"
-      :state="state"
+      :schema
+      :state
       class="space-y-6"
       novalidate
       @submit.prevent="onSubmit"
     >
-      <UFormField label="Current password" name="currentPassword">
-        <UInput
-          v-model="state.currentPassword"
-          icon="i-custom-icon-password"
-          type="password"
-          placeholder="At least 8 characters"
-          autocomplete="current-password"
-          required
-          autofocus
-        />
-      </UFormField>
+      <fieldset class="space-y-6">
+        <UFormField
+          label="Current password"
+          name="currentPassword"
+          :ui="{ error: 'sm:mr-12' }"
+        >
+          <UInput
+            v-model="state.currentPassword"
+            icon="i-custom-icon-password"
+            :type="showCurrentPassword ? 'text' : 'password'"
+            :ui="{ trailing: 'pe-3' }"
+            placeholder="At least 8 characters"
+            autocomplete="current-password"
+            required
+            autofocus
+          >
+            <template #trailing>
+              <UButton
+                color="neutral"
+                variant="link"
+                size="sm"
+                :icon="showCurrentPassword ? 'i-lucide-eye-off' : 'i-lucide-eye'"
+                :aria-label="showCurrentPassword ? 'Hide password' : 'Show password'"
+                :aria-pressed="showCurrentPassword"
+                aria-controls="password"
+                @click="showCurrentPassword = !showCurrentPassword"
+              />
+            </template>
+          </UInput>
+        </UFormField>
 
-      <UFormField label="New password" name="newPassword">
-        <UInput
-          v-model="state.newPassword"
-          icon="i-custom-icon-password"
-          type="password"
-          placeholder="At least 8 characters"
-          autocomplete="new-password"
-        />
-      </UFormField>
+        <UFormField
+          label="New password"
+          name="newPassword"
+          :ui="{ error: 'sm:mr-12' }"
+        >
+          <UInput
+            v-model="state.newPassword"
+            icon="i-custom-icon-password"
+            :type="showNewPassword ? 'text' : 'password'"
+            :ui="{ trailing: 'pe-3' }"
+            placeholder="At least 8 characters"
+            autocomplete="new-password"
+          >
+            <template #trailing>
+              <UButton
+                color="neutral"
+                variant="link"
+                size="sm"
+                :icon="showNewPassword ? 'i-lucide-eye-off' : 'i-lucide-eye'"
+                :aria-label="showNewPassword ? 'Hide password' : 'Show password'"
+                :aria-pressed="showNewPassword"
+                aria-controls="password"
+                @click="showNewPassword = !showNewPassword"
+              />
+            </template>
+          </UInput>
+        </UFormField>
 
-      <UFormField
-        label="Confirm new password"
-        name="newPasswordConfirm"
-        help="Password must contain at least 8 characters"
-      >
-        <UInput
-          v-model="state.newPasswordConfirm"
-          icon="i-custom-icon-password"
-          type="password"
-          placeholder="At least 8 characters"
-          autocomplete="new-password"
-        />
-      </UFormField>
+        <UFormField
+          label="Confirm new password"
+          name="newPasswordConfirm"
+          help="Password must contain at least 8 characters"
+          :ui="{ error: 'sm:mr-12' }"
+        >
+          <UInput
+            v-model="state.newPasswordConfirm"
+            icon="i-custom-icon-password"
+            :type="showNewPasswordConfirm ? 'text' : 'password'"
+            :ui="{ trailing: 'pe-3' }"
+            placeholder="At least 8 characters"
+            autocomplete="new-password"
+          >
+            <template #trailing>
+              <UButton
+                color="neutral"
+                variant="link"
+                size="sm"
+                :icon="showNewPasswordConfirm ? 'i-lucide-eye-off' : 'i-lucide-eye'"
+                :aria-label="showNewPasswordConfirm ? 'Hide password' : 'Show password'"
+                :aria-pressed="showNewPasswordConfirm"
+                aria-controls="password"
+                @click="showNewPasswordConfirm = !showNewPasswordConfirm"
+              />
+            </template>
+          </UInput>
+        </UFormField>
+      </fieldset>
 
       <UButton
         type="submit"

@@ -13,20 +13,39 @@ useSeoMeta({
   ogTitle: "devlinks - Create a new account",
 });
 
+// const fields: AuthFormField[] = [{
+//   name: "email",
+//   type: "email",
+//   icon: "i-custom-icon-email",
+//   label: "Email address",
+//   placeholder: "e.g. alex@email.com",
+//   autocomplete: "email",
+//   autofocus: true,
+// }, {
+//   name: "password",
+//   type: "password",
+//   icon: "i-custom-icon-password",
+//   label: "Create password",
+//   placeholder: "At least 8 characters",
+//   autocomplete: "new-password",
+// }, {
+//   name: "passwordConfirm",
+//   type: "password",
+//   icon: "i-custom-icon-password",
+//   label: "Confirm password",
+//   placeholder: "At least 8 characters",
+//   help: "Password must contain at least 8 characters",
+//   autocomplete: "new-password",
+// }];
+
 const schema = z.object({
-  email: z.string("Can't be empty").check(z.email("Invalid email")),
-  password: z.string("Can't be empty").min(8, { message: "Must be at least 8 characters" }),
-  passwordConfirm: z.string("Can't be empty").min(8, { message: "Must be at least 8 characters" }),
+  email: z.string("Can't be empty").trim().check(z.email("Invalid email")),
+  password: z.string("Please check again").min(8, { message: "Must be at least 8 characters" }),
+  passwordConfirm: z.string("Please check again").min(8, { message: "Must be at least 8 characters" }),
 }).refine(data => data.password === data.passwordConfirm, {
   message: "Passwords don't match",
   path: ["passwordConfirm"],
 });
-;
-
-// password: z.string({ message: "Can't be empty" })
-//   .trim()
-//   .nonempty({ message: "Can't be empty" })
-//   .min(8, { message: "Must be at least 8 characters" }),
 
 type Schema = z.output<typeof schema>;
 
@@ -36,21 +55,24 @@ const state = reactive<Partial<Schema>>({
   passwordConfirm: undefined,
 });
 
+const showPassword = ref(false);
+const showPasswordConfirm = ref(false);
+
 const { fetch, loggedIn } = useUserSession();
 const toast = useToast();
 
-async function onSubmit(event: FormSubmitEvent<Schema>) {
+async function onSubmit(payload: FormSubmitEvent<Schema>) {
   try {
     await $fetch("/auth/register", {
       method: "POST",
-      body: event.data,
+      body: payload.data,
     });
     await fetch();
     toast.add({ title: "Registration Success", description: "Thank you for registering!", color: "success" });
   }
   catch (error) {
     if (error instanceof FetchError) {
-      toast.add({ title: "Error Registering", description: error.data.message, color: "error" });
+      toast.add({ title: "Error Registering", description: error.statusText, color: "error" });
     }
     else {
       toast.add({ title: "Error Registering", description: "There was an issue.", color: "error" });
@@ -83,50 +105,83 @@ watch(loggedIn, () => {
     </template>
 
     <UForm
-      :schema="schema"
-      :state="state"
+      :schema
+      :state
       class="space-y-6"
       novalidate
       @submit.prevent="onSubmit"
     >
-      <UFormField label="Email address" name="email">
-        <!-- <UIcon name="i-lucide-mail" /> -->
-        <UInput
-          v-model="state.email"
-          icon="i-custom-icon-email"
-          type="email"
-          placeholder="e.g. alex@email.com"
-          autocomplete="email"
-          required
-          autofocus
-        />
-      </UFormField>
+      <fieldset class="space-y-6">
+        <UFormField label="Email address" name="email">
+          <UInput
+            v-model="state.email"
+            icon="i-custom-icon-email"
+            type="email"
+            placeholder="e.g. alex@email.com"
+            autocomplete="email"
+            autofocus
+          />
+        </UFormField>
 
-      <UFormField label="Create password" name="password">
-        <UInput
-          v-model="state.password"
-          icon="i-custom-icon-password"
-          type="password"
-          placeholder="At least 8 characters"
-          autocomplete="new-password"
-          required
-        />
-      </UFormField>
+        <UFormField
+          label="Create password"
+          name="password"
+          :ui="{ error: 'sm:mr-12' }"
+        >
+          <UInput
+            v-model="state.password"
+            icon="i-custom-icon-password"
+            :type="showPassword ? 'text' : 'password'"
+            :ui="{ trailing: 'pe-3' }"
+            placeholder="At least 8 characters"
+            autocomplete="new-password"
+          >
+            <template #trailing>
+              <UButton
+                color="neutral"
+                variant="link"
+                size="sm"
+                :icon="showPassword ? 'i-lucide-eye-off' : 'i-lucide-eye'"
+                :aria-label="showPassword ? 'Hide password' : 'Show password'"
+                :aria-pressed="showPassword"
+                aria-controls="password"
+                @click="showPassword = !showPassword"
+              />
+            </template>
+          </UInput>
+        </UFormField>
 
-      <UFormField
-        label="Confirm password"
-        name="passwordConfirm"
-        help="Password must contain at least 8 characters"
-      >
-        <UInput
-          v-model="state.passwordConfirm"
-          icon="i-custom-icon-password"
-          type="password"
-          placeholder="At least 8 characters"
-          autocomplete="new-password"
-          required
-        />
-      </UFormField>
+        <UFormField
+          label="Confirm password"
+          name="passwordConfirm"
+          :ui="{ error: 'sm:mr-12' }"
+        >
+          <UInput
+            v-model="state.passwordConfirm"
+            icon="i-custom-icon-password"
+            :type="showPasswordConfirm ? 'text' : 'password'"
+            :ui="{ trailing: 'pe-3' }"
+            placeholder="At least 8 characters"
+            autocomplete="new-password"
+          >
+            <template #trailing>
+              <UButton
+                color="neutral"
+                variant="link"
+                size="sm"
+                :icon="showPasswordConfirm ? 'i-lucide-eye-off' : 'i-lucide-eye'"
+                :aria-label="showPasswordConfirm ? 'Hide password' : 'Show password'"
+                :aria-pressed="showPasswordConfirm"
+                aria-controls="password"
+                @click="showPasswordConfirm = !showPasswordConfirm"
+              />
+            </template>
+          </UInput>
+          <template #help>
+            Password must contain at least 8 characters
+          </template>
+        </UFormField>
+      </fieldset>
 
       <UButton
         type="submit"
