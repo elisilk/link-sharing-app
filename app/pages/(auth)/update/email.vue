@@ -15,7 +15,7 @@ useSeoMeta({
 
 const schema = z.object({
   currentEmail: z.string("Can't be empty").check(z.email("Invalid email")),
-  newEmail: z.string("Can't be empty").check(z.email("Invalid email")),
+  newEmail: z.string("Can't be empty").trim().check(z.email("Invalid email")),
 });
 
 type Schema = z.output<typeof schema>;
@@ -28,7 +28,7 @@ const state = reactive<Partial<Schema>>({
   newEmail: undefined,
 });
 
-async function onSubmit(event: FormSubmitEvent<Schema>) {
+async function onSubmit(payload: FormSubmitEvent<Schema>) {
   if (!user.value) {
     toast.add({ title: "Error Updating", description: "User not logged in.", color: "error" });
     return;
@@ -37,7 +37,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   try {
     await $fetch(`/api/user/${user.value.id}/update/email`, {
       method: "PATCH",
-      body: event.data,
+      body: payload.data,
     });
     await fetch();
     await navigateTo("/editor");
@@ -45,7 +45,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   }
   catch (error) {
     if (error instanceof FetchError) {
-      toast.add({ title: "Error Updating", description: error.data.message, color: "error" });
+      toast.add({ title: "Error Updating", description: error.statusText, color: "error" });
     }
     else {
       toast.add({ title: "Error Updating", description: "There was an issue.", color: "error" });
@@ -73,34 +73,33 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     </template>
 
     <UForm
-      :schema="schema"
-      :state="state"
+      :schema
+      :state
       class="space-y-6"
       novalidate
       @submit.prevent="onSubmit"
     >
-      <UFormField label="Current email address" name="currentEmail">
-        <UInput
-          v-model="state.currentEmail"
-          icon="i-custom-icon-email"
-          type="email"
-          placeholder="e.g. alex@email.com"
-          disabled
-          required
-        />
-      </UFormField>
+      <fieldset class="space-y-6">
+        <UFormField label="Current email address" name="currentEmail">
+          <UInput
+            v-model="state.currentEmail"
+            icon="i-custom-icon-email"
+            type="email"
+            disabled
+          />
+        </UFormField>
 
-      <UFormField label="New email address" name="newEmail">
-        <UInput
-          v-model="state.newEmail"
-          icon="i-custom-icon-email"
-          type="email"
-          placeholder="e.g. alex@email.com"
-          autocomplete="email"
-          required
-          autofocus
-        />
-      </UFormField>
+        <UFormField label="New email address" name="newEmail">
+          <UInput
+            v-model="state.newEmail"
+            icon="i-custom-icon-email"
+            type="email"
+            placeholder="e.g. alex@email.com"
+            autocomplete="email"
+            autofocus
+          />
+        </UFormField>
+      </fieldset>
 
       <UButton
         type="submit"

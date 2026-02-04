@@ -9,11 +9,11 @@ defineProps<{
 }>();
 
 const profileDetailsSchema = z.object({
-  firstName: z.string("Can't be empty").trim().nonempty("Can't be empty"),
-  lastName: z.string("Can't be empty").trim().nonempty("Can't be empty"),
+  firstName: z.string().trim().nonempty("Can't be empty"),
+  lastName: z.string().trim().nonempty("Can't be empty"),
   email: z.union([
     z.literal(""),
-    z.string().trim().check(z.email("Email is invalid")).toLowerCase(),
+    z.string().trim().check(z.email("Email is invalid")), // .toLowerCase(),
   ]).optional(),
   newPictureFile: z
     .instanceof(File)
