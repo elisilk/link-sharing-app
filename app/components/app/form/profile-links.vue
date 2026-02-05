@@ -11,13 +11,28 @@ defineProps<{
 
 const emit = defineEmits(["removeLink"]);
 
+const REGEX_PROTOCOL = /^https:?$/;
+
 const profileLinkSchema = z.object({
   id: z.any(),
-  platform: z.string("Can't be empty").nonempty("Can't be empty"),
-  url: z.string("Can't be empty").nonempty("Can't be empty").check(z.url("Please check the URL")),
+  // platform: z.string("Can't be empty").nonempty("Can't be empty"),
+  platform: z.enum(PlatformNames).optional(),
+  url: z.string("Can't be empty").trim().nonempty("Can't be empty").check(z.url({ error: "Please check the URL" })),
   order: z.any(),
   userId: z.any(),
-});
+}).refine(
+  (data) => {
+    const url = new URL(data.url);
+    // const regexHostname = findPlatformHostnameRegex(data.platform);
+    const regexHostname = data.platform ? platforms[data.platform]?.hostnameRegex : null;
+    return REGEX_PROTOCOL.test(url.protocol)
+      && regexHostname && regexHostname.test(url.hostname);
+  },
+  {
+    message: "Please check the URL",
+    path: ["url"],
+  },
+);
 
 type ProfileLinkSchema = z.output<typeof profileLinkSchema>;
 type PartialProfileLinkSchema = Partial<ProfileLinkSchema>;
@@ -48,8 +63,8 @@ function handleAddLink() {
   // add a new link to the local array
   profileLinksForm.value.push({
     id: null,
-    platform: "",
-    url: "",
+    platform: undefined,
+    url: undefined,
     order: maxLinkItemOrder(profileLinksForm.value) + 1,
     userId: null,
   });
@@ -123,31 +138,13 @@ useSortable(linksContainer, profileLinksForm, {
 
 /* Platforms List/Options + Utils */
 
-const platformItems = platforms.map((platform) => {
+const platformItems = Object.entries(platforms).map(([platformKey, platformValues]) => {
   return {
-    label: platform.name,
-    value: platform.name,
-    icon: platform.icon,
+    value: platformKey,
+    label: platformValues.label,
+    icon: platformValues.icon,
   };
 });
-
-function findPlatformIcon(platformName: string | undefined) {
-  if (!platformName)
-    return null;
-  const platform = platforms.find(item => item.name === platformName);
-  if (!platform)
-    return null;
-  return platform.icon;
-}
-
-function findPlatformPlaceholder(platformName: string | undefined) {
-  if (!platformName)
-    return "";
-  const platform = platforms.find(item => item.name === platformName);
-  if (!platform)
-    return "";
-  return platform.placeholder;
-}
 </script>
 
 <template>
@@ -231,10 +228,11 @@ function findPlatformPlaceholder(platformName: string | undefined) {
             label="Platform"
             name="platform"
           >
+            <!-- :icon="findPlatformIcon(link.platform)" -->
             <USelect
               v-model="link.platform"
               :items="platformItems"
-              :icon="findPlatformIcon(link.platform)"
+              :icon="link.platform ? platforms[link.platform]?.icon : undefined"
               trailing-icon="i-custom-icon-chevron-down"
               required
             />
@@ -244,10 +242,11 @@ function findPlatformPlaceholder(platformName: string | undefined) {
             label="Link"
             name="url"
           >
+            <!-- :placeholder="findPlatformPlaceholder(link.platform)" -->
             <UInput
               v-model="link.url"
               icon="i-custom-icon-link"
-              :placeholder="findPlatformPlaceholder(link.platform)"
+              :placeholder="link.platform ? platforms[link.platform]?.placeholder : undefined"
               type="url"
               required
             />
