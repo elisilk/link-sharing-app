@@ -89,6 +89,10 @@ async function onSubmit(payload: FormSubmitEvent<Schema>) {
       @submit.prevent="onSubmit"
     >
       <fieldset class="space-y-6">
+        <legend class="sr-only">
+          Update email fields
+        </legend>
+
         <UFormField
           label="Current password"
           name="currentPassword"

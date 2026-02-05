@@ -13,6 +13,7 @@ This is a solution to the [Link-sharing app challenge on Frontend Mentor](https:
   - [What I learned](#what-i-learned)
   - [Continued development](#continued-development)
 - [Author](#author)
+- [Acknowledgements](#acknowledgements)
 
 ## Overview
 
@@ -131,10 +132,10 @@ Known issues - specific areas that the solution should be improved:
 
 Feature requests - specific enhancements to make:
 
-- [Nuxt v4.3.0](https://github.com/nuxt/nuxt/releases/tag/v4.3.0) - Look at all Nuxt v4.3 changes and upgrade as needed/advantageous
-- [Learn from @AhmadYousif89's solution](https://www.frontendmentor.io/solutions/devlinks-a-link-sharing-app-tvkjym6OMw)
-  - Link Validation: Smart URL validation for different platforms (GitHub, LinkedIn, etc.)
-  - Guest Mode: Try the app without registration with automatic guest session creation
+- [ ] [Nuxt v4.3.0](https://github.com/nuxt/nuxt/releases/tag/v4.3.0) - Look at all Nuxt v4.3 changes and upgrade as needed/advantageous
+- [ ] [Learn from @AhmadYousif89's solution](https://www.frontendmentor.io/solutions/devlinks-a-link-sharing-app-tvkjym6OMw)
+  - [x] Link Validation: Smart URL validation for different platforms (GitHub, LinkedIn, etc.)
+  - [ ] Guest Mode: Try the app without registration with automatic guest session creation
 - [ ] Method for retrieving/changing a forgotten password
   - [Password reset links in Nuxt](https://v2.lucia-auth.com/guidebook/password-reset-link/nuxt/) - although a different framework, this seems like a good model for the steps that are needed.
   - [Google "nuxt auth utils forgot password"](https://www.google.com/search?q=nuxt+auth+utils+forgot+password)
@@ -156,3 +157,7 @@ Feature requests - specific enhancements to make:
 
 - Website - [Eli Silk](https://github.com/elisilk)
 - Frontend Mentor - [@elisilk](https://www.frontendmentor.io/profile/elisilk)
+
+## Acknowledgements
+
+Thank you to [@AhmadYousif89](https://www.frontendmentor.io/profile/AhmadYousif89) for their [thoughtful and helpful feedback on my first solution](https://www.frontendmentor.io/solutions/full-stack-link-sharing-app-using-nuxt-gdxUVblWay). I also benefited greatly from inspecting [their solution to the challenge](https://www.frontendmentor.io/solutions/devlinks-a-link-sharing-app-tvkjym6OMw), and was inspired to improve my own by implementing smart link validation tailored to each platform, a show password button in password input fields, and more.
