@@ -198,6 +198,10 @@ const platformItems = Object.entries(platforms).map(([platformKey, platformValue
         :disabled="loading"
         class="space-y-6"
       >
+        <legend class="sr-only">
+          Profile links
+        </legend>
+
         <UForm
           v-for="(link, index) in profileLinksForm"
           :key="link.id"

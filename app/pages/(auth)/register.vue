@@ -112,6 +112,10 @@ watch(loggedIn, () => {
       @submit.prevent="onSubmit"
     >
       <fieldset class="space-y-6">
+        <legend class="sr-only">
+          New account credentials
+        </legend>
+
         <UFormField label="Email address" name="email">
           <UInput
             v-model="state.email"

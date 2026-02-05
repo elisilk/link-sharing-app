@@ -129,6 +129,9 @@ function handleRemoveCurrentPicture() {
         :disabled="loading"
         class="@container bg-grey-50 rounded-xl p-6"
       >
+        <legend class="sr-only">
+          Profile picture
+        </legend>
         <UFormField
           label="Profile picture"
           name="newPictureFile"
@@ -196,6 +199,9 @@ function handleRemoveCurrentPicture() {
         :disabled="loading"
         class="@container bg-grey-50 rounded-xl p-6"
       >
+        <legend class="sr-only">
+          Profile name and email
+        </legend>
         <UFormField
           label="First name"
           name="firstName"
