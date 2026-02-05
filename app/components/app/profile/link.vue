@@ -1,20 +1,20 @@
 <script setup lang="ts">
 type Props = {
   size?: "sm" | "md";
-  platform: string;
+  platform: PlatformName;
   url: string | null;
 };
 
 const { size = "md", platform, url } = defineProps<Props>();
 
-const platformInfo = computed(() => platforms.find(item => item.name === platform));
+const platformInfo = computed<Platform | undefined>(() => platforms[platform]);
 </script>
 
 <template>
   <UButton
     v-if="platformInfo"
     :to="url || undefined"
-    :label="platformInfo.name"
+    :label="platformInfo.label"
     :icon="platformInfo.icon"
     trailing-icon="i-custom-icon-arrow-right"
     :ui="{
