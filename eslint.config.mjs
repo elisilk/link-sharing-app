@@ -1,4 +1,5 @@
 import antfu from "@antfu/eslint-config";
+import nodePlugin from "eslint-plugin-n";
 
 // @ts-check
 import withNuxt from "./.nuxt/eslint.config.mjs";
@@ -18,6 +19,9 @@ export default withNuxt(
       ignores: [".pnpm-store/**", "**/migrations/*"],
     },
     {
+      plugins: {
+        node: nodePlugin,
+      },
       rules: {
         "vue/max-attributes-per-line": [
           "error",

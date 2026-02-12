@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import type { SortableEvent } from "sortablejs";
-
 import { AppConfirmDialog } from "#components";
-import { moveArrayElement, useSortable } from "@vueuse/integrations/useSortable";
+import draggable from "vuedraggable";
+
 import * as z from "zod";
 
 defineProps<{
@@ -22,11 +21,17 @@ const profileLinkSchema = z.object({
   userId: z.any(),
 }).refine(
   (data) => {
-    const url = new URL(data.url);
-    // const regexHostname = findPlatformHostnameRegex(data.platform);
-    const regexHostname = data.platform ? platforms[data.platform]?.hostnameRegex : null;
-    return REGEX_PROTOCOL.test(url.protocol)
-      && regexHostname && regexHostname.test(url.hostname);
+    try {
+      const url = new URL(data.url);
+      // const regexHostname = findPlatformHostnameRegex(data.platform);
+      const regexHostname = data.platform ? platforms[data.platform]?.hostnameRegex : null;
+      return REGEX_PROTOCOL.test(url.protocol)
+        && regexHostname && regexHostname.test(url.hostname);
+    }
+    catch (error) {
+      console.error(error);
+      return false;
+    }
   },
   {
     message: "Please check the URL",
@@ -44,14 +49,22 @@ const { form: profileLinksForm, handleSubmit } = useForm<PartialProfileLinkSchem
 const toast = useToast();
 
 function maxLinkItemOrder(links: PartialProfileLinkSchema[]) {
-  if (links.length === 0)
+  // extract valid numeric orders only
+  const orders = links
+    .map(link => link.order)
+    .filter(order => typeof order === "number");
+
+  // if no valid orders, then return default of 0
+  if (orders.length === 0)
     return 0;
-  return links.reduce((prevMax, currentItem) => currentItem.order > prevMax ? currentItem.order : prevMax, -Infinity);
+
+  // return the highest order value
+  return Math.max(...orders);
 }
 
 function normalizeLinkOrder(links: PartialProfileLinkSchema[]) {
   if (links.length === 0)
-    return 0;
+    return;
   links.forEach((link, index) => {
     link.order = index + 1;
   });
@@ -92,7 +105,7 @@ async function handleRemoveLink(linkIndex: number) {
 
   if (confirmDelete) {
     // check if index out of bounds
-    if (linkIndex < 0 || linkIndex > profileLinksForm.value.length)
+    if (linkIndex < 0 || linkIndex >= profileLinksForm.value.length)
       return;
 
     const linkToDelete = profileLinksForm.value[linkIndex];
@@ -123,18 +136,6 @@ async function handleRemoveLink(linkIndex: number) {
 /* Drag and Drop */
 
 const linksContainer = useTemplateRef("linksContainer");
-useSortable(linksContainer, profileLinksForm, {
-  handle: ".drag-and-drop-handle",
-  onUpdate: (e: SortableEvent) => {
-    if (e.oldIndex !== undefined && e.newIndex !== undefined) {
-      moveArrayElement(profileLinksForm, e.oldIndex, e.newIndex, e);
-    }
-
-    nextTick(() => {
-      normalizeLinkOrder(profileLinksForm.value);
-    });
-  },
-});
 
 /* Platforms List/Options + Utils */
 
@@ -202,60 +203,66 @@ const platformItems = Object.entries(platforms).map(([platformKey, platformValue
           Profile links
         </legend>
 
-        <UForm
-          v-for="(link, index) in profileLinksForm"
-          :key="link.id"
-          :name="`${index}`"
-          :schema="profileLinkSchema"
-          class="bg-gray-50 rounded-xl p-4 sm:p-6 space-y-4"
-          nested
+        <draggable
+          v-model="profileLinksForm"
+          item-key="id"
+          class="space-y-6"
+          handle=".drag-and-drop-handle"
+          @end="normalizeLinkOrder(profileLinksForm)"
         >
-          <div class="flex items-center gap-2">
-            <UButton
-              icon="i-custom-icon-drag-and-drop"
-              size="xs"
-              color="neutral"
-              variant="ghost"
-              class="p-0 drag-and-drop-handle cursor-grab outline-primary outline-offset-4 active:cursor-grabbing active:bg-transparent active:text-primary hover:bg-transparent hover:text-primary focus-visible:bg-transparent focus-visible:text-primary focus-visible:outline-solid focus-visible:outline-2"
-            />
-            <span class="font-bold">Link #{{ index + 1 }}</span>
-            <UButton
-              label="Remove"
-              color="neutral"
-              variant="ghost"
-              class="ms-auto p-0 cursor-pointer outline-primary outline-offset-4 active:bg-transparent active:text-primary hover:bg-transparent hover:text-primary focus-visible:bg-transparent focus-visible:text-primary focus-visible:outline-solid focus-visible:outline-2"
-              @click="handleRemoveLink(index)"
-            />
-          </div>
+          <template #item="{ element, index }">
+            <UForm
+              :name="`${index}`"
+              :schema="profileLinkSchema"
+              class="bg-gray-50 rounded-xl p-4 sm:p-6 space-y-4"
+              nested
+            >
+              <div class="flex items-center gap-2">
+                <UButton
+                  icon="i-custom-icon-drag-and-drop"
+                  size="xs"
+                  color="neutral"
+                  variant="ghost"
+                  class="p-0 drag-and-drop-handle cursor-grab outline-primary outline-offset-4 active:cursor-grabbing active:bg-transparent active:text-primary hover:bg-transparent hover:text-primary focus-visible:bg-transparent focus-visible:text-primary focus-visible:outline-solid focus-visible:outline-2"
+                />
+                <span class="font-bold">Link #{{ Number(index) + 1 }}</span>
+                <UButton
+                  label="Remove"
+                  color="neutral"
+                  variant="ghost"
+                  class="ms-auto p-0 cursor-pointer outline-primary outline-offset-4 active:bg-transparent active:text-primary hover:bg-transparent hover:text-primary focus-visible:bg-transparent focus-visible:text-primary focus-visible:outline-solid focus-visible:outline-2"
+                  @click="handleRemoveLink(index)"
+                />
+              </div>
 
-          <UFormField
-            label="Platform"
-            name="platform"
-          >
-            <!-- :icon="findPlatformIcon(link.platform)" -->
-            <USelect
-              v-model="link.platform"
-              :items="platformItems"
-              :icon="link.platform ? platforms[link.platform]?.icon : undefined"
-              trailing-icon="i-custom-icon-chevron-down"
-              required
-            />
-          </UFormField>
+              <UFormField
+                label="Platform"
+                name="platform"
+              >
+                <USelect
+                  v-model="element.platform"
+                  :items="platformItems"
+                  :icon="element.platform ? platforms[element.platform]?.icon : undefined"
+                  trailing-icon="i-custom-icon-chevron-down"
+                  required
+                />
+              </UFormField>
 
-          <UFormField
-            label="Link"
-            name="url"
-          >
-            <!-- :placeholder="findPlatformPlaceholder(link.platform)" -->
-            <UInput
-              v-model="link.url"
-              icon="i-custom-icon-link"
-              :placeholder="link.platform ? platforms[link.platform]?.placeholder : undefined"
-              type="url"
-              required
-            />
-          </UFormField>
-        </UForm>
+              <UFormField
+                label="Link"
+                name="url"
+              >
+                <UInput
+                  v-model="element.url"
+                  icon="i-custom-icon-link"
+                  :placeholder="element.platform ? platforms[element.platform]?.placeholder : undefined"
+                  type="url"
+                  required
+                />
+              </UFormField>
+            </UForm>
+          </template>
+        </draggable>
       </fieldset>
 
       <template #footer>

@@ -18,7 +18,7 @@ const loading = ref<boolean>(false);
 
 type ProfileLinksForm = {
   id: number;
-  platform: string;
+  platform: PlatformName;
   url: string;
   order: number;
   userId?: number;
