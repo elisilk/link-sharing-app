@@ -21,17 +21,13 @@ const profileLinkSchema = z.object({
   userId: z.any(),
 }).refine(
   (data) => {
-    try {
-      const url = new URL(data.url);
-      // const regexHostname = findPlatformHostnameRegex(data.platform);
-      const regexHostname = data.platform ? platforms[data.platform]?.hostnameRegex : null;
-      return REGEX_PROTOCOL.test(url.protocol)
-        && regexHostname && regexHostname.test(url.hostname);
-    }
-    catch (error) {
-      console.error(error);
+    if (!URL.canParse(data.url))
       return false;
-    }
+    const url = new URL(data.url);
+    // const regexHostname = findPlatformHostnameRegex(data.platform);
+    const regexHostname = data.platform ? platforms[data.platform]?.hostnameRegex : null;
+    return REGEX_PROTOCOL.test(url.protocol)
+      && regexHostname && regexHostname.test(url.hostname);
   },
   {
     message: "Please check the URL",
@@ -65,9 +61,14 @@ function maxLinkItemOrder(links: PartialProfileLinkSchema[]) {
 function normalizeLinkOrder(links: PartialProfileLinkSchema[]) {
   if (links.length === 0)
     return;
-  links.forEach((link, index) => {
-    link.order = index + 1;
-  });
+  return links.map((link, index) => ({
+    ...link,
+    order: index + 1,
+  }));
+}
+
+function normalizeProfileLinksOrder() {
+  profileLinksForm.value = normalizeLinkOrder(profileLinksForm.value) || [];
 }
 
 /* Add Link */
@@ -76,8 +77,8 @@ function handleAddLink() {
   // add a new link to the local array
   profileLinksForm.value.push({
     id: null,
-    platform: undefined,
-    url: undefined,
+    platform: "github",
+    url: "",
     order: maxLinkItemOrder(profileLinksForm.value) + 1,
     userId: null,
   });
@@ -116,9 +117,7 @@ async function handleRemoveLink(linkIndex: number) {
     if (linkToDelete.id === null) {
       // a new link that hasn't yet been saved to the state
       // so just splice it from the local copy of the links array
-      if (linkIndex !== -1) {
-        profileLinksForm.value.splice(linkIndex, 1);
-      }
+      profileLinksForm.value.splice(linkIndex, 1);
     }
     else {
       // an already-saved link in the state
@@ -208,7 +207,7 @@ const platformItems = Object.entries(platforms).map(([platformKey, platformValue
           item-key="id"
           class="space-y-6"
           handle=".drag-and-drop-handle"
-          @end="normalizeLinkOrder(profileLinksForm)"
+          @end="normalizeProfileLinksOrder()"
         >
           <template #item="{ element, index }">
             <UForm
@@ -242,7 +241,7 @@ const platformItems = Object.entries(platforms).map(([platformKey, platformValue
                 <USelect
                   v-model="element.platform"
                   :items="platformItems"
-                  :icon="element.platform ? platforms[element.platform]?.icon : undefined"
+                  :icon="element.platform ? platforms[element.platform as keyof typeof platforms]?.icon : undefined"
                   trailing-icon="i-custom-icon-chevron-down"
                   required
                 />
@@ -255,7 +254,7 @@ const platformItems = Object.entries(platforms).map(([platformKey, platformValue
                 <UInput
                   v-model="element.url"
                   icon="i-custom-icon-link"
-                  :placeholder="element.platform ? platforms[element.platform]?.placeholder : undefined"
+                  :placeholder="element.platform ? platforms[element.platform as keyof typeof platforms]?.placeholder : undefined"
                   type="url"
                   required
                 />

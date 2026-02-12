@@ -40,7 +40,7 @@ async function uploadNewPicture(newPicture: File) {
 
   // prepare the file as form data to send to the upload API
   const formData = new FormData();
-  formData.append(newPicture.name, newPicture);
+  formData.append("file", newPicture);
 
   // make the API call
   try {
@@ -108,84 +108,87 @@ async function deleteOldPicture() {
 async function handleUpdate() {
   loading.value = true;
 
-  if (!profile.value) {
-    return {
-      status: "error",
-      message: "User not logged in.",
-    };
-  }
-
-  let newPicture;
-
-  // prepare and upload the profile picture
-  if (localProfileDetails.value.newPictureFile) {
-    // process the new picture file
-    const processedNewPicture = await preProcessNewPicture(localProfileDetails.value.newPictureFile);
-
-    // upload the (processed) new picture file
-    const result = await uploadNewPicture(processedNewPicture);
-
-    if (result && result.data && result.data.length > 0) {
-      newPicture = result.data[0]?.filename;
-
-      // delete the old picture file
-      if (profile.value.picture) {
-        await deleteOldPicture();
-      }
-    }
-  }
-  else {
-    if (localProfileDetails.value.deleteOldPictureFile) {
-      // delete the old picture file
-      if (profile.value.picture) {
-        await deleteOldPicture();
-      }
-      newPicture = null;
-    }
-  }
-
-  // update the profile details
   try {
-    const updateProfileResult = await $fetch(`/api/user/${profile.value.userId}/profile/`, {
-      method: "PATCH",
-      body: {
-        ...localProfileDetails.value,
-        picture: newPicture,
-      },
-    });
-    if (updateProfileResult.success) {
-      await refreshNuxtData("profile");
+    if (!profile.value) {
+      return {
+        status: "error",
+        message: "User not logged in.",
+      };
+    }
 
-      toast.add({
-        title: "Your changes have been successfully saved!",
-        icon: "i-custom-icon-changes-saved",
-        color: "success",
-      });
+    let newPicture;
 
-      // reset the new picture file
-      localProfileDetails.value.newPictureFile = undefined;
-      localProfileDetails.value.deleteOldPictureFile = false;
+    // prepare and upload the profile picture
+    if (localProfileDetails.value.newPictureFile) {
+      // process the new picture file
+      const processedNewPicture = await preProcessNewPicture(localProfileDetails.value.newPictureFile);
+
+      // upload the (processed) new picture file
+      const result = await uploadNewPicture(processedNewPicture);
+
+      if (result && result.data && result.data.length > 0) {
+        newPicture = result.data[0]?.filename;
+
+        // delete the old picture file
+        if (profile.value.picture) {
+          await deleteOldPicture();
+        }
+      }
     }
     else {
-      toast.add({
-        title: "Something went wrong!",
-        description: updateProfileResult.message,
-        icon: "i-custom-icon-changes-saved",
-        color: "error",
-      });
+      if (localProfileDetails.value.deleteOldPictureFile) {
+        // delete the old picture file
+        if (profile.value.picture) {
+          await deleteOldPicture();
+        }
+        newPicture = null;
+      }
     }
-  }
-  catch (error) {
-    console.error("profile NOT updated:", error);
-    if (error instanceof FetchError) {
-      toast.add({ title: "Error Updating Profile", description: error.data.message, color: "error" });
-    }
-    else {
-      toast.add({ title: "Error Updating Profile", description: "Something went wrong.", color: "error" });
-    }
-  }
 
-  loading.value = false;
+    // update the profile details
+    try {
+      const updateProfileResult = await $fetch(`/api/user/${profile.value.userId}/profile/`, {
+        method: "PATCH",
+        body: {
+          ...localProfileDetails.value,
+          picture: newPicture,
+        },
+      });
+      if (updateProfileResult.success) {
+        await refreshNuxtData("profile");
+
+        toast.add({
+          title: "Your changes have been successfully saved!",
+          icon: "i-custom-icon-changes-saved",
+          color: "success",
+        });
+
+        // reset the new picture file
+        localProfileDetails.value.newPictureFile = undefined;
+        localProfileDetails.value.deleteOldPictureFile = false;
+      }
+      else {
+        toast.add({
+          title: "Something went wrong!",
+          description: updateProfileResult.message,
+          icon: "i-custom-icon-changes-saved",
+          color: "error",
+        });
+      }
+    }
+    catch (error) {
+      console.error("profile NOT updated:", error);
+      if (error instanceof FetchError) {
+        toast.add({ title: "Error Updating Profile", description: error.data.message, color: "error" });
+      }
+      else {
+        toast.add({ title: "Error Updating Profile", description: "Something went wrong.", color: "error" });
+      }
+    }
+  }
+  finally {
+    loading.value = false;
+  }
 }
 </script>
 
