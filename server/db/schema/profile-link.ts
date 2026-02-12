@@ -1,10 +1,11 @@
 import { int, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
+import { PlatformNames } from "../../../shared/types/platforms";
 import { user } from "./auth";
 
 export const profileLink = sqliteTable("profileLink", {
   id: int().primaryKey({ autoIncrement: true }),
-  platform: text().notNull(),
+  platform: text("platform", { enum: PlatformNames }).notNull(),
   url: text().notNull(),
   order: int().notNull(),
   userId: int().notNull().references(() => user.id, { onDelete: "cascade" }),

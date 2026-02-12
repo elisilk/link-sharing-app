@@ -55,7 +55,7 @@ Users should be able to:
 - [Vercel Blob](https://vercel.com/docs/vercel-blob) - storage (for the profile picture images)
 - [Nuxt UI](https://ui.nuxt.com/) - UI component library (built on Tailwind and Reka UI)
   - [Lucide icons](https://icon-sets.iconify.design/lucide/?keyword=lucide)
-  - [VueUse useSortable](https://vueuse.org/integrations/useSortable/) - based on [sortable.js](https://github.com/SortableJS/Sortable)
+  - [Draggable](https://github.com/SortableJS/vue.draggable.next) - drag-and-drop component based on [Sortable.js](https://github.com/SortableJS/Sortable)
 - [Nuxt Auth Utils](https://github.com/Atinux/nuxt-auth-utils) - user authentication
 - [Drizzle](https://orm.drizzle.team/) - ORM library
 - [Turso](https://turso.tech/) - database
