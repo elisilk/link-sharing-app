@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { SelectProfileWithLinks } from "#server/db/schema/index";
 import type { FormSubmitEvent } from "@nuxt/ui";
+import type { SelectProfileWithLinks } from "#server/db/schema/index";
 
 import * as z from "zod";
 

@@ -1,163 +1,203 @@
-# Frontend Mentor - Link-Sharing App
+# Devlinks
 
-This is a solution to the [Link-sharing app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/linksharing-app-Fbt7yweGsT). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
+A full-stack link-sharing application built with **Nuxt, TypeScript, Drizzle, Turso, and Vercel Blob**.
 
-## Table of contents
+Devlinks allows users to create and manage a personal profile, add and reorder links, upload a profile image, and share their profile through a public-facing page. The project began as a [Frontend Mentor](https://www.frontendmentor.io/) challenge and was extended to explore authentication, server-side API development, relational data modeling, and object storage.
 
-- [Overview](#overview)
-  - [The challenge](#the-challenge)
-  - [Screenshots](#screenshots)
-  - [Links](#links)
-- [My process](#my-process)
-  - [Built with](#built-with)
-  - [What I learned](#what-i-learned)
-  - [Continued development](#continued-development)
-- [Author](#author)
-- [Acknowledgements](#acknowledgements)
+**[Live Demo](https://devlinks-site.vercel.app/)** · **[Frontend Mentor Solution](https://www.frontendmentor.io/solutions/full-stack-link-sharing-app-using-nuxt-gdxUVblWay)**
 
 ## Overview
 
-### The challenge
+The application provides two main experiences:
 
-Users should be able to:
+- **Private editor:** Authenticated users can manage their profile information, profile image, and links.
+- **Public profile:** Visitors can view a user's shareable profile and follow their published links.
 
-- Create, read, update, delete links and see previews in the mobile mockup
-- Receive validations if the links form is submitted without a URL or with the wrong URL pattern for the platform
-- Drag and drop links to reorder them
-- Add profile details like profile picture, first name, last name, and email
-- Receive validations if the profile details form is saved with no first or last name
-- Preview their devlinks profile and copy the link to their clipboard
-- View the optimal layout for the interface depending on their device's screen size
-- See hover and focus states for all interactive elements on the page
-- **Bonus**: Save details to a database (build the project as a full-stack app)
-- **Bonus**: Create an account and log in (add user authentication to the full-stack app)
+The project uses Nuxt for both the frontend application and server-side API routes. Drizzle ORM and Turso provide the relational data layer, while Vercel Blob is used for profile-image storage.
 
-### Screenshots
+The implementation goes beyond the basic frontend challenge requirements by adding user registration, authentication, database-backed profile management, server-side validation, and persistent data storage.
 
-|                Mobile designed at 375px:                |               Tablet designed at 1440px:                | Desktop designed at 1440px:                              |
+## Key Features
+
+- User registration and authentication
+- Private profile editor for authenticated users
+- Public profile pages for sharing links
+- Profile-image upload and storage
+- Create, edit, delete, and reorder profile links
+- Drag-and-drop link reordering
+- Client-side and server-side form validation
+- User-facing feedback for validation and API errors
+- Responsive layouts for mobile and desktop
+- Persistent relational data using Turso and Drizzle ORM
+
+## Screenshots
+
+|                Mobile designed at 375px:                |                Tablet designed at 768px:                | Desktop designed at 1440px:                              |
 | :-----------------------------------------------------: | :-----------------------------------------------------: | -------------------------------------------------------- |
 |  ![](./screenshots/screenshot-editor-links-mobile.png)  |  ![](./screenshots/screenshot-editor-links-tablet.png)  | ![](./screenshots/screenshot-editor-links-desktop.png)   |
 | ![](./screenshots/screenshot-editor-details-mobile.png) | ![](./screenshots/screenshot-editor-details-tablet.png) | ![](./screenshots/screenshot-editor-details-desktop.png) |
 |    ![](./screenshots/screenshot-preview-mobile.png)     |    ![](./screenshots/screenshot-preview-tablet.png)     | ![](./screenshots/screenshot-preview-desktop.png)        |
 
-### Links
+## Application Architecture
 
-- Solution URL: [https://github.com/elisilk/link-sharing-app](https://github.com/elisilk/link-sharing-app)
-- Live Site URL: [https://devlinks-site.vercel.app/](https://devlinks-site.vercel.app/)
+The application separates authentication data from the public profile information associated with an account.
 
-## My process
+A user account represents the identity used for authentication, while a related profile contains the information intended to be displayed publicly. Links belong to the profile and can be managed through the authenticated editor.
 
-### Built with
+The main application flow is:
 
-- [GitHub](https://github.com/) - code repository
-- [Nuxt](https://nuxt.com/) - full-stack web framework (built on Vue, Vite, and Nitro)
-- [Vercel](https://vercel.com/docs/getting-started-with-vercel) - web host deployment
-- [Vercel Blob](https://vercel.com/docs/vercel-blob) - storage (for the profile picture images)
-- [Nuxt UI](https://ui.nuxt.com/) - UI component library (built on Tailwind and Reka UI)
-  - [Lucide icons](https://icon-sets.iconify.design/lucide/?keyword=lucide)
-  - [Draggable](https://github.com/SortableJS/vue.draggable.next) - drag-and-drop component based on [Sortable.js](https://github.com/SortableJS/Sortable)
-- [Nuxt Auth Utils](https://github.com/Atinux/nuxt-auth-utils) - user authentication
-- [Drizzle](https://orm.drizzle.team/) - ORM library
-- [Turso](https://turso.tech/) - database
+```mermaid
+flowchart TD
+    A[Nuxt frontend] --> B[Nuxt server API routes]
+    B --> C[Authentication and session checks]
+    B --> D[Request validation]
+    D --> E[Drizzle ORM]
+    E --> F[Turso database]
+    B --> G[Vercel Blob]
+    G --> H[Profile image storage]
+```
 
-Other libraries I made use of, primarily for the workflow setup:
+### Authentication and identity
 
-- [Husky](https://github.com/typicode/husky)
-- [Concurrently](https://github.com/open-cli-tools/concurrently)
-- [Lint-staged](https://github.com/lint-staged/lint-staged)
-- [ESLint](https://eslint.org/)
-  - [Nuxt ESLint](https://eslint.nuxt.com/)
-  - [Anthony Fu's ESLint config preset](https://github.com/antfu/eslint-config)
+Authentication is handled through Nuxt Auth Utils. Protected pages and server operations check the authenticated session before allowing access to user-specific data or modifications.
 
-### What I learned
+The separation between the user account and the public profile allows authentication-related information to remain distinct from information intended for public sharing.
 
-As always, so many cool :sunglasses: things. Here are some of the key resources I used.
+### Database and relationships
 
-#### Database
+The relational database stores user accounts, profiles, and profile links. Drizzle ORM provides the schema and database access layer, while Turso provides the SQLite-compatible database service.
 
-[My database schema](https://mermaid.ai/d/c1808b67-d215-4c2e-8ed1-f856fbcdebc9)
+The application uses database relationships to associate profiles and links with the appropriate account. This allows the server to retrieve and modify data in the context of the authenticated user rather than relying on client-provided identity information alone.
 
-To update/reset the database locally (development):
+### Profile-image storage
 
-- delete the #server/db/migrations folder
-- delete each of the ~/local.db\* files
-- update the schema files in #server/db/schema/
-- run `pnpm drizzle-kit generate` to regenerate the migration files
-- run `pnpm drizzle-kit migrate` to apply the generated SQL migration files to the database
+Profile images are stored using Vercel Blob rather than directly in the relational database.
 
-To update/reset the database on Turso (production):
+The database stores the information needed to associate an uploaded image with the user's profile, while the image file itself is handled by the object-storage service.
 
-- do all of the above first on the local/development environment
-- **may have to go online to the Turso database and delete the existing rows and tables**
-- change the `.env` to the production version
-- run `pnpm drizzle-kit push` (the same two commands as above)
-- change the `.env` back to the development version
+## API Routes and Server-Side Operations
 
-See: [Migrations with Drizzle Kit](https://orm.drizzle.team/docs/kit-overview)
+Nuxt server API routes provide the boundary between the client application and the application's data services.
 
-#### Building the App
+The server layer handles operations such as:
 
-- [Full Stack App Build | Travel Log w/ Nuxt, Vue, Better Auth, Drizzle, Tailwind, DaisyUI, MapLibre](https://www.youtube.com/watch?v=DK93dqmJJYg) - I learned so much from watching and following along with this video. I adopted/adapted much the same approach and tech stack. Thanks, CJ!
-- [Nuxt Auth Utils: Secure, Simple, and Flexible Logins](https://vueschool.io/courses/nuxt-auth-utils-secure-simple-and-flexible-logins) - I learned a ton from this video course too, and an [associated blog post](https://vueschool.io/articles/vuejs-tutorials/email-password-logins-with-nuxt-auth-utils-and-nuxt-ui/). Among other things, helped me to realize that I preferred using Nuxt UI rather than DaisyUI. Thank you, Daniel!
-- [File Uploads in Vue.js](https://vueschool.io/courses/file-uploads-in-vue-js) - This video course and [associated blog post](https://vueschool.io/articles/vuejs-tutorials/handling-file-uploads-in-nuxt-with-usestorage/) led me to using [unstorage](https://unstorage.unjs.io/guide) with Vercel Blob storage to store the profile picture files.
-  - [Store files and K/Vs in Nuxt and Nitro - Powered by unstorage](https://www.youtube.com/watch?v=iE67C7ldjEk&t=49s)
-  - [unstorage - Vercel driver](https://unstorage.unjs.io/drivers/vercel)
-  - [unstorage - feat: raw data support (experimental)](https://github.com/unjs/unstorage/pull/141) - I had some issues using the [`getItemRaw()` function](https://unstorage.unjs.io/guide#getitemrawkey-opts), which is experimental, and so had to abandon that for now. But I hope to come back to it at some point, because it is so nice to have such a nice, simple solution built in to Nuxt.
-- [The Vue Form Component Pattern: Robust Forms Without the Fuss](https://vueschool.io/articles/vuejs-tutorials/the-vue-form-component-pattern-robust-forms-without-the-fuss/) - A great, reusable component to maintain a local copy of form data rather than directly binding to the state data, so that updates are only visisble to the user upon hitting the save button.
+- Registering users and creating associated profile data
+- Retrieving and updating profile information
+- Creating, updating, deleting, and reordering links
+- Managing profile-image uploads
+- Checking authentication before protected operations
+- Validating incoming request data
+- Returning errors from failed operations
 
-#### Testing the App
+Keeping these operations on the server allows database and storage credentials to remain outside the client application and gives the server responsibility for enforcing access to user-specific data.
 
-Hmm 🤔 ... I still have to do this part!
+## Validation and Error Handling
 
-### Continued development
+The application uses validation at both the client and server levels.
 
-Known issues - specific areas that the solution should be improved:
+Client-side validation provides immediate feedback while users complete forms. Server-side validation independently checks incoming data before it is used in database or storage operations, rather than relying on the client to enforce application rules.
 
-- [ ] All of the testing part!
-- [x] Input field error message is obscured by the show password trailing icon
-  - [ ] Figure out if there's a way to use [Auth Form](https://ui.nuxt.com/docs/components/auth-form) while still being able to control the position of the error message for the password fields so it doesn't obscure the show password trailing icon
-- [ ] Prevent input field error message from hiding the input field's help message
-- [ ] Remove the extra unneccsary vertical scrolling in the large viewport due to the height of the `aside` container calculating its height incorrectly. It likely has something to do with the [`--ui-header-height` CSS variable](https://ui.nuxt.com/docs/getting-started/theme/css-variables#header).
-- [ ] Warning message that occurs on Chrome when opening up the toggled navigation menu from the header: "Blocked aria-hidden on an element because its descendant retained focus". The issue doesn't seem to arise on Firefox so far.
-- [ ] Issue with the [`getItemRaw()` unstorage function](https://unstorage.unjs.io/guide#getitemrawkey-opts) not properly returning the image buffer when called in the picture uploads server route when using Vercel Blob.
-- [ ] Vertical orientation photos uploaded as the profile picture are viewed in the incorrect orientation (as horizontal). May need to [read the EXIF data and rotate those photos](https://www.google.com/search?q=javascript+upload+photo+from+mac+photos+vertical+in+wrong+orientation).
-  - [Fixing wrongly oriented iphone photos](https://medium.com/@manoj_makkuboy/fixing-wrongly-oriented-iphone-photos-f6375d32ef73)
-- [ ] improve the page header flex items as transition to a smaller viewport/container width so that the crowding is minimized and the left/logo side doesn't take up disproportionate space
-- [ ] improve the design of the toast components so it better matches the design
-- [x] improve the hover/active/focus state of the image upload input
-- [x] When viewing the page on a mobile device, the page zooms in automatically when going into an input field. That behavior is fine, but the issue is more when the form is submitted and the user is navigated to the next page, it seems to maintain that zoom instead of resetting fully to the original zoom of the page. How to fix? Hmm 🤔
-  - Solved: had to just change the font size of the inputs to 16px
-  - [Google search: "nuxt mobile zoom out to full page on navigation to new page"](https://www.google.com/search?q=nuxt+mobile+zoom+out+to+full+page+on+navigation+to+new+page)
-  - [Disable Auto Zoom in Input "Text" tag - Safari on iPhone](https://stackoverflow.com/questions/2989263/disable-auto-zoom-in-input-text-tag-safari-on-iphone)
+The application also distinguishes between validation failures and errors returned by API, database, or storage operations. These errors are surfaced through user-facing feedback, including toast notifications, so users receive information when an operation cannot be completed.
 
-Feature requests - specific enhancements to make:
+This layered approach helps keep the interface responsive while maintaining validation and authorization responsibilities on the server.
 
-- [ ] [Nuxt v4.3.0](https://github.com/nuxt/nuxt/releases/tag/v4.3.0) - Look at all Nuxt v4.3 changes and upgrade as needed/advantageous
-- [ ] [Learn from @AhmadYousif89's solution](https://www.frontendmentor.io/solutions/devlinks-a-link-sharing-app-tvkjym6OMw)
-  - [x] Link Validation: Smart URL validation for different platforms (GitHub, LinkedIn, etc.)
-  - [ ] Guest Mode: Try the app without registration with automatic guest session creation
-- [ ] Method for retrieving/changing a forgotten password
-  - [Password reset links in Nuxt](https://v2.lucia-auth.com/guidebook/password-reset-link/nuxt/) - although a different framework, this seems like a good model for the steps that are needed.
-  - [Google "nuxt auth utils forgot password"](https://www.google.com/search?q=nuxt+auth+utils+forgot+password)
-- [ ] Method for deleting an account
-- [ ] [Next level security features to prevent brute force attacks](https://vueschool.io/lessons/next-level-security-features-attempt-locks-to-prevent-brute-force-attacks)
-- [ ] [Optimistic updates](https://nuxt.com/docs/4.x/api/composables/use-nuxt-data#optimistic-updates)
-- [ ] If make changes in the editor and try to navigate away without saving them, ask to confirm before navigating away (e.g., [video marker: "show confirmation if unsaved changes in form"](https://www.youtube.com/watch?v=DK93dqmJJYg&t=11693s))
-- [ ] Make sure all errors are handled appropriately
-  - [Nuxt Error Handling](https://nuxt.com/docs/4.x/getting-started/error-handling)
-  - [HTTP response status codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status)
-  - [Nuxt v4.3.0](https://github.com/nuxt/nuxt/releases/tag/v4.3.0) - use 'status' and 'statusText'
-- [x] Disable form buttons and inputs after submission until the server action is completed; show loading state
-- [x] Make sure all tabbable elements have a clear focused state (e.g., with outlines)
-- [x] Ability to delete the current profile picture without having to replace it with a new one
-- [x] Method for updating login info (email and password)
-- [x] [Protection of sensitive data in API routes with requireUserSession](https://vueschool.io/lessons/protect-sensitive-data-in-api-routes-with-requireusersession)
+## Accessibility and Responsive Design
+
+The application was developed with responsive behavior and keyboard interaction in mind.
+
+The editor includes interactive controls for managing profile links, including drag-and-drop reordering. The interface also provides keyboard-accessible alternatives for interacting with the relevant controls.
+
+Responsive layouts support the editor and public profile experience across mobile and desktop viewport sizes.
+
+Accessibility and responsive behavior were considered during implementation, although the project has not yet gone through a comprehensive, documented cross-browser and assistive-technology testing process.
+
+## Development Workflow
+
+The project uses:
+
+- **Nuxt / Vue** — application framework
+- **TypeScript** — static typing
+- **Nuxt Auth Utils** — authentication and session management
+- **Drizzle ORM** — database schema and queries
+- **Turso** — relational database
+- **Vercel Blob** — profile-image storage
+- **Zod** — validation
+- **Vite** — development and build tooling
+- **ESLint** — linting
+- **Husky and lint-staged** — pre-commit checks
+- **GitHub Actions** — automated linting workflow
+- **Vercel** — deployment
+
+The repository includes database migration configuration and generated migration files. Linting and selected checks are integrated into the development workflow to catch issues before changes are committed or deployed.
+
+## Testing
+
+Automated tests have not yet been added to this project.
+
+Manual testing was used during development, including testing forms, authentication flows, profile editing, link management, responsive layouts, and interactive editor functionality.
+
+Adding automated tests for server endpoints, authentication-related behavior, and important UI interactions would be a logical next step.
+
+## Known Limitations
+
+The project remains a learning and development project, with several areas that could be extended:
+
+- Automated tests for server endpoints and key user flows
+- Password reset and additional account-management functionality
+- Account deletion
+- Additional protection against repeated or abusive requests
+- Further refinement of unsaved-form navigation and user feedback
+- More comprehensive cross-browser and assistive-technology testing
+
+These limitations reflect areas for continued development rather than functionality represented as already complete.
+
+## Local Development
+
+### Requirements
+
+- Node.js
+- pnpm
+- A configured Turso database
+- A configured Vercel Blob storage environment
+- The required authentication and application environment variables
+
+### Install dependencies
+
+```bash
+pnpm install
+```
+
+### Configure environment variables
+
+Create the appropriate local environment configuration with the credentials and settings required by the application.
+
+Refer to the repository's environment configuration and server setup for the variables used by the database, authentication, and object-storage integrations.
+
+### Run the development server
+
+```bash
+pnpm dev
+```
+
+The application will be available at the local development URL shown by Nuxt.
+
+### Database migrations
+
+The project uses Drizzle migrations to manage database schema changes.
+
+Use the repository's configured Drizzle commands to generate and apply migrations in the appropriate environment. Avoid applying destructive database operations to a production database without first reviewing the migration and confirming the target environment.
+
+## Credits
+
+- Interface design provided by [Frontend Mentor](https://www.frontendmentor.io/).
+- Authentication supported by [Nuxt Auth Utils](https://github.com/atinux/nuxt-auth-utils).
+- Database access provided by [Drizzle ORM](https://orm.drizzle.team/).
+- Database service provided by [Turso](https://turso.tech/).
+- Profile-image storage provided by [Vercel Blob](https://vercel.com/docs/storage/vercel-blob).
 
 ## Author
 
-- Website - [Eli Silk](https://github.com/elisilk)
-- Frontend Mentor - [@elisilk](https://www.frontendmentor.io/profile/elisilk)
+**Eli M. Silk**
 
-## Acknowledgements
-
-Thank you to [@AhmadYousif89](https://www.frontendmentor.io/profile/AhmadYousif89) for their [thoughtful and helpful feedback on my first solution](https://www.frontendmentor.io/solutions/full-stack-link-sharing-app-using-nuxt-gdxUVblWay). I also benefited greatly from inspecting [their solution to the challenge](https://www.frontendmentor.io/solutions/devlinks-a-link-sharing-app-tvkjym6OMw), and was inspired to improve my own by implementing smart link validation tailored to each platform, a show password button in password input fields, and more.
+- [GitHub](https://github.com/elisilk)
+- [Frontend Mentor](https://www.frontendmentor.io/profile/elisilk)

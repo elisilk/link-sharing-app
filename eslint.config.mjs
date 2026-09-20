@@ -16,7 +16,7 @@ export default withNuxt(
         semi: true,
         quotes: "double",
       },
-      ignores: [".pnpm-store/**", "**/migrations/*"],
+      ignores: [".pnpm-store/**", "**/migrations/*", "**/*.md"],
     },
     {
       plugins: {

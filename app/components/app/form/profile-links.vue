@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { AppConfirmDialog } from "#components";
 import draggable from "vuedraggable";
-
 import * as z from "zod";
+
+import { AppConfirmDialog } from "#components";
 
 defineProps<{
   loading: boolean;
