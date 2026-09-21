@@ -18,7 +18,7 @@ const profileUserId = computed(() => {
   return null;
 });
 
-const shareLink = computed(() => profileUserId.value ? `${url.protocol}://${url.host}/profile/${profileUserId.value}` : null);
+const shareLink = computed(() => profileUserId.value ? `${url.protocol}//${url.host}/profile/${profileUserId.value}` : null);
 
 async function handleShareLink() {
   if (!shareLink.value)
