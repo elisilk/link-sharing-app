@@ -152,9 +152,9 @@ watch(loggedIn, () => {
 
     <template #footer>
       <p class="text-center text-balance px-4">
-        Already have an account?
-        <ULink to="/" class="text-primary">
-          Login
+        Don't have an account?
+        <ULink to="/register" class="text-primary">
+          Create account
         </ULink>
       </p>
     </template>
