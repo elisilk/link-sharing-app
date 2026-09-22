@@ -6,6 +6,28 @@ Devlinks allows users to create and manage a personal profile, add and reorder l
 
 **[Live Demo](https://devlinks-site.vercel.app/)** · **[Frontend Mentor Solution](https://www.frontendmentor.io/solutions/full-stack-link-sharing-app-using-nuxt-gdxUVblWay)**
 
+## Demo Account
+
+The live application includes a demonstration account for exploring the authenticated editor.
+
+**Demo credentials**
+
+* **Email:** `ben@example.com`
+* **Password:** `demopassword`
+
+To explore the authenticated experience:
+
+1. Open the [live demo](https://devlinks-site.vercel.app/).
+2. Navigate to the login page.
+3. Sign in using the demonstration credentials.
+4. Explore the profile details editor, profile image management, and link editor.
+
+A public sample profile is also available at:
+
+[View sample public profile](https://devlinks-site.vercel.app/profile/4)
+
+The demonstration account is intended for exploring the application. Please do not use it for personal information or change its credentials.
+
 ## Overview
 
 The application provides two main experiences:
@@ -63,11 +85,13 @@ Authentication is handled through Nuxt Auth Utils. Protected pages and server op
 
 The separation between the user account and the public profile allows authentication-related information to remain distinct from information intended for public sharing.
 
+The account email and public profile contact email are currently stored as separate fields. Email verification and additional coordination between these fields have not yet been implemented.
+
 ### Database and relationships
 
 The relational database stores user accounts, profiles, and profile links. Drizzle ORM provides the schema and database access layer, while Turso provides the SQLite-compatible database service.
 
-The application uses database relationships to associate profiles and links with the appropriate account. This allows the server to retrieve and modify data in the context of the authenticated user rather than relying on client-provided identity information alone.
+The application uses database relationships to associate profiles and links with the appropriate account. Server-side operations use the authenticated user's identity when accessing or modifying user-specific data rather than relying on client-provided identity information alone.
 
 ### Profile-image storage
 
@@ -97,7 +121,9 @@ The application uses validation at both the client and server levels.
 
 Client-side validation provides immediate feedback while users complete forms. Server-side validation independently checks incoming data before it is used in database or storage operations, rather than relying on the client to enforce application rules.
 
-The application also distinguishes between validation failures and errors returned by API, database, or storage operations. These errors are surfaced through user-facing feedback, including toast notifications, so users receive information when an operation cannot be completed.
+The application uses thrown API errors for failed server operations and distinguishes expected application errors from unexpected failures. For example, a profile update that conflicts with an existing unique email address can return a specific error that the frontend translates into an actionable message.
+
+Errors are surfaced through user-facing feedback, including toast notifications, so users receive information when an operation cannot be completed.
 
 This layered approach helps keep the interface responsive while maintaining validation and authorization responsibilities on the server.
 
@@ -130,6 +156,8 @@ The project uses:
 
 The repository includes database migration configuration and generated migration files. Linting and selected checks are integrated into the development workflow to catch issues before changes are committed or deployed.
 
+Development is organized using Git feature branches and pull requests. Completed changes are merged into the main branch.
+
 ## Testing
 
 Automated tests have not yet been added to this project.
@@ -143,6 +171,8 @@ Adding automated tests for server endpoints, authentication-related behavior, an
 The project remains a learning and development project, with several areas that could be extended:
 
 - Automated tests for server endpoints and key user flows
+- Guest-to-registered account conversion
+- Email verification for account and public contact email addresses
 - Password reset and additional account-management functionality
 - Account deletion
 - Additional protection against repeated or abusive requests
