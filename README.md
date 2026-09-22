@@ -8,7 +8,7 @@ Devlinks allows users to create and manage a personal profile, add and reorder l
 
 ## Demo Account
 
-The live application includes a demonstration account for exploring the authenticated editor.
+Visitors are welcome to register a new account with their own chosen credentials in order to explore the live application. If you would prefer not to register a new account, I've included a demonstration account for exploring the authenticated editor.
 
 **Demo credentials**
 
@@ -18,15 +18,15 @@ The live application includes a demonstration account for exploring the authenti
 To explore the authenticated experience:
 
 1. Open the [live demo](https://devlinks-site.vercel.app/).
-2. Navigate to the login page.
-3. Sign in using the demonstration credentials.
-4. Explore the profile details editor, profile image management, and link editor.
+1. Sign in using the demonstration credentials.
+1. Explore and update the profile links and details.
+1. Preview the resulting shareable profile.
 
-A public sample profile is also available at:
+The public profile for this demo account is viewable without logging in at:
 
-[View sample public profile](https://devlinks-site.vercel.app/profile/4)
+[View demo public profile](https://devlinks-site.vercel.app/profile/4)
 
-The demonstration account is intended for exploring the application. Please do not use it for personal information or change its credentials.
+The demonstration account is intended for exploring the application. Please do not use it for personal information or change its credentials. 
 
 ## Overview
 
