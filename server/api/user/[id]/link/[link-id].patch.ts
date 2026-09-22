@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 
 export default defineEventHandler(async (event) => {
   // restrict api only to logged in users
@@ -42,7 +42,15 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const result = await useDb().update(schema.profileLink).set({ platform, url, order }).where(eq(schema.profileLink.id, linkId));
+    const result = await useDb()
+      .update(schema.profileLink)
+      .set({ platform, url, order })
+      .where(
+        and(
+          eq(schema.profileLink.userId, userId),
+          eq(schema.profileLink.id, linkId),
+        ),
+      );
 
     if (result.rowsAffected > 0) {
       return {

@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 
 export default defineEventHandler(async (event) => {
   // restrict api only to logged in users
@@ -33,7 +33,17 @@ export default defineEventHandler(async (event) => {
 
   const linkId: number = Number(routerParamLinkId);
 
-  const deletedLink = await useDb().delete(schema.profileLink).where(eq(schema.profileLink.id, linkId)).returning();
+  const deletedLink = await useDb()
+    .delete(
+      schema.profileLink,
+    )
+    .where(
+      and(
+        eq(schema.profileLink.userId, userId),
+        eq(schema.profileLink.id, linkId),
+      ),
+    )
+    .returning();
 
   if (deletedLink.length > 0) {
     return {
