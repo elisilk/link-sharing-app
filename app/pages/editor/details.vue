@@ -147,42 +147,44 @@ async function handleUpdate() {
 
     // update the profile details
     try {
-      const updateProfileResult = await $fetch(`/api/user/${profile.value.userId}/profile/`, {
+      await $fetch(`/api/user/${profile.value.userId}/profile/`, {
         method: "PATCH",
         body: {
           ...localProfileDetails.value,
           picture: newPicture,
         },
       });
-      if (updateProfileResult.success) {
-        await refreshNuxtData("profile");
 
-        toast.add({
-          title: "Your changes have been successfully saved!",
-          icon: "i-custom-icon-changes-saved",
-          color: "success",
-        });
+      await refreshNuxtData("profile");
 
-        // reset the new picture file
-        localProfileDetails.value.newPictureFile = undefined;
-        localProfileDetails.value.deleteOldPictureFile = false;
-      }
-      else {
-        toast.add({
-          title: "Something went wrong!",
-          description: updateProfileResult.message,
-          icon: "i-custom-icon-changes-saved",
-          color: "error",
-        });
-      }
+      toast.add({
+        title: "Your changes have been successfully saved!",
+        icon: "i-custom-icon-changes-saved",
+        color: "success",
+      });
+
+      // reset the new picture file
+      localProfileDetails.value.newPictureFile = undefined;
+      localProfileDetails.value.deleteOldPictureFile = false;
     }
     catch (error) {
       console.error("profile NOT updated:", error);
       if (error instanceof FetchError) {
-        toast.add({ title: "Error Updating Profile", description: error.data.message, color: "error" });
+        toast.add({
+          title: "Error Updating Profile",
+          description:
+            error.data?.data?.code === "EMAIL_ALREADY_IN_USE"
+              ? "This email address is already being used by another profile. Please try a different email address."
+              : error.data?.message || "Something went wrong. Please try again.",
+          color: "error",
+        });
       }
       else {
-        toast.add({ title: "Error Updating Profile", description: "Something went wrong.", color: "error" });
+        toast.add({
+          title: "Error Updating Profile",
+          description: "Something went wrong. Please try again.",
+          color: "error",
+        });
       }
     }
   }

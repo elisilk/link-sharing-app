@@ -1,9 +1,8 @@
 import { eq } from "drizzle-orm";
+// import { LibsqlError } from "@libsql/client";
+// import { DrizzleQueryError } from "drizzle-orm";
 
 export default defineEventHandler(async (event) => {
-  // TESTING: block for an amount of time to test pending state
-  // await sleep(4000);
-
   // restrict api only to logged in users
   const { user: loggedInUser } = await requireUserSession(event);
 
@@ -16,41 +15,72 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const userId: number = Number(routerParamId);
+  const userId = Number(routerParamId);
+
+  if (!Number.isInteger(userId) || userId <= 0) {
+    throw createError({
+      status: 400,
+      statusText: "Invalid user ID.",
+    });
+  }
 
   if (loggedInUser.id !== userId) {
     throw createError({
-      status: 400,
-      statusText: "User/data mismatch.",
+      status: 403,
+      statusText: "You are not authorized to update this profile.",
     });
   }
 
   const { firstName, lastName, email, picture } = await readBody(event);
+
   if (!firstName || !lastName) {
     throw createError({
       status: 400,
-      statusText: "Missing required fields!",
+      statusText: "First name and last name are required.",
     });
   }
 
   try {
-    const result = await useDb().update(schema.profile).set({ firstName, lastName, email, picture }).where(eq(schema.profile.userId, userId));
+    const result = await useDb()
+      .update(schema.profile)
+      .set({ firstName, lastName, email, picture })
+      .where(eq(schema.profile.userId, userId));
 
-    if (result.rowsAffected > 0) {
-      return {
-        success: true,
-        message: `User ID ${userId} updated (${result.rowsAffected} row(s) affected)`,
-      };
+    if (result.rowsAffected === 0) {
+      throw createError({
+        status: 404,
+        statusText: "Profile not found.",
+      });
     }
-    else {
-      return {
-        success: false,
-        message: `User ID ${userId} not found or no changes made.`,
-      };
-    }
+
+    return {
+      success: true,
+    };
   }
-  catch (error: unknown) {
-    console.error("(Server) Error updating profile:", error);
-    return { success: false, message: "Failed to update profile." };
+  catch (error: any) {
+    const errorMessage = error?.message || "";
+    const causeMessage = error?.cause?.message || "";
+
+    const errorDuplicateEmail = "SQLITE_CONSTRAINT: SQLite error: UNIQUE constraint failed: profile.email";
+    const isDuplicateEmail
+      = errorMessage.includes(errorDuplicateEmail)
+        || causeMessage.includes(errorDuplicateEmail);
+
+    if (isDuplicateEmail) {
+      console.error("(Server) Error updating profile. Profile email already in use.");
+      throw createError({
+        status: 409,
+        statusText: "Profile email is already in use.",
+        data: {
+          code: "EMAIL_ALREADY_IN_USE",
+        },
+      });
+    }
+
+    console.error("(Server) Error updating profile. Uknown error. More details:", error);
+    throw createError({
+      status: 500,
+      statusText: "Failed to update profile.",
+    });
   }
 });
