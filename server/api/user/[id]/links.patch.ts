@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 
 export default defineEventHandler(async (event) => {
   // TESTING: block for an amount of time to test pending state
@@ -51,7 +51,12 @@ export default defineEventHandler(async (event) => {
             url: update.url,
             order: update.order,
           })
-          .where(eq(schema.profileLink.id, update.id))
+          .where(
+            and(
+              eq(schema.profileLink.userId, userId),
+              eq(schema.profileLink.id, update.id),
+            ),
+          )
           .returning(); // Get the updated row back
 
         updatedItems.push(updatedItem);
